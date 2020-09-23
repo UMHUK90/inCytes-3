@@ -30,7 +30,6 @@ public class ClinicianR10A {
     public void EnterVerifyPassword() {
         $(name("verifyPassword")).setValue(password);
     }
-
     public void clickTCradio() {
         $(byAttribute("type", "checkbox")).click();
     }

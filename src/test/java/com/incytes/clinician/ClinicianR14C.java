@@ -1,5 +1,6 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Condition;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.CollectionCondition.size;
@@ -10,7 +11,7 @@ import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.By.name;
 import static org.openqa.selenium.By.xpath;
 
-public class ClinicianR13A {
+public class ClinicianR14C {
     public static String siteurl = "https://alpha.incytesdata-dev.com/",
             password = "261090inCytes",
             existingPassword = password,
@@ -28,10 +29,10 @@ public class ClinicianR13A {
     public void c_test() {
         open(siteurl + "auth/register");
         $$(".MuiButton-label").findBy(text("УЖЕ ЕСТЬ УЧЁТНАЯ ЗАПИСЬ?")).shouldBe(visible);
-        $(name("email")).setValue("ScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScori@gmail.com").shouldBe(visible);
-        $(name("email")).shouldHave(value("ScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScoringGroupTestScori@gmail.com"));
+        $(name("password")).setValue("261090 inCytes").shouldBe(visible);
+        $(name("password")).shouldHave(value("261090 inCytes"));
         clickTCradio();
         clickNextButton();
-        $$(byText("Required")).shouldHave(size(4));
+        $$(".MuiFormHelperText-filled").findBy(text("Spaces are not allowed")).shouldBe(visible);
     }
 }
