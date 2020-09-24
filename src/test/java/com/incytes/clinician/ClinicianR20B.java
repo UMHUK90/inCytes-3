@@ -41,7 +41,7 @@ public class ClinicianR20B {
         open(siteurl + "/auth/forgotPassword");
         $$("input").findBy(attribute("placeholder", "Адрес электронной почты*")).shouldBe(visible);
         $(name("email")).setValue(password);
-        $("span.MuiButton-label").byText("SUBMIT");
+        $("span.MuiButton-label").shouldHave(text("SUBMIT"));
         $$("span.MuiButton-label").findBy(text("Отправить код подтверждения ещё раз")).shouldBe(visible);
         System.out.println("Hi");
     }
