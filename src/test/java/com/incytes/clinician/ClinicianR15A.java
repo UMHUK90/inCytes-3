@@ -27,7 +27,7 @@ public class ClinicianR15A {
         open(siteurl + "auth/register");
         $$(".MuiButton-label").findBy(text("УЖЕ ЕСТЬ УЧЁТНАЯ ЗАПИСЬ?")).shouldBe(visible);
         $(name("password")).setValue("261090inCytes").shouldBe(visible);
-        $(name("Password")).shouldHave(value("261090inCytes"));
+        $(name("password")).shouldHave(value("261090inCytes"));
         $(name("verifyPassword")).setValue("261090inCytes!").shouldBe(visible);
         $(name("verifyPassword")).shouldHave(value("261090inCytes!"));
         clickTCradio();
