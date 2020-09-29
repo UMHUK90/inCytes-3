@@ -1,6 +1,5 @@
 package com.incytes.clinician;
 
-
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.*;

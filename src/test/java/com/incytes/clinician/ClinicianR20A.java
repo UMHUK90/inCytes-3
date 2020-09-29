@@ -9,52 +9,16 @@ import static org.openqa.selenium.By.name;
 import static org.openqa.selenium.By.xpath;
 
 public class ClinicianR20A {
-    public static String siteurl = "https://alpha.incytesdata-dev.com/",
-            password = "261090inCytes",
-            existingPassword = password,
-            newpassword = "261090inCytes";
-
-    public void EnterFirstName() {
-        $(name("firstName")).setValue("Andrew").shouldBe(visible);
-    }
-    public void EnterLastName() {
-        $(name("lastName")).setValue("Grabovskiy").shouldBe(visible);
-    }
-    public void EnterEmail() {
-        $(name("email")).setValue("andrew.grabovskiy+clinician1a@gmail.com");
-    }
-    public void EnterPassword() {
-        $(name("password")).setValue(password);
-    }
-    public void EnterVerifyPassword() {
-        $(name("verifyPassword")).setValue(password);
-    }
-    public void clickTCradio() {
-        $(byAttribute("type", "checkbox")).click();
-    }
-    public void clickNextButton() {
-        $(xpath("//*[@id=\"root\"]/div/form/div/div[9]/div/button")).shouldBe(visible).click();
-    }
-    public void clickChangePasswordButton() {
-        $(xpath("//*[@id=\"root\"]/div/div[1]/div[2]/div/div[1]/div[2]/div/button[3]/span[1]")).click();
-    }
-    public void EnterConfirmPassword() {
-        $(name("confirmPassword")).setValue(newpassword);
-    }
-    public void clickSaveButton() {
-        $(xpath("/html/body/div[3]/div[3]/div/div[2]/form/div/div/div/div[5]/button")).click();
-    }
-
     @Test
     public void c_test() {
-        open(siteurl + "auth/register");
-        EnterFirstName();
-        EnterLastName();
-        EnterEmail();
-        EnterPassword();
-        EnterVerifyPassword();
-        clickTCradio();
-        clickNextButton();
+        Main main = new Main("Ru");
+        Main.FileTXT file = main.new FileTXT("D:\\Path\\count.txt");
+        int count = Integer.parseInt(file.getText());
+        Main.Registration reg = main.new Registration("https://qa.incytesdata-dev.com/auth/register");
+        reg.open();
+        reg.setAll("Dmitry", "Polsky", "qwertyuiop17091709+" + count + "@yandex.by", "261090inCytes!", "261090inCytes!");
+        reg.wRegistration().cRegistration().clickNext();
+        file.writeTest(String.valueOf(count+1), false);
         $$("h4").findBy(text("Код подтверждения")).shouldBe(visible);
         $$("h4").findBy(text("Код подтверждения был успешно отправлен на вашу электронную почту. Пожалуйста, введите код в соответствующее поле.")).shouldBe(visible);
         $$("input").findBy(attribute("placeholder", "Код подтверждения")).shouldBe(visible);
