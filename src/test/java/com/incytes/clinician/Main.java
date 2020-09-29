@@ -2,7 +2,6 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
-import org.openqa.selenium.By;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -11,8 +10,32 @@ import java.io.IOException;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
+import static org.openqa.selenium.By.name;
 
 public class Main {
+    public Main(String language){
+        setLang(language);
+    }
+
+    /** Открывает новое окно */
+    public static void newTab(){ Selenide.executeJavaScript("window.open()"); }
+    /** Устанавливает язые браузера */
+    public static void setLang(String language){
+        switch (language){
+            case "En": language = "en";
+            break;
+            case "Fr": language = "fr";
+            break;
+            case "Ru": language = "ru";
+            break;
+            case "Sp": language = "es";
+            break;
+            case "It" : language = "it";
+            default: language = "en";
+            break;
+        }
+        System.setProperty("chromeoptions.prefs","intl.accept_languages=" + language);
+    }
     public class FileTXT{
         private String path;
         public FileTXT(String path){
@@ -37,8 +60,6 @@ public class Main {
             catch(IOException ex){ System.out.println(ex.getMessage()); }
         }
     }
-    /** Открывает новое окно */
-    public static void newTab(){ Selenide.executeJavaScript("window.open()"); }
     public class Registration {
         private String adress;
 
@@ -68,24 +89,23 @@ public class Main {
             this.verifyPassword = verifyPassword;
             return this;
         }
-
              /** Вводит записанные данные на страницу регистрации / в случае их отсутствия введутся пустые строки */
         public Registration wRegistration() {
-            $(By.name("firstName")).setValue(firstName);
-            $(By.name("lastName")).setValue(lastName);
-            $(By.name("email")).setValue(email);
-            $(By.name("password")).setValue(password);
-            $(By.name("verifyPassword")).setValue(verifyPassword);
+            $(name("firstName")).setValue(firstName);
+            $(name("lastName")).setValue(lastName);
+            $(name("email")).setValue(email);
+            $(name("password")).setValue(password);
+            $(name("verifyPassword")).setValue(verifyPassword);
             return this;
         }
 
                /** Проверяет на присутствие введённых данных (можно пропустить) */
         public Registration cRegistration() {
-            $(By.name("firstName")).shouldHave(Condition.value(firstName));
-            $(By.name("lastName")).shouldHave(Condition.value(lastName));
-            $(By.name("email")).shouldHave(Condition.value(email));
-            $(By.name("password")).shouldHave(Condition.value(password));
-            $(By.name("verifyPassword")).shouldHave(Condition.value(verifyPassword));
+            $(name("firstName")).shouldHave(Condition.value(firstName));
+            $(name("lastName")).shouldHave(Condition.value(lastName));
+            $(name("email")).shouldHave(Condition.value(email));
+            $(name("password")).shouldHave(Condition.value(password));
+            $(name("verifyPassword")).shouldHave(Condition.value(verifyPassword));
             return this;
         }
          /** Соглашается с лицензией и отправляет данные */
@@ -104,6 +124,8 @@ public class Main {
         private String password;
         private String phone;
         private String code;
+        /** Возвращает код (Если он уже получен, иначе вернётся пустая строка)*/
+        public String getCode() { if(code != null) return code; return "";}
         public GetCodeWithYandex(String email, String password, String phone){
             this.email = email;
             this.password = password;
@@ -116,7 +138,7 @@ public class Main {
             return lastCode();
         }
         private void enter(){
-            $(By.name("login")).setValue(email);
+            $(name("login")).setValue(email);
             $(byAttribute("type", "submit")).click();
             $(byAttribute("type", "password")).setValue(password);
             $(byAttribute("type", "submit")).click();

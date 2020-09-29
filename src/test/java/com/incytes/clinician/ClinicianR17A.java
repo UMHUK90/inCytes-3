@@ -11,10 +11,10 @@ import static com.codeborne.selenide.Selenide.switchTo;
 public class ClinicianR17A {
     @Test
     public void OpenTwoTabs(){
-        Main main = new Main();
+        Main main = new Main("En");
         Main.FileTXT file = main.new FileTXT("C:\\Users\\qwert\\new-app\\src\\main\\java\\org\\selenide\\examples\\count.txt");
         int count = Integer.parseInt(file.getText());
-        Main.Registration reg = main.new Registration("https://alpha.incytesdata-dev.com/auth/register");
+        Main.Registration reg = main.new Registration("https://qa.incytesdata-dev.com/auth/register");
         reg.open();
         reg.setAll("Dmitry", "Polsky", "qwertyuiop17091709+" + count + "@yandex.by", "261090inCytes!", "261090inCytes!");
         reg.wRegistration().cRegistration().clickNext();
