@@ -30,7 +30,7 @@ public class Main {
             break;
             case "Sp": language = "es";
             break;
-            case "It" : language = "it";
+            case "It": language = "it";
             default: language = "en";
             break;
         }
