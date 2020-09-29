@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.By.name;
 import static org.openqa.selenium.By.xpath;
 
-public class ClinicianL33A {
+public class ClinicianL33A1 {
     public static String siteurl = "https://alpha.incytesdata-dev.com/",
             email = "viikysia.zaxarowa1989+clinician123@gmail.com",
             password = "261090inCytes",
