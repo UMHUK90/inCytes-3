@@ -2,15 +2,14 @@ package com.incytes.clinician;
 
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byAttribute;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 import static org.openqa.selenium.By.name;
 import static org.openqa.selenium.By.xpath;
 
-public class ClinicianR21A_NotDone {
+public class ClinicianL32A {
     public static String siteurl = "https://alpha.incytesdata-dev.com/",
             email = "viikysia.zaxarowa1989+clinician123@gmail.com",
             password = "261090inCytes",
@@ -41,11 +40,9 @@ public class ClinicianR21A_NotDone {
 
     @Test
     public void c_test() {
-        open(siteurl + "auth/register/confirmation" + "?email=andrew.grabovskiy@gmail.com");
-        $$("input").findBy(attribute("placeholder", "Адрес электронной почты")).shouldBe(visible);
-        EnterEmail();
-        clickNextButton();
-        $$("span.MuiButton-label").findBy(text("Отправить код подтверждения ещё раз")).shouldBe(visible).click();
-        $$(byText("Код был отправлен")).shouldBe(visible);
+        open(siteurl + "auth/login");
+        $("h3").shouldHave(text("Вход")).shouldBe(visible);
+        $(name("password")).setValue("261090inCytes!261090inCytes!261090inCytes!261090inCytes!261090inCytes!261090inCytes!261090inCytes!!");
+        $(name("password")).shouldHave(value("261090inCytes!261090inCytes!261090inCytes!261090inCytes!261090inCytes!261090inCytes!261090inCytes!!"));
     }
 }
