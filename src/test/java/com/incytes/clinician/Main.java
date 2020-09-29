@@ -61,7 +61,7 @@ public class Main {
         }
     }
     public class Registration {
-        private String adress;
+        private String address;
 
         //All
         private String firstName = "";
@@ -70,14 +70,14 @@ public class Main {
         private String password = "";
         private String verifyPassword = "";
 
-        public Registration(String adress) {
-            this.adress = adress;
-            Selenide.open(adress);
+        public Registration(String address) {
+            this.address = address;
+            Selenide.open(address);
         }
 
              /** Открывает ссылку в настоящем окне */
         public void open() {
-            Selenide.open(adress);
+            Selenide.open(address);
         }
 
         /** Устанавливает параметры для регистрации */
