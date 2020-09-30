@@ -10,7 +10,7 @@ public class ClinicianR14B {
     @Test
     void opening(){
         Main main = new Main("En");
-        Main.Registration reg = main.new Registration("https://alpha.incytesdata-dev.com/auth/register");
+        Main.Registration reg = main.new Registration();
         reg.open();
         reg.setAll("", "", "Tkkjdsg@gmail.com", "Alpha77", "").clickNext();
         $("p.Mui-error").shouldBe(Condition.visible);

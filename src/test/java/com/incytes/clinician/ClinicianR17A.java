@@ -1,10 +1,9 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Condition;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.Selenide.*;
 
 public class ClinicianR17A {
     @Test
@@ -12,7 +11,7 @@ public class ClinicianR17A {
         Main main = new Main("En");
         Main.FileTXT file = main.new FileTXT("D:\\Path\\count.txt");
         int count = Integer.parseInt(file.getText());
-        Main.Registration reg = main.new Registration("https://qa.incytesdata-dev.com/auth/register");
+        Main.Registration reg = main.new Registration();
         reg.open();
         reg.setAll("Dmitry", "Polsky", "qwertyuiop17091709+" + count + "@yandex.by", "261090inCytes!", "261090inCytes!");
         reg.wRegistration().cRegistration().clickNext();
@@ -23,6 +22,6 @@ public class ClinicianR17A {
         String code = getcode.fastCode();
         switchTo().window(0);
         reg.submitCode(code);
-        $$("h3").findBy(text("Sign in")).shouldBe(visible);
+        $$("h3").findBy(Condition.text("Sign in")).shouldBe(Condition.visible);
     }
 }

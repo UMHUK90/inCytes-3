@@ -14,14 +14,18 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.By.name;
 
+/** Главный класс (контейнер) */
 public class Main {
     public Main(String language){
         setLang(language);
     }
+    public Main(){
+        setLang("En");
+    }
 
     /** Открывает новое окно */
     public static void newTab(){ Selenide.executeJavaScript("window.open()"); }
-    /** Устанавливает язые браузера */
+    /** Устанавливает язык браузера */
     public static void setLang(String language){
         switch (language){
             case "En": language = "en";
@@ -32,12 +36,13 @@ public class Main {
             break;
             case "Sp": language = "es";
             break;
-            case "It": language = "it";
+            case "It" : language = "it";
             default: language = "en";
             break;
         }
         System.setProperty("chromeoptions.prefs","intl.accept_languages=" + language);
     }
+    /** Работа с тескстовым файлом */
     public class FileTXT{
         private String path;
         public FileTXT(String path){
@@ -62,20 +67,13 @@ public class Main {
             catch(IOException ex){ System.out.println(ex.getMessage()); }
         }
     }
+    // Работа с регистрацией
     public class Registration {
-        private String address;
-
+        private String address = "https://alpha.incytesdata-dev.com/auth/register";
+        public Registration(){}
+        public Registration(String empty){} // Для уже написанных тестов
         //All
-        private String firstName = "";
-        private String lastName = "";
-        private String email = "";
-        private String password = "";
-        private String verifyPassword = "";
-
-        public Registration(String address) {
-            this.address = address;
-            Selenide.open(address);
-        }
+        private String firstName = "", lastName = "", email = "", password = "", verifyPassword = "";
 
              /** Открывает ссылку в настоящем окне */
         public void open() {
@@ -125,11 +123,9 @@ public class Main {
             $(byAttribute("var","body1")).waitUntil(visible, 6000);
         }
     }
+    /** Предназначен для получения кода для верификации */
     public class GetCodeWithYandex{
-        private String email;
-        private String password;
-        private String phone;
-        private String code;
+        private String email, password, phone, code;
         /** Возвращает код (Если он уже получен, иначе вернётся пустая строка)*/
         public String getCode() { if(code != null) return code; return "";}
         public GetCodeWithYandex(String email, String password, String phone){
