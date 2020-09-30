@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
@@ -62,7 +61,7 @@ public class Main {
             return str;
         }
         /** Записывает текст в файл (Значение, false(перезаписывать файл), true(дозаписывает в конец файла)) */
-        public void writeTest(String str, Boolean append){
+        public void writeText(String str, Boolean append){
             try(FileWriter writer = new FileWriter(path, append)) { writer.write(str); }
             catch(IOException ex){ System.out.println(ex.getMessage()); }
         }
@@ -121,6 +120,32 @@ public class Main {
         public void resendCode() {
             $("span.MuiButton-label", 1).click();
             $(byAttribute("var","body1")).waitUntil(visible, 6000);
+        }
+    }
+    public class Login{
+        private String adress = "https://alpha.incytesdata-dev.com/auth/login";
+        private String email = "", password = "";
+        public void open(){
+            Selenide.open(adress);
+        }
+        public void setAll(String email, String password){
+            this.email = email;
+            this.password = password;
+        }
+        public void wLogin(){
+            $(name("email")).setValue(email);
+            $(name("password")).setValue(password);
+        }
+        public void isVisible(){
+            $(".MuiTypography-root").shouldBe(visible);
+            $(name("email")).shouldBe(visible);
+            $(name("password")).shouldBe(visible);
+            $(".MuiButton-label", 0).shouldBe(visible);
+            $(".MuiButton-label", 1).shouldBe(visible);
+            $(".MuiButton-label", 2).shouldBe(visible);
+        }
+        public void signIn(){
+            $(".MuiButton-label", 2).click();
         }
     }
     /** Предназначен для получения кода для верификации */
