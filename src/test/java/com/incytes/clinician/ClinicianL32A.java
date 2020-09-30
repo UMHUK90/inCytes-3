@@ -2,7 +2,6 @@ package com.incytes.clinician;
 
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.value;
 import static com.codeborne.selenide.Selenide.$;
 import static org.openqa.selenium.By.name;

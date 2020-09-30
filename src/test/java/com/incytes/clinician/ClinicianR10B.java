@@ -7,8 +7,6 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static org.openqa.selenium.By.name;
-import static org.openqa.selenium.By.xpath;
 
 public class ClinicianR10B {
     public static String siteurl = "https://alpha.incytesdata-dev.com/",
