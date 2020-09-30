@@ -23,7 +23,7 @@ public class Main {
 
     /** Открывает новое окно */
     public static void newTab(){ Selenide.executeJavaScript("window.open()"); }
-    /** Устанавливает язые браузера */
+    /** Устанавливает язык браузера */
     public static void setLang(String language){
         switch (language){
             case "En": language = "en";
