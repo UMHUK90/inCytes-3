@@ -13,7 +13,7 @@ public class ClinicianR12A {
     @Test
     public void c_test() {
         Main main = new Main("Ru");
-        Main.Registration reg = main.new Registration("https://qa.incytesdata-dev.com/auth/register");
+        Main.Registration reg = main.new Registration();
         reg.open();
         $$(".MuiButton-label").findBy(text("УЖЕ ЕСТЬ УЧЁТНАЯ ЗАПИСЬ?")).shouldBe(visible);
         reg.setAll("", "Грабовский", "", "", "").wRegistration().cRegistration();

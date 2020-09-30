@@ -12,6 +12,7 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.By.name;
 
+/** Главный класс (контейнер) */
 public class Main {
     public Main(String language){
         setLang(language);
@@ -36,6 +37,7 @@ public class Main {
         }
         System.setProperty("chromeoptions.prefs","intl.accept_languages=" + language);
     }
+    /** Работа с тескстовым файлом */
     public class FileTXT{
         private String path;
         public FileTXT(String path){
@@ -60,24 +62,16 @@ public class Main {
             catch(IOException ex){ System.out.println(ex.getMessage()); }
         }
     }
+    // Работа с регистрацией
     public class Registration {
-        private String adress;
+        private String address = "https://alpha.incytesdata-dev.com/auth/register";
 
         //All
-        private String firstName = "";
-        private String lastName = "";
-        private String email = "";
-        private String password = "";
-        private String verifyPassword = "";
-
-        public Registration(String adress) {
-            this.adress = adress;
-            Selenide.open(adress);
-        }
+        private String firstName = "", lastName = "", email = "", password = "", verifyPassword = "";
 
              /** Открывает ссылку в настоящем окне */
         public void open() {
-            Selenide.open(adress);
+            Selenide.open(address);
         }
 
         /** Устанавливает параметры для регистрации */
@@ -119,11 +113,9 @@ public class Main {
             $(".MuiButton-label").click();
         }
     }
+    /** Предназначен для получения кода для верификации */
     public class GetCodeWithYandex{
-        private String email;
-        private String password;
-        private String phone;
-        private String code;
+        private String email, password, phone, code;
         /** Возвращает код (Если он уже получен, иначе вернётся пустая строка)*/
         public String getCode() { if(code != null) return code; return "";}
         public GetCodeWithYandex(String email, String password, String phone){
