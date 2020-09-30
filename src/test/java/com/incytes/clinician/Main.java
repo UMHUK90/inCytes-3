@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -114,9 +116,13 @@ public class Main {
             $(".MuiButton-label").click();
         }
              /** Вводит код и отправляет */
-        public void submitCode(String code){
+        public void submitCode(String code) {
             $(".MuiInputBase-input").setValue(code);
             $(".MuiButton-label").click();
+        }
+        public void resendCode() {
+            $("span.MuiButton-label", 1).click();
+            $(byAttribute("var","body1")).waitUntil(visible, 6000);
         }
     }
     public class GetCodeWithYandex{

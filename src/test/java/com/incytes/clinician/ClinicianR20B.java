@@ -41,10 +41,14 @@ public class ClinicianR20B {
 
     @Test
     public void c_test() {
-        open(siteurl + "auth/register/confirmation");
-        $$("input").findBy(attribute("placeholder", "Адрес электронной почты")).shouldBe(visible);
-        EnterEmail();
-        clickNextButton();
+        Main main = new Main("Ru");
+        Main.FileTXT file = main.new FileTXT("D:\\Path\\count.txt");
+        int count = Integer.parseInt(file.getText());
+        Main.Registration reg = main.new Registration("https://qa.incytesdata-dev.com/auth/register");
+        reg.open();
+        reg.setAll("Dmitry", "Polsky", "qwertyuiop17091709+" + count + "@yandex.by", "261090inCytes!", "261090inCytes!");
+        reg.wRegistration().cRegistration().clickNext();
+        file.writeTest(String.valueOf(count+1), false);
         $$("span.MuiButton-label").findBy(text("Отправить код подтверждения ещё раз")).shouldBe(visible);
         $$(byText("Required")).shouldHave(size(1));
     }
