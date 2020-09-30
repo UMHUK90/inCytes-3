@@ -122,30 +122,43 @@ public class Main {
             $(byAttribute("var","body1")).waitUntil(visible, 6000);
         }
     }
+    /** Класс предназначен для работы с формой входа */
     public class Login{
-        private String adress = "https://alpha.incytesdata-dev.com/auth/login";
+        private String address = "https://alpha.incytesdata-dev.com/auth/login";
         private String email = "", password = "";
+        /** Открывает страницу входа */
         public void open(){
-            Selenide.open(adress);
+            Selenide.open(address);
         }
-        public void setAll(String email, String password){
+        /** Устанавливает для класса email и password */
+        public Login setAll(String email, String password){
             this.email = email;
             this.password = password;
+            return this;
         }
-        public void wLogin(){
+        /** Вводит пароль и логин в форму */
+        public Login wLogin(){
             $(name("email")).setValue(email);
             $(name("password")).setValue(password);
+            return this;
         }
-        public void isVisible(){
+        /** Проверяет видны ли элементы формы */
+        public Login isVisible(){
             $(".MuiTypography-root").shouldBe(visible);
             $(name("email")).shouldBe(visible);
             $(name("password")).shouldBe(visible);
-            $(".MuiButton-label", 0).shouldBe(visible);
+            $(".MuiButtonBase-root", 0).shouldBe(visible);
             $(".MuiButton-label", 1).shouldBe(visible);
             $(".MuiButton-label", 2).shouldBe(visible);
+            return this;
         }
+        /** Производит вход */
         public void signIn(){
             $(".MuiButton-label", 2).click();
+        }
+        /** Производит переход н астраницу подтверждения пароля */
+        public void forgotPassword(){
+            $(".MuiButtonBase-root", 0).click();
         }
     }
     /** Предназначен для получения кода для верификации */
