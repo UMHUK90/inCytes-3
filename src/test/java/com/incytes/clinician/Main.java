@@ -17,6 +17,9 @@ public class Main {
     public Main(String language){
         setLang(language);
     }
+    public Main(){
+        setLang("En");
+    }
 
     /** Открывает новое окно */
     public static void newTab(){ Selenide.executeJavaScript("window.open()"); }
@@ -65,7 +68,8 @@ public class Main {
     // Работа с регистрацией
     public class Registration {
         private String address = "https://alpha.incytesdata-dev.com/auth/register";
-
+        public Registration(){}
+        public Registration(String empty){} // Для уже написанных тестов
         //All
         private String firstName = "", lastName = "", email = "", password = "", verifyPassword = "";
 
