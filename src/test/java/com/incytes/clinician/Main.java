@@ -7,11 +7,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.By.name;
+import static org.openqa.selenium.By.xpath;
 
 /** Главный класс (контейнер) */
 public class Main {
@@ -121,6 +123,15 @@ public class Main {
             $("span.MuiButton-label", 1).click();
             $(byAttribute("var","body1")).waitUntil(visible, 6000);
         }
+        public void haveNextButton() {
+            $(xpath("//*[@id=\"root\"]/div/form/div/div[9]/div/button")).shouldBe(visible);
+        }
+        public void clickTCradio() {
+            $(byAttribute("type", "checkbox")).click();
+        }
+        public void clickHaveAnAccount(){ $(".MuiButton-fullWidth", 1).click();}
+        public void haveAnAccount(){ $(".MuiButton-fullWidth", 1).shouldBe(visible); }
+        public void haveFourRequired(){  $$(byText("Required")).shouldHave(size(4)); }
     }
     /** Класс предназначен для работы с формой входа */
     public class Login{
