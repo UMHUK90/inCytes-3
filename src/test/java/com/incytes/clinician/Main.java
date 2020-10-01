@@ -207,4 +207,33 @@ public class Main {
             return code;
         }
     }
+    //Тестовый класс
+    public static class Verification{
+        /** Открывает страницу с вставкой кода */
+        public static void open(String email){
+            open("https://alpha.incytesdata-dev.com/auth/register/confirmation?email=" + email);
+        }
+        /** Записывает код */
+        public void writeCode(String code){
+            $(".MuiInputBase-input").setValue(code);
+        }
+        /** Отправляет код */
+        public void submitCode(){
+            $(".MuiButton-label").click();
+        }
+        /** Видно ли поле для кода */
+        public void inputIsVisible(){
+            $(".MuiInputBase-input").shouldBe(visible);
+        }
+        /** Видна ли кнопка для отправки кода */
+        public void submitIsVisible(){
+            $(".MuiButton-label").shouldBe(visible);
+        }
+        public void clickResend(){
+            $(".MuiButton-label", 1).click();
+        }
+        public void resendIsVisible(){
+            $(".MuiButton-label", 1).shouldBe(visible);
+        }
+    }
 }
