@@ -18,7 +18,7 @@ public class ClinicianR20A {
         reg.open();
         reg.setAll("Dmitry", "Polsky", "qwertyuiop17091709+" + count + "@yandex.by", "261090inCytes!", "261090inCytes!");
         reg.wRegistration().cRegistration().clickNext();
-        file.writeTest(String.valueOf(count+1), false);
+        file.writeText(String.valueOf(count+1), false);
         $$("h4").findBy(text("Код подтверждения")).shouldBe(visible);
         $$("h4").findBy(text("Код подтверждения был успешно отправлен на вашу электронную почту. Пожалуйста, введите код в соответствующее поле.")).shouldBe(visible);
         $$("input").findBy(attribute("placeholder", "Код подтверждения")).shouldBe(visible);

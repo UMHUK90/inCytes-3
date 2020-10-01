@@ -15,7 +15,7 @@ public class ClinicianR17A {
         reg.open();
         reg.setAll("Dmitry", "Polsky", "qwertyuiop17091709+" + count + "@yandex.by", "261090inCytes!", "261090inCytes!");
         reg.wRegistration().cRegistration().clickNext();
-        file.writeTest(String.valueOf(count+1), false);
+        file.writeText(String.valueOf(count+1), false);
         Main.newTab();
         switchTo().window(1);
         Main.GetCodeWithYandex getcode = main.new GetCodeWithYandex("qwertyuiop17091709@yandex.ru", "cilaCILA17097938", "+375298746833");

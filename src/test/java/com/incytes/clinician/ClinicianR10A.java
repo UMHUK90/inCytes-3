@@ -16,6 +16,6 @@ public class ClinicianR10A {
         reg.setAll("Andrew", "Grabovskiy", "andrew.grabovskiy+patient3a@gmail.com", "261090inCytes", "261090inCytes").wRegistration();
         reg.clickTCradio();
         reg.haveNextButton();
-        $$(".MuiButton-label").findBy(text("УЖЕ ЕСТЬ УЧЁТНАЯ ЗАПИСЬ?")).shouldBe(visible);
+        $(".MuiButton-label", 1).shouldBe(visible); /* "Already Have an Account?" button  */
     }
 }

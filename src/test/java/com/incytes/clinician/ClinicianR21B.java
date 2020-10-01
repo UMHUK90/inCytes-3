@@ -21,12 +21,6 @@ public class ClinicianR21B {
     public void EnterPassword() {
         $(name("password")).setValue(password);
     }
-    public void clickTCradio() {
-        $(byAttribute("type", "checkbox")).click();
-    }
-    public void clickNextButton() {
-        $("span.MuiButton-label").shouldHave(text("SUBMIT")).click();
-    }
     public void clickChangePasswordButton() {
         $(xpath("//*[@id=\"root\"]/div/div[1]/div[2]/div/div[1]/div[2]/div/button[3]/span[1]")).click();
     }

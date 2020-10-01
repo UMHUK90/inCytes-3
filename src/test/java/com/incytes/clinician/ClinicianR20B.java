@@ -48,7 +48,7 @@ public class ClinicianR20B {
         reg.open();
         reg.setAll("Dmitry", "Polsky", "qwertyuiop17091709+" + count + "@yandex.by", "261090inCytes!", "261090inCytes!");
         reg.wRegistration().cRegistration().clickNext();
-        file.writeTest(String.valueOf(count+1), false);
+        file.writeText(String.valueOf(count+1), false);
         $$("span.MuiButton-label").findBy(text("Отправить код подтверждения ещё раз")).shouldBe(visible);
         $$(byText("Required")).shouldHave(size(1));
     }

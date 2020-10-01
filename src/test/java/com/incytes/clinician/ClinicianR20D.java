@@ -18,7 +18,7 @@ public class ClinicianR20D {
         reg.open();
         reg.setAll("Dmitry", "Polsky", "qwertyuiop17091709+" + count + "@yandex.by", "261090inCytes!", "261090inCytes!");
         reg.wRegistration().cRegistration().clickNext();
-        file.writeTest(String.valueOf(count+1), false);
+        file.writeText(String.valueOf(count+1), false);
         reg.resendCode(); /* Clicking resend button */
         Main.newTab();
         switchTo().window(1);

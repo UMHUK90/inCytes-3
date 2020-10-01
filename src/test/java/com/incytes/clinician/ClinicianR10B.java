@@ -15,7 +15,7 @@ public class ClinicianR10B {
         Main main = new Main("Ru");
         Main.Registration reg = main.new Registration();
         reg.open();
-        $$(".MuiButton-label").findBy(text("УЖЕ ЕСТЬ УЧЁТНАЯ ЗАПИСЬ?")).shouldBe(visible);
+        $(".MuiButton-label", 1).shouldBe(visible); /* "Already Have an Account?" button  */
         reg.clickNext();
         $$(byText("Required")).shouldHave(size(5));
     }
