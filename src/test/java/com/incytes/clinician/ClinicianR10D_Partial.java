@@ -11,10 +11,13 @@ public class ClinicianR10D_Partial {
     @Test
     public void c_test() {
         Main main = new Main("Ru");
+        Main.FileTXT file = main.new FileTXT("D:\\Path\\count.txt");
+        int count = Integer.parseInt(file.getText());
         Main.Registration reg = main.new Registration();
         reg.open();
         reg.haveAnAccount();
-        reg.setAll("Andrew", "Grabovskiy", "andrew.grabovskiy+clinician1aa@gmail.com", "261090inCytes", "261090inCytes").wRegistration().clickNext();
+        reg.setAll("Andrew", "Grabovskiy", "qwertyuiop17091709+" + count + "@yandex.by", "261090inCytes", "261090inCytes").wRegistration().clickNext();
         $$("h4").findBy(text("Код подтверждения")).shouldBe(visible);
+        file.writeText(String.valueOf(count+1), false);
     }
 }
