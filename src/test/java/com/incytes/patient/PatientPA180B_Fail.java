@@ -2,11 +2,8 @@ package com.incytes.patient;
 
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.CollectionCondition.size;
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.*;
-import static org.openqa.selenium.By.name;
 import static org.openqa.selenium.By.xpath;
 
 public class PatientPA180B_Fail {
@@ -19,18 +16,24 @@ public class PatientPA180B_Fail {
 
     @Test
     public void c_test() {
-        open(siteurl + "auth/register");
-        $(name("email")).setValue("andrew");
-        clickSignInButton();
-        $$("p.Mui-error").shouldHave(size(3));
-        $(name("email")).setValue("and" + ' ' + "rew");
-        clickSignInButton();
-        $$("p.Mui-error").shouldHave(size(3));
-        $(name("email")).setValue("@@");
-        clickSignInButton();
-        $$("p.Mui-error").shouldHave(size(3));
-        $(name("email")).setValue("Русский");
-        clickSignInButton();
-        $$("p.Mui-error").shouldHave(size(3));
+        patient.Main main = new patient.Main("Ru");
+        patient.Main.Registration reg = main.new Registration();
+        reg.open();
+        reg.email = "andrew";
+        reg.wRegistration();
+        reg.clickLogin();
+        patient.Main.muiError(3);
+        reg.email = "and" + ' ' + "rew";
+        reg.wRegistration();
+        reg.clickLogin();
+        patient.Main.muiError(3);
+        reg.email = "@@";
+        reg.wRegistration();
+        reg.clickLogin();
+        patient.Main.muiError(3);
+        reg.email = "Русский";
+        reg.wRegistration();
+        reg.clickLogin();
+        patient.Main.muiError(3);
     }
 }
