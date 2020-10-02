@@ -2,21 +2,22 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
 import static com.codeborne.selenide.CollectionCondition.size;
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.By.name;
-import static org.openqa.selenium.By.xpath;
 
 /** Главный класс (контейнер) */
 public class Main {
+    private String baddress = "https://alpha.incytesdata-dev.com/";
     public Main(String language){
         setLang(language);
     }
@@ -70,13 +71,25 @@ public class Main {
     }
     // Работа с регистрацией
     public class Registration {
-        private String address = "https://alpha.incytesdata-dev.com/auth/register";
+        //Элементы страницы
+        public SelenideElement eFirstName(){ return $(name("firstName"));}
+        public SelenideElement eLastName(){ return $(name("lastName"));}
+        public SelenideElement eEmail(){ return $(name("email"));}
+        public SelenideElement ePassword(){ return $(name("password"));}
+        public SelenideElement eVerifyPassword(){ return $(name("verifyPassword"));}
+        public SelenideElement eNext(){ return $(".MuiButton-label");}
+        public SelenideElement eCheckBox(){ return $(byAttribute("type", "checkbox"));}
+        public SelenideElement eInputCode(){return $(".MuiInputBase-input");}
+        public SelenideElement eSubmitCode(){ return $(".MuiButton-label");}
+        public SelenideElement eHaveAnAccount(){return $(".MuiButton-fullWidth", 1);}
+
+        private String address = baddress + "auth/register";
         public Registration(){}
         public Registration(String empty){} // Для уже написанных тестов
         //All
-        private String firstName = "", lastName = "", email = "", password = "", verifyPassword = "";
+        public String firstName = "", lastName = "", email = "", password = "", verifyPassword = "";
 
-        /** Открывает ссылку в настоящем окне */
+             /** Открывает ссылку в настоящем окне */
         public void open() {
             Selenide.open(address);
         }
@@ -90,60 +103,60 @@ public class Main {
             this.verifyPassword = verifyPassword;
             return this;
         }
-
-        /** Вводит записанные данные на страницу регистрации / в случае их отсутствия введутся пустые строки */
+             /** Вводит записанные данные на страницу регистрации / в случае их отсутствия введутся пустые строки */
         public Registration wRegistration() {
-            $(name("firstName")).setValue(firstName);
-            $(name("lastName")).setValue(lastName);
-            $(name("email")).setValue(email);
-            $(name("password")).setValue(password);
-            $(name("verifyPassword")).setValue(verifyPassword);
+            eFirstName().setValue(firstName);
+            eLastName().setValue(lastName);
+            eEmail().setValue(email);
+            ePassword().setValue(password);
+            eVerifyPassword().setValue(verifyPassword);
             return this;
         }
 
-        /** Проверяет на присутствие введённых данных (можно пропустить) */
+               /** Проверяет на присутствие введённых данных (можно пропустить) */
         public Registration cRegistration() {
-            $(name("firstName")).shouldHave(Condition.value(firstName));
-            $(name("lastName")).shouldHave(Condition.value(lastName));
-            $(name("email")).shouldHave(Condition.value(email));
-            $(name("password")).shouldHave(Condition.value(password));
-            $(name("verifyPassword")).shouldHave(Condition.value(verifyPassword));
+            eFirstName().shouldHave(Condition.value(firstName));
+            eLastName().shouldHave(Condition.value(lastName));
+            eEmail().shouldHave(Condition.value(email));
+            ePassword().shouldHave(Condition.value(password));
+            eVerifyPassword().shouldHave(Condition.value(verifyPassword));
             return this;
         }
-
-        /** Открывает и отправляет данные */
-        public void clickTC() {
-            $("a").shouldHave(attribute("href", "//terms"));
-        }
-
          /** Соглашается с лицензией и отправляет данные */
         public void clickNext() {
-            $(byAttribute("type", "checkbox")).click();
-            $(".MuiButton-label").click();
+            eCheckBox().click();
+            eNext().click();
         }
-
-        /** Вводит код и отправляет */
+             /** Вводит код и отправляет */
         public void submitCode(String code) {
-            $(".MuiInputBase-input").setValue(code);
-            $(".MuiButton-label").click();
+            eInputCode().setValue(code);
+            eSubmitCode().click();
         }
         public void resendCode() {
             $("span.MuiButton-label", 1).click();
             $(byAttribute("var","body1")).waitUntil(visible, 6000);
         }
         public void haveNextButton() {
-            $(xpath("//*[@id=\"root\"]/div/form/div/div[9]/div/button")).shouldBe(visible);
+            eNext().shouldBe(visible);
         }
         public void clickTCradio() {
-            $(byAttribute("type", "checkbox")).click();
+            eCheckBox().click();
         }
-        public void clickHaveAnAccount(){ $(".MuiButton-fullWidth", 1).click();}
-        public void haveAnAccount(){ $(".MuiButton-fullWidth", 1).shouldBe(visible); }
+        public void clickHaveAnAccount(){ eHaveAnAccount().click();}
+        public void haveAnAccount(){ eHaveAnAccount().shouldBe(visible); }
         public void haveFourRequired(){  $$(byText("Required")).shouldHave(size(4)); }
     }
     /** Класс предназначен для работы с формой входа */
     public class Login{
-        private String address = "https://alpha.incytesdata-dev.com/auth/login";
+        //Элементы страницы
+        public SelenideElement eEmail(){return $(name("email"));}
+        public SelenideElement ePassword(){return $(name("password"));}
+        public SelenideElement eSignIn(){return $(".MuiButton-label", 2) ;}
+        public SelenideElement eForgotPassword(){return $(".MuiButtonBase-root", 0);}
+        public SelenideElement eSignUp(){return $(".MuiButton-label", 1);}
+
+
+        private String address = baddress + "auth/login";
         private String email = "", password = "";
         /** Открывает страницу входа */
         public void open(){
@@ -157,27 +170,27 @@ public class Main {
         }
         /** Вводит пароль и логин в форму */
         public Login wLogin(){
-            $(name("email")).setValue(email);
-            $(name("password")).setValue(password);
+            eEmail().setValue(email);
+            ePassword().setValue(password);
             return this;
         }
         /** Проверяет видны ли элементы формы */
         public Login isVisible(){
             $(".MuiTypography-root").shouldBe(visible);
-            $(name("email")).shouldBe(visible);
-            $(name("password")).shouldBe(visible);
-            $(".MuiButtonBase-root", 0).shouldBe(visible);
-            $(".MuiButton-label", 1).shouldBe(visible);
-            $(".MuiButton-label", 2).shouldBe(visible);
+            eEmail().shouldBe(visible);
+            ePassword().shouldBe(visible);
+            eForgotPassword().shouldBe(visible);
+            eSignUp().shouldBe(visible);
+            eSignIn().shouldBe(visible);
             return this;
         }
         /** Производит вход */
         public void signIn(){
-            $(".MuiButton-label", 2).click();
+            eSignIn().click();
         }
         /** Производит переход н астраницу подтверждения пароля */
         public void forgotPassword(){
-            $(".MuiButtonBase-root", 0).click();
+            eForgotPassword().click();
         }
     }
     /** Предназначен для получения кода для верификации */
