@@ -76,18 +76,18 @@ public class Main {
     public class Registration {
 
         //Элементы Регистрации
-        public SelenideElement firstName(){ return $(name("firstName")); }
-        public SelenideElement lastName(){ return  $(name("lastName"));}
-        public SelenideElement email(){ return $(name("email")); }
-        public SelenideElement password(){ return $(name("password")); }
-        public SelenideElement confirmPassword(){ return $(name("confirmPassword")); }
-        public SelenideElement birthDate(){ return $(name("birthDate")); }
-        public SelenideElement countryName(){ return $(name("countryName")); }
-        public SelenideElement phoneNumber(){ return $(name("phoneNumber")); }
-        public SelenideElement checkBox1(){return $(byAttribute("type", "checkbox"), 0);}
-        public SelenideElement checkBox2(){return $(byAttribute("type", "checkbox"), 1);}
-        public SelenideElement getStarted(){ return $("button"); }
-        public SelenideElement login(){return $(".MuiButton-sizeLarge");}
+        public SelenideElement eFirstName(){ return $(name("firstName")); }
+        public SelenideElement eLastName(){ return  $(name("lastName"));}
+        public SelenideElement eEmail(){ return $(name("email")); }
+        public SelenideElement ePassword(){ return $(name("password")); }
+        public SelenideElement eConfirmPassword(){ return $(name("confirmPassword")); }
+        public SelenideElement eBirthDate(){ return $(name("birthDate")); }
+        public SelenideElement eCountryName(){ return $(name("countryName")); }
+        public SelenideElement ePhoneNumber(){ return $(name("phoneNumber")); }
+        public SelenideElement eCheckBox1(){return $(byAttribute("type", "checkbox"), 0);}
+        public SelenideElement eCheckBox2(){return $(byAttribute("type", "checkbox"), 1);}
+        public SelenideElement eGetStarted(){ return $("button"); }
+        public SelenideElement eLogin(){return $(".MuiButton-sizeLarge");}
 
 
         private String address = baddress + "auth/register/";
@@ -116,50 +116,50 @@ public class Main {
         }
              /** Вводит записанные данные на страницу регистрации / в случае их отсутствия введутся пустые строки */
         public Registration wRegistration() {
-            email().setValue(email);
-            password().setValue(password);
-            confirmPassword().setValue(verifyPassword);
+            eEmail().setValue(email);
+            ePassword().setValue(password);
+            eConfirmPassword().setValue(verifyPassword);
             return this;
         }
         public Registration wwRegistration(){
-            firstName().setValue(firstName);
-            lastName().setValue(lastName);
-            birthDate().setValue(date);
-            countryName().setValue(country);
+            eFirstName().setValue(firstName);
+            eLastName().setValue(lastName);
+            eBirthDate().setValue(date);
+            eCountryName().setValue(country);
             $(".MuiListItem-root").click();
-            phoneNumber().setValue(phone);
+            ePhoneNumber().setValue(phone);
             return this;
         }
                /** Проверяет на присутствие введённых данных (можно пропустить) */
         public Registration cRegistration() {
-            email().shouldHave(Condition.value(email));
-            password().shouldHave(Condition.value(password));
-            confirmPassword().shouldHave(Condition.value(verifyPassword));
+            eEmail().shouldHave(Condition.value(email));
+            ePassword().shouldHave(Condition.value(password));
+            eConfirmPassword().shouldHave(Condition.value(verifyPassword));
             return this;
         }
         public Registration cwRegistration() {
-            firstName().shouldHave(value(firstName)).shouldBe(visible);
-            lastName().shouldHave(value(lastName)).shouldBe(visible);
-            birthDate().shouldHave(value(date)).shouldBe(visible);
-            countryName().shouldHave(value(country)).shouldBe(visible);
-            phoneNumber().shouldHave(value(phone)).shouldBe(visible);
-            checkBox1().should(exist);
-            checkBox2().should(exist);
-            getStarted().shouldBe(visible);
+            eFirstName().shouldHave(value(firstName)).shouldBe(visible);
+            eLastName().shouldHave(value(lastName)).shouldBe(visible);
+            eBirthDate().shouldHave(value(date)).shouldBe(visible);
+            eCountryName().shouldHave(value(country)).shouldBe(visible);
+            ePhoneNumber().shouldHave(value(phone)).shouldBe(visible);
+            eCheckBox1().should(exist);
+            eCheckBox2().should(exist);
+            eGetStarted().shouldBe(visible);
             return this;
         }
          /** Соглашается с лицензией и отправляет данные */
         public void clickLogin() {
-            login().click();
+            eLogin().click();
         }
         public void clickNext(){
-            checkBox1().click();
-            checkBox2().click();
-            getStarted().click();
+            eCheckBox1().click();
+            eCheckBox2().click();
+            eGetStarted().click();
         }
         public void clickCheckBox(){
-            checkBox1().click();
-            checkBox2().click();
+            eCheckBox1().click();
+            eCheckBox2().click();
         }
     }
     /** Предназначен для получения кода для верификации */

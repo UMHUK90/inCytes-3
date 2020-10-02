@@ -16,7 +16,7 @@ public class PatientPA181L {
         $(".MuiTypography-h3").shouldHave(text("Добро пожаловать! Ваш аккаунт почти готов."));
         reg.wwRegistration().cwRegistration();
         reg.clickCheckBox();
-        reg.getStarted().shouldHave(attribute("style", "width: 300px; color: white; background-color: rgb(0, 122, 255);"));
-        reg.getStarted().shouldHave(text("Продолжить"));
+        reg.eGetStarted().shouldHave(attribute("style", "width: 300px; color: white; background-color: rgb(0, 122, 255);"));
+        reg.eGetStarted().shouldHave(text("Продолжить"));
     }
 }
