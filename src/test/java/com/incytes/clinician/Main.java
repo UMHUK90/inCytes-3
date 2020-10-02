@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import static com.codeborne.selenide.CollectionCondition.size;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -76,7 +76,7 @@ public class Main {
         //All
         private String firstName = "", lastName = "", email = "", password = "", verifyPassword = "";
 
-             /** Открывает ссылку в настоящем окне */
+        /** Открывает ссылку в настоящем окне */
         public void open() {
             Selenide.open(address);
         }
@@ -90,7 +90,8 @@ public class Main {
             this.verifyPassword = verifyPassword;
             return this;
         }
-             /** Вводит записанные данные на страницу регистрации / в случае их отсутствия введутся пустые строки */
+
+        /** Вводит записанные данные на страницу регистрации / в случае их отсутствия введутся пустые строки */
         public Registration wRegistration() {
             $(name("firstName")).setValue(firstName);
             $(name("lastName")).setValue(lastName);
@@ -100,7 +101,7 @@ public class Main {
             return this;
         }
 
-               /** Проверяет на присутствие введённых данных (можно пропустить) */
+        /** Проверяет на присутствие введённых данных (можно пропустить) */
         public Registration cRegistration() {
             $(name("firstName")).shouldHave(Condition.value(firstName));
             $(name("lastName")).shouldHave(Condition.value(lastName));
@@ -109,12 +110,19 @@ public class Main {
             $(name("verifyPassword")).shouldHave(Condition.value(verifyPassword));
             return this;
         }
+
+        /** Открывает и отправляет данные */
+        public void clickTC() {
+            $("a").shouldHave(attribute("href", "//terms"));
+        }
+
          /** Соглашается с лицензией и отправляет данные */
         public void clickNext() {
             $(byAttribute("type", "checkbox")).click();
             $(".MuiButton-label").click();
         }
-             /** Вводит код и отправляет */
+
+        /** Вводит код и отправляет */
         public void submitCode(String code) {
             $(".MuiInputBase-input").setValue(code);
             $(".MuiButton-label").click();
