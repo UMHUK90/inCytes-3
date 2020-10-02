@@ -76,8 +76,19 @@ public class Main {
     public class Registration {
 
         //Элементы Регистрации
-
+        public SelenideElement firstName(){ return $(name("firstName")); }
+        public SelenideElement lastName(){ return  $(name("lastName"));}
+        public SelenideElement email(){ return $(name("email")); }
+        public SelenideElement password(){ return $(name("password")); }
+        public SelenideElement confirmPassword(){ return $(name("confirmPassword")); }
+        public SelenideElement birthDate(){ return $(name("birthDate")); }
+        public SelenideElement countryName(){ return $(name("countryName")); }
+        public SelenideElement phoneNumber(){ return $(name("phoneNumber")); }
+        public SelenideElement checkBox1(){return $(byAttribute("type", "checkbox"), 0);}
+        public SelenideElement checkBox2(){return $(byAttribute("type", "checkbox"), 1);}
         public SelenideElement getStarted(){ return $("button"); }
+        public SelenideElement login(){return $(".MuiButton-sizeLarge");}
+
 
         private String address = baddress + "auth/register/";
         public Registration(){}
@@ -105,50 +116,50 @@ public class Main {
         }
              /** Вводит записанные данные на страницу регистрации / в случае их отсутствия введутся пустые строки */
         public Registration wRegistration() {
-            $(name("email")).setValue(email);
-            $(name("password")).setValue(password);
-            $(name("confirmPassword")).setValue(verifyPassword);
+            email().setValue(email);
+            password().setValue(password);
+            confirmPassword().setValue(verifyPassword);
             return this;
         }
         public Registration wwRegistration(){
-            $(name("firstName")).setValue(firstName);
-            $(name("lastName")).setValue(lastName);
-            $(name("birthDate")).setValue(date);
-            $(name("countryName")).setValue(country);
-            $(".MuiListItem-button").click();
-            $(name("phoneNumber")).setValue(phone);
+            firstName().setValue(firstName);
+            lastName().setValue(lastName);
+            birthDate().setValue(date);
+            countryName().setValue(country);
+            $(".MuiListItem-root").click();
+            phoneNumber().setValue(phone);
             return this;
         }
                /** Проверяет на присутствие введённых данных (можно пропустить) */
         public Registration cRegistration() {
-            $(name("email")).shouldHave(Condition.value(email));
-            $(name("password")).shouldHave(Condition.value(password));
-            $(name("confirmPassword")).shouldHave(Condition.value(verifyPassword));
+            email().shouldHave(Condition.value(email));
+            password().shouldHave(Condition.value(password));
+            confirmPassword().shouldHave(Condition.value(verifyPassword));
             return this;
         }
         public Registration cwRegistration() {
-            $(name("firstName")).shouldHave(value(firstName)).shouldBe(visible);
-            $(name("lastName")).shouldHave(value(lastName)).shouldBe(visible);
-            $(name("birthDate")).shouldHave(value(date)).shouldBe(visible);
-            $(name("countryName")).shouldHave(value(country)).shouldBe(visible);
-            $(name("phoneNumber")).shouldHave(value(phone)).shouldBe(visible);
-            $(byAttribute("type", "checkbox"), 0).should(exist);
-            $(byAttribute("type", "checkbox"), 1).should(exist);
-            $(".MuiButton-root").shouldBe(visible);
+            firstName().shouldHave(value(firstName)).shouldBe(visible);
+            lastName().shouldHave(value(lastName)).shouldBe(visible);
+            birthDate().shouldHave(value(date)).shouldBe(visible);
+            countryName().shouldHave(value(country)).shouldBe(visible);
+            phoneNumber().shouldHave(value(phone)).shouldBe(visible);
+            checkBox1().should(exist);
+            checkBox2().should(exist);
+            getStarted().shouldBe(visible);
             return this;
         }
          /** Соглашается с лицензией и отправляет данные */
         public void clickLogin() {
-            $(".MuiButton-sizeLarge").click();
+            login().click();
         }
         public void clickNext(){
-            $(byAttribute("type", "checkbox"), 0).click();
-            $(byAttribute("type", "checkbox"), 1).click();
-            $(".MuiButton-root").click();
+            checkBox1().click();
+            checkBox2().click();
+            getStarted().click();
         }
         public void clickCheckBox(){
-            $(byAttribute("type", "checkbox"), 0).click();
-            $(byAttribute("type", "checkbox"), 1).click();
+            checkBox1().click();
+            checkBox2().click();
         }
     }
     /** Предназначен для получения кода для верификации */
