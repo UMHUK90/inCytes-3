@@ -16,24 +16,24 @@ public class PatientPA180B_Fail {
 
     @Test
     public void c_test() {
-        patient.Main main = new patient.Main("Ru");
-        patient.Main.Registration reg = main.new Registration();
+        Main main = new Main("Ru");
+        Main.Registration reg = main.new Registration();
         reg.open();
         reg.email = "andrew";
         reg.wRegistration();
         reg.clickLogin();
-        patient.Main.muiError(3);
+        Main.muiError(3);
         reg.email = "and" + ' ' + "rew";
         reg.wRegistration();
         reg.clickLogin();
-        patient.Main.muiError(3);
+        Main.muiError(3);
         reg.email = "@@";
         reg.wRegistration();
         reg.clickLogin();
-        patient.Main.muiError(3);
+        Main.muiError(3);
         reg.email = "Русский";
         reg.wRegistration();
         reg.clickLogin();
-        patient.Main.muiError(3);
+        Main.muiError(3);
     }
 }
