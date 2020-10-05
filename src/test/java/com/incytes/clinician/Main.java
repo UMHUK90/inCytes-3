@@ -17,7 +17,7 @@ import static org.openqa.selenium.By.name;
 
 /** Главный класс (контейнер) */
 public class Main {
-    private String baddress = "https://alpha.incytesdata-dev.com/";
+    private String baddress = "https://qa.incytesdata-dev.com/";
     public Main(String language){
         setLang(language);
     }
@@ -188,7 +188,7 @@ public class Main {
         public void signIn(){
             eSignIn().click();
         }
-        /** Производит переход н астраницу подтверждения пароля */
+        /** Производит переход на страницу подтверждения пароля */
         public void forgotPassword(){
             eForgotPassword().click();
         }
@@ -232,7 +232,7 @@ public class Main {
     public static class Verification{
         /** Открывает страницу с вставкой кода */
         public static void open(String email){
-            open("https://alpha.incytesdata-dev.com/auth/register/confirmation?email=" + email);
+            open("https://qa.incytesdata-dev.com/auth/register/confirmation?email=" + email);
         }
         /** Записывает код */
         public void writeCode(String code){

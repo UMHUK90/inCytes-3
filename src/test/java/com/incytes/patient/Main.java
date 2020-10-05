@@ -201,7 +201,7 @@ public class Main {
     public static class Verification{
         /** Открывает страницу с вставкой кода */
         public static void open(String email){
-             Selenide.open("https://alpha.incytesdata-dev.com/auth/register/confirmation?email=" + email);
+             Selenide.open("https://qa.incytesdata-dev.com/auth/register/confirmation?email=" + email);
         }
         /** Записывает код */
         public void writeCode(String code){
