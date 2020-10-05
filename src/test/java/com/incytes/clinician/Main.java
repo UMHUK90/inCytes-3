@@ -1,6 +1,7 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 
@@ -9,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import static com.codeborne.selenide.CollectionCondition.size;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
@@ -39,6 +41,7 @@ public class Main {
             case "Sp": language = "es";
             break;
             case "It" : language = "it";
+            break;
             default: language = "en";
             break;
         }
@@ -82,6 +85,7 @@ public class Main {
         public SelenideElement eInputCode(){return $(".MuiInputBase-input");}
         public SelenideElement eSubmitCode(){ return $(".MuiButton-label");}
         public SelenideElement eHaveAnAccount(){return $(".MuiButton-fullWidth", 1);}
+        public SelenideElement eTermsAndConditions(){return $(".MuiTypography-body2");}
 
         private String address = baddress + "auth/register";
         public Registration(){}
@@ -145,6 +149,13 @@ public class Main {
         public void clickHaveAnAccount(){ eHaveAnAccount().click();}
         public void haveAnAccount(){ eHaveAnAccount().shouldBe(visible); }
         public void haveFourRequired(){  $$(byText("Required")).shouldHave(size(4)); }
+        public void clickTerms(){ eTermsAndConditions().click(); }
+
+        public class TermsAndConditions{
+            public SelenideElement eHeading(){return $(".MuiTypography-h3");}
+            public ElementsCollection eLinks(){ return $$("a"); }
+            public SelenideElement firstText(){return $(".MuiTypography-body2");}
+        }
     }
     /** Класс предназначен для работы с формой входа */
     public class Login{
@@ -188,16 +199,28 @@ public class Main {
         public void signIn(){
             eSignIn().click();
         }
-        /** Производит переход на страницу подтверждения пароля */
+        /** Производит переход н астраницу подтверждения пароля */
         public void forgotPassword(){
             eForgotPassword().click();
         }
     }
     /** Предназначен для получения кода для верификации */
     public class GetCodeWithYandex{
+
+        public SelenideElement eLastSender(){ return $(".mail-MessageSnippet-FromText"); }
+        public SelenideElement eLastTitle(){ return $(".mail-MessageSnippet-Item_body"); }
+        public SelenideElement eLastText(){ return $(".mail-MessageSnippet-Item_firstline"); }
+
         private String email, password, phone, code;
         /** Возвращает код (Если он уже получен, иначе вернётся пустая строка)*/
         public String getCode() { if(code != null) return code; return "";}
+        public GetCodeWithYandex checkMessage(){
+            enter();
+            eLastSender().shouldHave(text("no-reply@verificationemail.com"));
+            eLastTitle().shouldHave(text("Your verification code to inCytes™")); // Не соответствует требованиям
+            eLastText().shouldHave(text("Your verification code is"));
+            return this;
+        }
         public GetCodeWithYandex(String email, String password, String phone){
             this.email = email;
             this.password = password;
@@ -216,10 +239,10 @@ public class Main {
             $(byAttribute("type", "submit")).click();
             if($(byAttribute("type", "tel")).exists()) {$(byAttribute("type", "tel")).setValue(phone);
                 $(byAttribute("type", "submit")).click();}
-        }
-        private String lastCode(){
             $(".user-account__name").click(); //
             $(byAttribute("href", "https://mail.yandex.by")).click();
+        }
+        private String lastCode(){
             $$(byText("Your verification code to inCytes™")).first().click();
             String code;
             if(!$(".mail-Message-Body-Content").exists()) code = $(".mail-MessageSnippet-Item_firstline").closest("span").getText().substring(64).replace(".", "");
