@@ -1,17 +1,13 @@
 package com.incytes.clinician;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
 import static com.codeborne.selenide.CollectionCondition.size;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -111,7 +107,7 @@ public class Main {
         public Registration wRegistration() {
             eFirstName().setValue(firstName);
             eLastName().setValue(lastName);
-            eEmail().setValue(email);
+            if(!eEmail().is(disabled)) eEmail().setValue(email);
             ePassword().setValue(password);
             eVerifyPassword().setValue(verifyPassword);
             return this;
@@ -121,7 +117,7 @@ public class Main {
         public Registration cRegistration() {
             eFirstName().shouldHave(Condition.value(firstName));
             eLastName().shouldHave(Condition.value(lastName));
-            eEmail().shouldHave(Condition.value(email));
+            if(!eEmail().is(disabled)) eEmail().shouldHave(Condition.value(email));
             ePassword().shouldHave(Condition.value(password));
             eVerifyPassword().shouldHave(Condition.value(verifyPassword));
             return this;
@@ -203,6 +199,50 @@ public class Main {
         public void forgotPassword(){
             eForgotPassword().click();
         }
+        public class DashBoard{
+            public SelenideElement eSearch(){ return $(".MuiGrid-align-items-xs-center", 0).parent().parent().parent(); }
+            public SelenideElement eNewCase(){ return $(".MuiGrid-align-items-xs-center", 1).parent().parent().parent(); }
+            public SelenideElement eReports(){ return $(".MuiTypography-body2", 4).parent().parent().parent(); }
+            public SelenideElement eCircles(){ return $(".MuiTypography-body2", 5).parent().parent().parent(); }
+            public SelenideElement ePatients(){ return $(".MuiTypography-body2", 6).parent().parent().parent(); }
+            public SelenideElement eSupport(){ return $(".MuiGrid-align-items-xs-center", 2).parent().parent().parent(); }
+            public SelenideElement eAccount(){ return $(".MuiGrid-align-items-xs-center", 3).parent().parent().parent(); }
+            public SelenideElement eProfile(){ return $(".MuiGrid-align-items-xs-center", 4).parent().parent().parent(); }
+            public SelenideElement eLogout(){ return $(".MuiGrid-align-items-xs-center", 5).parent().parent().parent(); }
+
+            public void clickSearch(){ eSearch().click(); }
+            public void clickNewCase(){ eNewCase().click(); }
+            public void clickReports(){ eReports().click(); }
+            public void clickCircles(){ eCircles().click(); }
+            public void clickPatients(){ ePatients().click(); }
+            public void clickSupport(){ eSupport().click(); }
+            public void clickAccount(){ eAccount().click(); }
+            public void clickProfile(){ eProfile().click(); }
+            public void clickLogout(){ eLogout().click(); }
+
+            public class Profile{
+                public SelenideElement eEDIT(){ return $(".MuiTypography-body1", 0); }
+                public SelenideElement eChangePassword(){ return $(".MuiTypography-body1", 1); }
+                public SelenideElement eInvite(){ return $(".MuiTypography-body1", 5); }
+                public SelenideElement eI_Invite(){ return $((".MuiFilledInput-input")); }
+                public SelenideElement eSendInvitation(){ return $(".MuiButton-label"); }
+                public SelenideElement eInvitationSent() { return $((".MuiSnackbarContent-message"));}
+
+                public void clickEDIT(){ eEDIT().click(); }
+                public void clickChangePassword(){ eChangePassword().click(); }
+                public void clickInvite(){ eInvite().click(); }
+
+                String text;
+                public Profile writeEmail(String text){ eI_Invite().setValue(text); this.text = text; return  this; }
+                public Profile clickSendInvitation(){ eSendInvitation().click(); return this;}
+                public Profile checkingInvitationForm(){
+                    if(text != null) eI_Invite().shouldHave(value(text)).shouldBe(visible);
+                    eSendInvitation().shouldBe(visible);
+                    return this;
+                }
+                public Profile isInvitationSent(){ eInvitationSent().shouldHave(text("Invitation sent")).shouldBe(visible); return this; }
+            }
+        }
     }
     /** Предназначен для получения кода для верификации */
     public class GetCodeWithYandex{
@@ -210,6 +250,12 @@ public class Main {
         public SelenideElement eLastSender(){ return $(".mail-MessageSnippet-FromText"); }
         public SelenideElement eLastTitle(){ return $(".mail-MessageSnippet-Item_body"); }
         public SelenideElement eLastText(){ return $(".mail-MessageSnippet-Item_firstline"); }
+        public SelenideElement eLastCheckBox(){ return $(".mail-MessageSnippet-Checkbox-Nb", 1); }
+        public SelenideElement eForward(){ return $(".ns-view-toolbar-button-forward"); }
+
+        public void clickLastTitle(){eLastTitle().click();}
+        public void clickLastCheckBox(){ eLastCheckBox().click(); }
+        public void clickForward(){ eForward().click(); }
 
         private String email, password, phone, code;
         /** Возвращает код (Если он уже получен, иначе вернётся пустая строка)*/
@@ -250,6 +296,28 @@ public class Main {
             this.code = code;
             return code;
         }
+    }
+    public class GetInvitationWithYandex extends GetCodeWithYandex {
+
+        public SelenideElement eForwardLink() { return $$("a").findBy(attribute("data-cke-saved-href")); }
+
+
+        public void clickForwardLink(){ eForwardLink().click(); }
+        public GetInvitationWithYandex(String email, String password, String phone) {
+            super(email, password, phone);
+        }
+        public void clickInvitation(){
+            super.enter();
+            super.clickLastTitle();
+            int size = $$(".ns-view-messages-item-wrap").size();
+            while(true) {
+                if($$(".ns-view-messages-item-wrap").size() > size) {super.clickLastCheckBox(); break;}
+                sleep(50);
+            }
+            super.clickForward();
+            clickForwardLink();
+        }
+
     }
     //Тестовый класс
     public static class Verification{
