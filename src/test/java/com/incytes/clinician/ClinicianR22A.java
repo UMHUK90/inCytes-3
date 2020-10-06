@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.switchTo;
 
-public class PreClinicianR22A {
+public class ClinicianR22A {
     @Test
     public void c_test() {
             org.selenide.examples.Clinician.Main main = new org.selenide.examples.Clinician.Main("En");
