@@ -200,6 +200,21 @@ public class Main {
             eForgotPassword().click();
         }
         public class DashBoard{
+
+            public void isThisLanguage(String language){
+                switch (language){
+                case "En": $(".MuiTypography-h4").shouldHave(text("Welcome to inCytes!"));
+                break;
+                case "Fr": $(".MuiTypography-h4").shouldHave(text("Bienvenue chez inCytes!"));
+                break;
+                case "Ru": $(".MuiTypography-h4").shouldHave(text("Добро пожаловать в InСytes!"));
+                break;
+                case "Sp": $(".MuiTypography-h4").shouldHave(text("¡Bienvenido a inCytes!"));
+                break;
+                case "It" : $(".MuiTypography-h4").shouldHave(text("Benvenuto in inCytes!"));
+                break;
+            }}
+
             public SelenideElement eSearch(){ return $(".MuiGrid-align-items-xs-center", 0).parent().parent().parent(); }
             public SelenideElement eNewCase(){ return $(".MuiGrid-align-items-xs-center", 1).parent().parent().parent(); }
             public SelenideElement eReports(){ return $(".MuiTypography-body2", 4).parent().parent().parent(); }
@@ -240,7 +255,7 @@ public class Main {
                     eSendInvitation().shouldBe(visible);
                     return this;
                 }
-                public Profile isInvitationSent(){ eInvitationSent().shouldHave(text("Invitation sent")).shouldBe(visible); return this; }
+                public Profile isInvitationSent(){ eInvitationSent().shouldBe(visible); return this; }
             }
         }
     }
@@ -299,25 +314,46 @@ public class Main {
     }
     public class GetInvitationWithYandex extends GetCodeWithYandex {
 
-        public SelenideElement eForwardLink() { return $$("a").findBy(attribute("data-cke-saved-href")); }
+        public SelenideElement eForwardLink() {
+            return $$("a").findBy(attribute("data-cke-saved-href"));
+        }
 
+        public SelenideElement eSimpleLink() {
+            return $(".daria-goto-anchor");
+        }
 
-        public void clickForwardLink(){ eForwardLink().click(); }
+        public void clickForwardLink() {
+            eForwardLink().click();
+        }
+
         public GetInvitationWithYandex(String email, String password, String phone) {
             super(email, password, phone);
         }
-        public void clickInvitation(){
-            super.enter();
-            super.clickLastTitle();
-            int size = $$(".ns-view-messages-item-wrap").size();
-            while(true) {
-                if($$(".ns-view-messages-item-wrap").size() > size) {super.clickLastCheckBox(); break;}
-                sleep(50);
-            }
-            super.clickForward();
-            clickForwardLink();
-        }
 
+        public void clickInvitation() {
+            super.enter();
+            int size = $$(".ns-view-messages-item-wrap").size();
+            super.clickLastTitle();
+            if ($(".mail-MessageSnippet-Item_threadExpand").parent().getText().equals($(".mail-MessageSnippet-Item_subjectWrapper").getText())) {
+                while (true) {
+                    if ($$(".ns-view-messages-item-wrap").size() > size && eLastCheckBox().is(enabled)) {
+                        super.clickLastCheckBox();
+                        break;
+                    }
+                    sleep(50);
+                }
+                while(true) { if(eLastCheckBox().has(attribute("id"))) { super.clickForward(); break; } sleep(50); }
+                clickForwardLink();
+            } else {
+                while (true) {
+                    if (eSimpleLink().is(enabled)) {
+                        eSimpleLink().click();
+                        break;
+                    }
+                    sleep(50);
+                }
+            }
+        }
     }
     //Тестовый класс
     public static class Verification{

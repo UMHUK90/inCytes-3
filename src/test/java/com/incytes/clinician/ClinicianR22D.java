@@ -1,0 +1,38 @@
+package com.incytes.clinician;
+
+import com.codeborne.selenide.Condition;
+import org.testng.annotations.Test;
+
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.switchTo;
+
+public class ClinicianR22D {
+    @Test
+    public void method(){
+        Main main = new Main("It");
+        Main.FileTXT file = main.new FileTXT("D:\\Path\\count.txt");
+        int count = Integer.parseInt(file.getText());
+        Main.Login login = main.new Login();
+        login.open();
+        login.setAll("qwertyuiop17091709+1@yandex.by", "261090inCytes!").wLogin().signIn();
+        Main.Login.DashBoard dashBoard = login.new DashBoard();
+        dashBoard.isThisLanguage("It");
+        dashBoard.clickProfile();
+        Main.Login.DashBoard.Profile profile = dashBoard.new Profile();
+        profile.clickInvite();
+        profile.writeEmail("qwertyuiop17091709+" + count + "@yandex.by");
+        profile.checkingInvitationForm().clickSendInvitation().isInvitationSent();
+        Main.newTab();
+        switchTo().window(1);
+        Main.GetInvitationWithYandex yandex = main.new GetInvitationWithYandex("qwertyuiop17091709@yandex.ru", "cilaCILA17097938", "+375298746833");
+        yandex.clickInvitation();
+        switchTo().window(2);
+        Main.Registration reg = main.new Registration();
+        //Next step
+        reg.clickTerms();
+        switchTo().window(3);
+        Main.Registration.TermsAndConditions terms = reg.new TermsAndConditions();
+        terms.eHeading().shouldHave(Condition.exactText("Termini e Condizioni"));
+        terms.firstText().shouldHave(text("™"));
+    }
+}
