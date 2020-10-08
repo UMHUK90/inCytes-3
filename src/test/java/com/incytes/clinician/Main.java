@@ -163,7 +163,8 @@ public class Main {
         public SelenideElement eSignIn(){return $(".MuiButton-label", 2) ;}
         public SelenideElement eForgotPassword(){return $(".MuiButtonBase-root", 0);}
         public SelenideElement eSignUp(){return $(".MuiButton-label", 1);}
-
+        public SelenideElement ebackToLogin_forgotPassword() { return $("a"); }
+        public void backToLoginShouldBe_forgotPassword(){ ebackToLogin_forgotPassword().shouldHave(text("Back to Login")); }
 
         private String address = baddress + "auth/login";
         private String email = "", password = "";
