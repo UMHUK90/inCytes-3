@@ -22,7 +22,9 @@ public class Main {
     public Main(){
         setLang("En");
     }
-
+    public static void close(){
+        Selenide.closeWebDriver();
+    }
     /** Открывает новое окно */
     public static void newTab(){ Selenide.executeJavaScript("window.open()"); }
     /** Устанавливает язык браузера */
@@ -257,6 +259,43 @@ public class Main {
                 }
                 public Profile isInvitationSent(){ eInvitationSent().shouldBe(visible); return this; }
             }
+            public class Circles{
+                public SelenideElement eAllCircles(){ return $(".MuiInput-formControl"); }
+                public SelenideElement eSearch(){ return $(".MuiInputBase-inputAdornedStart"); }
+                public SelenideElement eCreateCircle(){ return $(".MuiButton-contained"); }
+                public SelenideElement eCircleName_Creation(){ return $(".MuiFilledInput-input"); }
+                public SelenideElement eNonPHI_Creation(){ return $(byAttribute("name", "phi"));}
+                public SelenideElement ePHI_Creation(){ return $(byAttribute("name", "phi"), 1);}
+                public SelenideElement eSponsored_Creation(){ return $(byAttribute("type", "checkbox"));}
+                public SelenideElement eProtocol_Creation(){ return $(".MuiFilledInput-input", 1); }
+                public SelenideElement eTreatment_Creation(){ return $(".MuiFilledInput-input", 2); }
+                public SelenideElement eIndication_Creation(){ return $(".MuiFilledInput-input", 3); }
+                public SelenideElement eLastCircle(){ return $(byAttribute("style", "display: block; text-decoration: none; font-weight: bold; font-size: 17px; line-height: 20px; letter-spacing: 0.16px; color: rgb(1, 16, 32); margin-bottom: 5px;")); }
+
+                public Boolean isNoCircles(){ if($(".MuiTypography-h4").has(text("MuiTypography-h4"))) return true; return false; }
+                public void writeCircleName(String name){ eCircleName_Creation().setValue(name); }
+                public void clickNonPHI(){ eNonPHI_Creation().click(); }
+                public void clickPHI(){ ePHI_Creation().click(); }
+                public void clickSponsored(){eSponsored_Creation().click();}
+                public void writeProtocol(String name){ eProtocol_Creation().setValue(name); }
+                public void writeTreatment(String name){ eTreatment_Creation().setValue(name); }
+                public void writeIndication(String name){ eIndication_Creation().setValue(name); }
+                public void clickLastCircle(){ eLastCircle().click(); }
+                public class Circle{
+                    public SelenideElement eInvite() { return $(".MuiIconButton-label", 1); }
+                    public SelenideElement eEmail_Invite(){ return $(".MuiFilledInput-input"); }
+                    public ElementsCollection eErrors_Invite(){ return $$(".Mui-error"); }
+                    public ElementsCollection eCircleMembers() { return $$(".MuiTableRow-root"); }
+                    //public SelenideElement eSponsor_Invite(){ return $(""); }
+                    public SelenideElement eSendInvitation_Invite(){ return $(byAttribute("type", "submit")); }
+
+                    public void clickInvite() { eInvite().click();}
+                    public void writeEmail_Invite(String email){ eEmail_Invite().setValue(email); }
+                    public void clickSendInvitation_Invite(){ eSendInvitation_Invite().click(); }
+                    public void notHaveErrors(){ eErrors_Invite().shouldHave(size(0)); }
+                    public void haveCircleMember(String email){ eCircleMembers().findBy(text(email)).exists(); }
+                }
+            }
         }
     }
     /** Предназначен для получения кода для верификации */
@@ -332,11 +371,12 @@ public class Main {
 
         public void clickInvitation() {
             super.enter();
-            int size = $$(".ns-view-messages-item-wrap").size();
-            super.clickLastTitle();
             if ($(".mail-MessageSnippet-Item_threadExpand").parent().getText().equals($(".mail-MessageSnippet-Item_subjectWrapper").getText())) {
+                int size;
+                while(true) if($$(".mail-MessageSnippet-Checkbox-Nb").size() > 0) { size = $$(".mail-MessageSnippet-Checkbox-Nb").size(); break;}
+                super.clickLastTitle();
                 while (true) {
-                    if ($$(".ns-view-messages-item-wrap").size() > size && eLastCheckBox().is(enabled)) {
+                    if ($$(".mail-MessageSnippet-Checkbox-Nb").size() > size && eLastCheckBox().is(enabled)) {
                         super.clickLastCheckBox();
                         break;
                     }
@@ -345,6 +385,7 @@ public class Main {
                 while(true) { if(eLastCheckBox().has(attribute("id"))) { super.clickForward(); break; } sleep(50); }
                 clickForwardLink();
             } else {
+                super.clickLastTitle();
                 while (true) {
                     if (eSimpleLink().is(enabled)) {
                         eSimpleLink().click();
