@@ -41,6 +41,8 @@ public class Main {
             break;
             case "It" : language = "it";
             break;
+            case "Ge" : language = "ge";
+            break;
             default: language = "en";
             break;
         }
