@@ -10,7 +10,7 @@ public class ClinicianR20C {
         Main main = new Main("En");
         Main.FileTXT file = main.new FileTXT("D:\\Path\\count.txt");
         int count = Integer.parseInt(file.getText());
-        Main.Registration reg = main.new Registration("https://qa.incytesdata-dev.com/auth/register");
+        Main.Registration reg = main.new Registration("https://alpha.incytesdata-dev.com/auth/register");
         reg.open();
         reg.setAll("Dmitry", "Polsky", "qwertyuiop17091709+" + count + "@yandex.by", "261090inCytes!", "261090inCytes!");
         reg.wRegistration().cRegistration().clickNext();

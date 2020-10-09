@@ -15,7 +15,7 @@ import static org.openqa.selenium.By.name;
 
 /** Главный класс (контейнер) */
 public class Main {
-    private String baddress = "https://qa.incytesdata-dev.com/";
+    private String baddress = "https://alpha.incytesdata-dev.com/";
     public Main(String language){
         setLang(language);
     }
@@ -23,7 +23,7 @@ public class Main {
         setLang("En");
     }
     public static void close(){
-        Selenide.closeWebDriver();
+        Selenide.close();
     }
     /** Открывает новое окно */
     public static void newTab(){ Selenide.executeJavaScript("window.open()"); }
@@ -401,7 +401,7 @@ public class Main {
     public static class Verification{
         /** Открывает страницу с вставкой кода */
         public static void open(String email){
-            open("https://qa.incytesdata-dev.com/auth/register/confirmation?email=" + email);
+            open("https://alpha.incytesdata-dev.com/auth/register/confirmation?email=" + email);
         }
         /** Записывает код */
         public void writeCode(String code){

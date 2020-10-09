@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class ClinicianR21B {
     @Test
     public void c_test() {
-        open("https://qa.incytesdata-dev.com/auth/register/confirmation" + "?email=andrew.grabovskiy@gmail.com");
+        open("https://alpha.incytesdata-dev.com/auth/register/confirmation" + "?email=andrew.grabovskiy@gmail.com");
         $$("input").findBy(attribute("placeholder", "Код подтверждения")).shouldBe(visible);
         $(byAttribute("placeholder", "Код подтверждения")).setValue("123456");
         $(byAttribute("placeholder", "Код подтверждения")).shouldHave(value("123456"));

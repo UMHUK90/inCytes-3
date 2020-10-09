@@ -5,8 +5,6 @@ import org.testng.annotations.Test;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selenide.*;
-import static org.openqa.selenium.By.name;
-import static org.openqa.selenium.By.xpath;
 
 public class ClinicianR20D {
     @Test
@@ -14,7 +12,7 @@ public class ClinicianR20D {
         Main main = new Main("En");
         Main.FileTXT file = main.new FileTXT("D:\\Path\\count.txt");
         int count = Integer.parseInt(file.getText());
-        Main.Registration reg = main.new Registration("https://qa.incytesdata-dev.com/auth/register");
+        Main.Registration reg = main.new Registration("https://alpha.incytesdata-dev.com/auth/register");
         reg.open();
         reg.setAll("Dmitry", "Polsky", "qwertyuiop17091709+" + count + "@yandex.by", "261090inCytes!", "261090inCytes!");
         reg.wRegistration().cRegistration().clickNext();

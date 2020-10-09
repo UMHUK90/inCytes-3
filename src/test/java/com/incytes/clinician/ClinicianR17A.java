@@ -23,5 +23,6 @@ public class ClinicianR17A {
         switchTo().window(0);
         reg.submitCode(code);
         $$("h3").findBy(Condition.text("Sign in")).shouldBe(Condition.visible);
+
     }
 }
