@@ -5,18 +5,18 @@ import com.codeborne.selenide.*;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.function.Function;
 
 import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 import static org.openqa.selenium.By.name;
 
 /** Главный класс (контейнер) */
 public class Main {
-    private String baddress = "https://alpha.incytesdata-dev.com/";
+    private String baddress = "https://qa.incytesdata-dev.com/";
     public Main(String language){
         setLang(language);
     }
@@ -24,10 +24,20 @@ public class Main {
         setLang("En");
     }
     public static void close(){
-        closeWebDriver();
+        Selenide.closeWebDriver();
+    }
+    public static void methodException(Function method){
+        try{
+            //method.
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        close();
     }
     /** Открывает новое окно */
-    public static void newTab(){ Selenide.executeJavaScript("window.open()"); }
+    public static void newTab(){ Selenide.executeJavaScript("window.open()");} //methodException(close());}
+    public static void haveRequired(int size){  $$(byText("Required")).shouldHave(size(size)); }
     /** Устанавливает язык браузера */
     public static void setLang(String language){
         switch (language){
@@ -160,15 +170,34 @@ public class Main {
     }
     /** Класс предназначен для работы с формой входа */
     public class Login{
+        private String eemail = "";
         //Элементы страницы
         public SelenideElement eEmail(){return $(name("email"));}
         public SelenideElement ePassword(){return $(name("password"));}
         public SelenideElement eSignIn(){return $(".MuiButton-label", 2) ;}
         public SelenideElement eForgotPassword(){return $(".MuiButtonBase-root", 0);}
         public SelenideElement eSignUp(){return $(".MuiButton-label", 1);}
-        public SelenideElement ebackToLogin_forgotPassword() { return $("a"); }
-        public void backToLoginShouldBe_forgotPassword(){ ebackToLogin_forgotPassword().shouldHave(text("Back to Login")); }
-
+        public SelenideElement eBackToLogin_forgotPassword() { return $("a", 0); }
+        public SelenideElement eTitle_forgotPassword(){ return $(".MuiTypography-h3"); }
+        public SelenideElement eSubmit_forgotPassword(){ return $(".MuiButton-label", 1); }
+        public SelenideElement eSignUp_forgotPassword(){ return $(".MuiButton-label", 0); }
+        public SelenideElement eInvalid_forgotPassoword() { return $(".MuiFormHelperText-filled"); }
+        public SelenideElement eMessage_forgotPassword() { return $(".MuiTypography-body1"); }
+        public void clickBackToLogin_forgotPassword(){ eBackToLogin_forgotPassword().click(); }
+        public void clickSignUp_forgotPassword(){ eSignUp_forgotPassword().click(); }
+        public void clickSubmit_forgotPassword(){ eSubmit_forgotPassword().click(); }
+        public void haveInvalid_forgotPassword(){ eInvalid_forgotPassoword().shouldBe(visible); }
+        public void writeEmail_forgotPassword(String email){ eemail = email; eEmail().setValue(email); }
+        public void diplayedEmail_forgotPassword(){ eEmail().shouldHave(value(eemail)); }
+        public void haveEmailError_forgotPassword(){ $(".MuiInputLabel-animated").shouldHave(cssValue("color", "rgba(244, 67, 54, 1)")); }
+        public void backToLoginShouldBe_forgotPassword(){ eBackToLogin_forgotPassword().shouldHave(text("Back to Login")); }
+        public void forgotPasswordIsCorrect(){
+            eBackToLogin_forgotPassword().shouldHave(attribute("href", "https://qa.incytesdata-dev.com/auth/login"));
+            eTitle_forgotPassword().shouldBe(visible);
+            eEmail().shouldBe(visible);
+            eSubmit_forgotPassword().shouldBe(visible);
+            eSignUp_forgotPassword().shouldBe(visible);
+        }
         private String address = baddress + "auth/login";
         private String email = "", password = "";
         /** Открывает страницу входа */
@@ -347,9 +376,10 @@ public class Main {
             $(byAttribute("href", "https://mail.yandex.by")).click();
         }
         private String lastCode(){
+            if (!$(".mail-MessageSnippet-Item_threadExpand").parent().getText().equals($(".mail-MessageSnippet-Item_subjectWrapper").getText())) {
             $$(byText("Your verification code to inCytes™")).first().click();
             String code;
-            if(!$(".mail-Message-Body-Content").exists()) code = $(".mail-MessageSnippet-Item_firstline").closest("span").getText().substring(64).replace(".", "");
+            code = $(".mail-MessageSnippet-Item_firstline").closest("span").getText().substring(64).replace(".", "");}
             else code = $(".mail-Message-Body-Content").getText().substring(64).replace(".", "");
             this.code = code;
             return code;
@@ -404,7 +434,7 @@ public class Main {
     public static class Verification{
         /** Открывает страницу с вставкой кода */
         public static void open(String email){
-            open("https://alpha.incytesdata-dev.com/auth/register/confirmation?email=" + email);
+            open("https://qa.incytesdata-dev.com/auth/register/confirmation?email=" + email);
         }
         /** Записывает код */
         public void writeCode(String code){
