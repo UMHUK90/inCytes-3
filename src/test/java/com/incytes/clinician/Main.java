@@ -11,6 +11,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 import static org.openqa.selenium.By.name;
 
 /** Главный класс (контейнер) */
@@ -23,7 +24,7 @@ public class Main {
         setLang("En");
     }
     public static void close(){
-        Selenide.close();
+        closeWebDriver();
     }
     /** Открывает новое окно */
     public static void newTab(){ Selenide.executeJavaScript("window.open()"); }
