@@ -17,7 +17,7 @@ import static org.openqa.selenium.By.name;
 
 /** Главный класс (контейнер) */
 public class Main {
-    private String baddress = "https://qa-patient.incytesdata-dev.com/";
+    private String baddress = "https://alpha-patient.incytesdata-dev.com/";
     public Main(String language){
         setLang(language);
     }
@@ -41,7 +41,8 @@ public class Main {
             break;
             case "Sp": language = "es";
             break;
-            case "It" : language = "it";
+            case "It": language = "it";
+            break;
             default: language = "en";
             break;
         }
@@ -114,6 +115,20 @@ public class Main {
             this.phone = phone;
             return this;
         }
+        public Registration SetRegFirstWindow(String email, String password, String verifyPassword) {
+            this.email = email;
+            this.password = password;
+            this.verifyPassword = verifyPassword;
+            return this;
+        }
+        public Registration SetRegSecondWindow(String firstName, String lastName, String date, String country, String phone) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.date = date;
+            this.country = country;
+            this.phone = phone;
+            return this;
+        }
              /** Вводит записанные данные на страницу регистрации / в случае их отсутствия введутся пустые строки */
         public Registration wRegistration() {
             eEmail().setValue(email);
@@ -126,8 +141,8 @@ public class Main {
             eLastName().setValue(lastName);
             eBirthDate().setValue(date);
             eCountryName().setValue(country);
-            $(".MuiListItem-root").click();
             ePhoneNumber().setValue(phone);
+            $(".MuiListItem-root").click();
             return this;
         }
                /** Проверяет на присутствие введённых данных (можно пропустить) */
@@ -160,6 +175,37 @@ public class Main {
         public void clickCheckBox(){
             eCheckBox1().click();
             eCheckBox2().click();
+        }
+    }
+
+    public class Login {
+        public SelenideElement eEmail(){return $(name("email"));}
+        public SelenideElement ePassword(){return $(name("password"));}
+        public SelenideElement eLogin(){return $(".MuiButton-sizeLarge");}
+        private String address = baddress + "auth/login";
+        private String email = "", password = "";
+        /** Открывает страницу входа */
+        public void open(){
+            Selenide.open(address);
+        }
+        /** Устанавливает для класса email и password */
+        public Login setAll(String email, String password){
+            this.email = email;
+            this.password = password;
+            return this;
+        }
+        /** Проверяет видны ли элементы формы */
+        public com.incytes.patient.Main.Login isVisible(){
+            $(".MuiTypography-root").shouldBe(visible);
+            eEmail().shouldBe(visible);
+            ePassword().shouldBe(visible);
+            return this;
+        }
+        /** Вводит пароль и логин в форму */
+        public Login wLogin(){
+            eEmail().setValue(email);
+            ePassword().setValue(password);
+            return this;
         }
     }
     /** Предназначен для получения кода для верификации */
