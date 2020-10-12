@@ -1,11 +1,11 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.*;
+import org.testng.annotations.Test;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.function.Function;
 
 import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.*;
@@ -16,6 +16,10 @@ import static org.openqa.selenium.By.name;
 
 /** Главный класс (контейнер) */
 public class Main {
+    interface IMethod{
+        @Test
+        void method();
+    }
     private String baddress = "https://qa.incytesdata-dev.com/";
     public Main(String language){
         setLang(language);
@@ -26,17 +30,8 @@ public class Main {
     public static void close(){
         Selenide.closeWebDriver();
     }
-    public static void methodException(Function method){
-        try{
-            //method.
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        close();
-    }
     /** Открывает новое окно */
-    public static void newTab(){ Selenide.executeJavaScript("window.open()");} //methodException(close());}
+    public static void newTab(){ Selenide.executeJavaScript("window.open()");}
     public static void haveRequired(int size){  $$(byText("Required")).shouldHave(size(size)); }
     /** Устанавливает язык браузера */
     public static void setLang(String language){
@@ -55,6 +50,51 @@ public class Main {
             break;
         }
         System.setProperty("chromeoptions.prefs","intl.accept_languages=" + language);
+    }
+    public class MultipleMethods{
+        private class List<T>{
+            Value[] mass = new Value[0];
+            public void Add(T value){
+                Value[] instead = new Value[mass.length+1];
+                for(int step = 0; step < mass.length; step++) instead[step] = mass[step];
+                mass = instead;
+                mass[mass.length-1] = new Value(value);
+            }
+            public int length(){
+                return mass.length;
+            }
+            public T getValue(int number){
+                return (T) mass[number].get();
+            }
+            class Value<T>{
+                T value;
+                public Value(T value){
+                    this.value = value;
+                }
+                public T get(){
+                    return value;
+                }
+            }
+        }
+        private List<String> list = new List<>();
+        public MultipleMethods open(IMethod method, String name){
+            try {
+                method.method();
+            } catch (Throwable e) {
+                list.Add(name + "   -   " + e);
+            }
+            Selenide.closeWebDriver();
+            return this;
+        }
+        public void GetExceptions(){
+            if(list.length() > 0) try {
+                new Exception("Произошли ошибки в тестах");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            for(int step = 0; step < list.length(); step++) System.out.println(list.getValue(step) + "\n------------------------------------------------------\n");
+            if(list.length() > 0) System.exit(-1);
+        }
     }
     /** Работа с тескстовым файлом */
     public class FileTXT{
