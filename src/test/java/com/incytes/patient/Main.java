@@ -269,9 +269,27 @@ public class Main {
 
     /** Предназначен для получения кода для верификации */
     public class GetCodeWithYandex{
+
+        public SelenideElement eLastSender(){ return $(".mail-MessageSnippet-FromText"); }
+        public SelenideElement eLastTitle(){ return $(".mail-MessageSnippet-Item_body"); }
+        public SelenideElement eLastText(){ return $(".mail-MessageSnippet-Item_firstline"); }
+        public SelenideElement eLastCheckBox(){ return $(".mail-MessageSnippet-Checkbox-Nb", 1); }
+        public SelenideElement eForward(){ return $(".ns-view-toolbar-button-forward"); }
+
+        public void clickLastTitle(){eLastTitle().click();}
+        public void clickLastCheckBox(){ eLastCheckBox().click(); }
+        public void clickForward(){ eForward().click(); }
+
         private String email, password, phone, code;
         /** Возвращает код (Если он уже получен, иначе вернётся пустая строка)*/
         public String getCode() { if(code != null) return code; return "";}
+        public GetCodeWithYandex checkMessage(){
+            enter();
+            eLastSender().shouldHave(text("no-reply@verificationemail.com"));
+            eLastTitle().shouldHave(text("Your verification code to inCytes™")); // Не соответствует требованиям
+            eLastText().shouldHave(text("Your verification code is"));
+            return this;
+        }
         public GetCodeWithYandex(String email, String password, String phone){
             this.email = email;
             this.password = password;
@@ -290,16 +308,62 @@ public class Main {
             $(byAttribute("type", "submit")).click();
             if($(byAttribute("type", "tel")).exists()) {$(byAttribute("type", "tel")).setValue(phone);
                 $(byAttribute("type", "submit")).click();}
-        }
-        private String lastCode(){
             $(".user-account__name").click(); //
             $(byAttribute("href", "https://mail.yandex.by")).click();
-            $$(byText("Your verification code to inCytes™")).first().click();
-            String code;
-            if(!$(".mail-Message-Body-Content").exists()) code = $(".mail-MessageSnippet-Item_firstline").closest("span").getText().substring(64).replace(".", "");
+        }
+        private String lastCode(){
+            if (!$(".mail-MessageSnippet-Item_threadExpand").parent().getText().equals($(".mail-MessageSnippet-Item_subjectWrapper").getText())) {
+                $$(byText("Your verification code to inCytes™")).first().click();
+                String code;
+                code = $(".mail-MessageSnippet-Item_firstline").closest("span").getText().substring(64).replace(".", "");}
             else code = $(".mail-Message-Body-Content").getText().substring(64).replace(".", "");
             this.code = code;
             return code;
+        }
+    }
+    public class GetInvitationWithYandex extends GetCodeWithYandex {
+
+        public SelenideElement eForwardLink() {
+            return $$("a").findBy(attribute("data-cke-saved-href"));
+        }
+
+        public SelenideElement eSimpleLink() {
+            return $(".daria-goto-anchor");
+        }
+
+        public void clickForwardLink() {
+            eForwardLink().click();
+        }
+
+        public GetInvitationWithYandex(String email, String password, String phone) {
+            super(email, password, phone);
+        }
+
+        public void clickInvitation() {
+            super.enter();
+            if ($(".mail-MessageSnippet-Item_threadExpand").parent().getText().equals($(".mail-MessageSnippet-Item_subjectWrapper").getText())) {
+                int size;
+                while(true) if($$(".mail-MessageSnippet-Checkbox-Nb").size() > 0) { size = $$(".mail-MessageSnippet-Checkbox-Nb").size(); break;}
+                super.clickLastTitle();
+                while (true) {
+                    if ($$(".mail-MessageSnippet-Checkbox-Nb").size() > size && eLastCheckBox().is(enabled)) {
+                        super.clickLastCheckBox();
+                        break;
+                    }
+                    sleep(50);
+                }
+                while(true) { if(eLastCheckBox().has(attribute("id"))) { super.clickForward(); break; } sleep(50); }
+                clickForwardLink();
+            } else {
+                super.clickLastTitle();
+                while (true) {
+                    if (eSimpleLink().is(enabled)) {
+                        eSimpleLink().click();
+                        break;
+                    }
+                    sleep(50);
+                }
+            }
         }
     }
     //Тестовый класс
