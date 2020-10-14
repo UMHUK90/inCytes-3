@@ -14,6 +14,7 @@ import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.By.name;
+import static org.openqa.selenium.By.xpath;
 
 /** Главный класс (контейнер) */
 public class Main {
@@ -73,6 +74,8 @@ public class Main {
             catch(IOException ex){ System.out.println(ex.getMessage()); }
         }
     }
+    //All
+
     // Работа с регистрацией
     public class Registration {
 
@@ -94,22 +97,21 @@ public class Main {
         private String address = baddress + "auth/register/";
         public Registration(){}
         public Registration(String empty){} // Для уже написанных тестов
-        //All
-        public String firstName = "", lastName = "", email = "", password = "", verifyPassword = "", date = "", country = "", phone = "";
 
              /** Открывает ссылку в настоящем окне */
              public void open(){Selenide.open(address);}
         public void open(String path) {
             Selenide.open(address + path);
         }
-
+        //All
+        public String firstName = "", lastName = "", email = "", password = "", verifyPassword = "", date = "", country ="", phone = "";
         /** Устанавливает параметры для регистрации */
         public Registration setAll(String email, String password, String verifyPassword, String firstName, String lastName, String date, String country, String phone) {
-            this.firstName = firstName;
-            this.lastName = lastName;
             this.email = email;
             this.password = password;
             this.verifyPassword = verifyPassword;
+            this.firstName = firstName;
+            this.lastName = lastName;
             this.date = date;
             this.country = country;
             this.phone = phone;
@@ -167,7 +169,10 @@ public class Main {
         public void clickLogin() {
             eLogin().click();
         }
-        public void clickNext(){
+        public void clickNext1(){
+
+        }
+        public void clickNext2(){
             eCheckBox1().click();
             eCheckBox2().click();
             eGetStarted().click();
@@ -182,8 +187,10 @@ public class Main {
         public SelenideElement eEmail(){return $(name("email"));}
         public SelenideElement ePassword(){return $(name("password"));}
         public SelenideElement eLogin(){return $(".MuiButton-sizeLarge");}
+        public SelenideElement eSignIn(){return $(".MuiButton-label", 1) ;}
+        public SelenideElement eForgotPassword(){return $(".MuiButtonBase-root", 0);}
         private String address = baddress + "auth/login";
-        private String email = "", password = "";
+        public String email = "", password = "", newPassword = "", confirmNewPassword = "";
         /** Открывает страницу входа */
         public void open(){
             Selenide.open(address);
@@ -195,11 +202,21 @@ public class Main {
             return this;
         }
         /** Проверяет видны ли элементы формы */
-        public com.incytes.patient.Main.Login isVisible(){
+        public Login isVisible(){
             $(".MuiTypography-root").shouldBe(visible);
             eEmail().shouldBe(visible);
             ePassword().shouldBe(visible);
+            eSignIn().shouldBe(visible);
+            eForgotPassword().shouldBe(visible);
             return this;
+        }
+        /** Производит вход */
+        public void signIn(){
+            eSignIn().click();
+        }
+        /** Производит переход н астраницу подтверждения пароля */
+        public void forgotPassword(){
+            eForgotPassword().click();
         }
         /** Вводит пароль и логин в форму */
         public Login wLogin(){
@@ -207,7 +224,49 @@ public class Main {
             ePassword().setValue(password);
             return this;
         }
+        public class Portal {
+            public void isThisLanguage(String language){
+                switch (language){
+                    case "En": $(".MuiTypography-h5").shouldHave(text("Patient Portal"));
+                        break;
+                    case "Fr": $(".MuiTypography-h4").shouldHave(text("Bienvenue chez inCytes!"));
+                        break;
+                    case "Ru": $(".MuiTypography-h4").shouldHave(text("Добро пожаловать в InСytes!"));
+                        break;
+                    case "Sp": $(".MuiTypography-h4").shouldHave(text("¡Bienvenido a inCytes!"));
+                        break;
+                    case "It" : $(".MuiTypography-h4").shouldHave(text("Benvenuto in inCytes!"));
+                        break;
+                    case "Ge" : $(".MuiTypography-h4").shouldHave(text("German!"));
+                        break;
+                }}
+            public SelenideElement eChangePassword(){ return $(xpath("//*[@id=\"root\"]/div/div[1]/div[1]/div/div/div[1]/div/button[3]/span[1]")); }
+            public SelenideElement eExistingPassword(){ return $(name("existingPassword")); }
+            public SelenideElement eNewPassword(){ return $(name("newPassword")); }
+            public SelenideElement eConfirmNewPassword(){ return $(name("confirmPassword")); }
+            public SelenideElement eSavePassword(){ return $(xpath("/html/body/div[3]/div[3]/div/div[2]/form/div/div/div[5]/button")); }
+            public SelenideElement eLogout(){ return $(xpath("//*[@id=\"root\"]/div/div[1]/div[1]/div/div/div[1]/div/button[4]/span[1]")); }
+
+            public void clickChangePassword(){ eChangePassword().click(); }
+            public void clickSavePassword(){ eSavePassword().click(); }
+            public void clickLogout(){ eLogout().click(); }
+            public String email = "", password = "", newPassword = "", confirmNewPassword = "";
+            public Portal setPassword(String password, String newPassword, String confirmNewPassword) {
+                this.password = password;
+                this.newPassword = newPassword;
+                this.confirmNewPassword = confirmNewPassword;
+                return this;
+            }
+            public Portal wPassword() {
+                eExistingPassword().setValue(password);
+                eNewPassword().setValue(newPassword);
+                eConfirmNewPassword().setValue(confirmNewPassword);
+                return this;
+            }
+        }
     }
+
+
     /** Предназначен для получения кода для верификации */
     public class GetCodeWithYandex{
         private String email, password, phone, code;
