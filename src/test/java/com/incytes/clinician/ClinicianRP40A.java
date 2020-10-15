@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class RP40A {
+public class ClinicianRP40A {
     @Test
     public void method(){
         Main main = new Main("En");

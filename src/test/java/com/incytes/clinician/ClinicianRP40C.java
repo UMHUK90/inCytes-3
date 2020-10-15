@@ -2,7 +2,7 @@ package com.incytes.clinician;
 
 import org.testng.annotations.Test;
 
-public class RP40D {
+public class ClinicianRP40C {
     @Test
     public void method(){
         Main main = new Main("En");
@@ -10,8 +10,8 @@ public class RP40D {
         login.open();
         login.forgotPassword();
         login.forgotPasswordIsCorrect();
-        login.clickSubmit_forgotPassword();
-        Main.haveRequired(1);
-        login.haveEmailError_forgotPassword();
+        login.clickSignUp_forgotPassword();
+        Main.Registration reg = main.new Registration();
+        reg.wRegistration();
     }
 }

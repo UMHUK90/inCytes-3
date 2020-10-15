@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.enabled;
 
-public class RP40Efail {
+public class ClinicianRP40Efail {
     @Test
     public void method(){
         Main main = new Main("En");

@@ -3,7 +3,7 @@ package com.incytes.clinician;
 import com.codeborne.selenide.Condition;
 import org.testng.annotations.Test;
 
-public class RP41C {
+public class ClinicianRP41C {
     @Test
     public void method(){
         Main main = new Main("En");

@@ -2,7 +2,7 @@ package com.incytes.clinician;
 
 import org.testng.annotations.Test;
 
-public class RP41A {
+public class ClinicianRP41A {
     @Test
     public void method(){
         Main main = new Main("En");
