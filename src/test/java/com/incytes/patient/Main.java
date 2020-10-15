@@ -101,7 +101,7 @@ public class Main {
              /** Открывает ссылку в настоящем окне */
              public void open(){Selenide.open(address);}
         public void open(String path) {
-            Selenide.open(address + path);
+            Selenide.open(path);
         }
         //All
         public String firstName = "", lastName = "", email = "", password = "", verifyPassword = "", date = "", country ="", phone = "";
@@ -143,8 +143,8 @@ public class Main {
             eLastName().setValue(lastName);
             eBirthDate().setValue(date);
             eCountryName().setValue(country);
+            if(!country.isEmpty()) $(".MuiListItem-gutters").click();
             ePhoneNumber().setValue(phone);
-            $(".MuiListItem-root").click();
             return this;
         }
                /** Проверяет на присутствие введённых данных (можно пропустить) */
