@@ -33,6 +33,9 @@ public class Main {
     /** Открывает новое окно */
     public static void newTab(){ Selenide.executeJavaScript("window.open()");}
     public static void haveRequired(int size){  $$(byText("Required")).shouldHave(size(size)); }
+    public static String currentPage(){
+        return WebDriverRunner.url();
+    }
     /** Устанавливает язык браузера */
     public static void setLang(String language){
         switch (language){
@@ -45,8 +48,6 @@ public class Main {
             case "Sp": language = "es";
             break;
             case "It" : language = "it";
-            break;
-            case "Ge" : language = "ge";
             break;
             default: language = "en";
             break;
@@ -88,6 +89,7 @@ public class Main {
             Selenide.closeWebDriver();
             return this;
         }
+        public MultipleMethods openWithoutException(IMethod method){ method.method(); return this;}
         public void GetExceptions(){
             if(list.length() > 0) try {
                 new Exception("Произошли ошибки в тестах");
@@ -223,6 +225,7 @@ public class Main {
         public SelenideElement eSignUp_forgotPassword(){ return $(".MuiButton-label", 0); }
         public SelenideElement eInvalid_forgotPassoword() { return $(".MuiFormHelperText-filled"); }
         public SelenideElement eMessage_forgotPassword() { return $(".MuiTypography-body1"); }
+        public SelenideElement eInvitation(){ return $(".MuiTypography-root"); }
         public void clickBackToLogin_forgotPassword(){ eBackToLogin_forgotPassword().click(); }
         public void clickSignUp_forgotPassword(){ eSignUp_forgotPassword().click(); }
         public void clickSubmit_forgotPassword(){ eSubmit_forgotPassword().click(); }
@@ -231,18 +234,20 @@ public class Main {
         public void diplayedEmail_forgotPassword(){ eEmail().shouldHave(value(eemail)); }
         public void haveEmailError_forgotPassword(){ $(".MuiInputLabel-animated").shouldHave(cssValue("color", "rgba(244, 67, 54, 1)")); }
         public void backToLoginShouldBe_forgotPassword(){ eBackToLogin_forgotPassword().shouldHave(text("Back to Login")); }
-        public void forgotPasswordIsCorrect(){
+        public void CodeHasBeenSent(){ eInvalid_forgotPassoword().shouldHave(text("Verification code has been sent to your email")); }
+        public Login forgotPasswordIsCorrect(){
             eBackToLogin_forgotPassword().shouldHave(attribute("href", "https://qa.incytesdata-dev.com/auth/login"));
             eTitle_forgotPassword().shouldBe(visible);
             eEmail().shouldBe(visible);
             eSubmit_forgotPassword().shouldBe(visible);
             eSignUp_forgotPassword().shouldBe(visible);
+            return this;
         }
         private String address = baddress + "auth/login";
         private String email = "", password = "";
         /** Открывает страницу входа */
-        public void open(){
-            Selenide.open(address);
+        public Login open(){
+            Selenide.open(address);return this;
         }
         /** Устанавливает для класса email и password */
         public Login setAll(String email, String password){
@@ -271,8 +276,9 @@ public class Main {
             eSignIn().click();
         }
         /** Производит переход н астраницу подтверждения пароля */
-        public void forgotPassword(){
+        public Login forgotPassword(){
             eForgotPassword().click();
+            return this;
         }
         public class DashBoard{
 
