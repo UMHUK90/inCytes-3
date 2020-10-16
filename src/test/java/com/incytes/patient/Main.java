@@ -3,6 +3,9 @@ package com.incytes.patient;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
+import org.openqa.selenium.Keys;
+import org.testng.annotations.Test;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -18,6 +21,10 @@ import static org.openqa.selenium.By.xpath;
 
 /** Главный класс (контейнер) */
 public class Main {
+    interface IMethod{
+        @Test
+        void method();
+    }
     private String baddress = "https://alpha-patient.incytesdata-dev.com/";
     public Main(String language){
         setLang(language);
@@ -25,9 +32,16 @@ public class Main {
     public Main(){
         setLang("En");
     }
-
+    public static String currentPage(){
+        return WebDriverRunner.url();
+    }
     public static void muiError(int size){
         $$("p.Mui-error").shouldHave(size(size));
+    }
+    public static SelenideElement eBottomMessage(){ return $(".MuiSnackbarContent-root"); }
+    public static SelenideElement muiError(int size, int number){
+        $$("p.Mui-error").shouldHave(size(size));
+        return $("p.Mui-error", number);
     }
     /** Открывает новое окно */
     public static void newTab(){ Selenide.executeJavaScript("window.open()"); }
@@ -74,6 +88,52 @@ public class Main {
             catch(IOException ex){ System.out.println(ex.getMessage()); }
         }
     }
+    public class MultipleMethods{
+        private class List<T>{
+            Value[] mass = new Value[0];
+            public void Add(T value){
+                Value[] instead = new Value[mass.length+1];
+                for(int step = 0; step < mass.length; step++) instead[step] = mass[step];
+                mass = instead;
+                mass[mass.length-1] = new Value(value);
+            }
+            public int length(){
+                return mass.length;
+            }
+            public T getValue(int number){
+                return (T) mass[number].get();
+            }
+            class Value<T>{
+                T value;
+                public Value(T value){
+                    this.value = value;
+                }
+                public T get(){
+                    return value;
+                }
+            }
+        }
+        private List<String> list = new List<>();
+        public MultipleMethods open(IMethod method, String name){
+            try {
+                method.method();
+            } catch (Throwable e) {
+                list.Add(name + "   -   " + e);
+            }
+            Selenide.closeWebDriver();
+            return this;
+        }
+        public MultipleMethods openWithoutException(IMethod method){ method.method(); Selenide.closeWebDriver(); return this;}
+        public void GetExceptions(){
+            if(list.length() > 0) try {
+                new Exception("Произошли ошибки в тестах");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            for(int step = 0; step < list.length(); step++) System.out.println(list.getValue(step) + "\n------------------------------------------------------\n");
+            if(list.length() > 0) System.exit(-1);
+        }
+    }
     //All
 
     // Работа с регистрацией
@@ -92,7 +152,9 @@ public class Main {
         public SelenideElement eCheckBox2(){return $(byAttribute("type", "checkbox"), 1);}
         public SelenideElement eGetStarted(){ return $("button"); }
         public SelenideElement eLogin(){return $(".MuiButton-sizeLarge");}
+        public SelenideElement eEnumCountiesFirst(){ return $(".MuiListItem-gutters");}
 
+        public void clickGetStarted(){ eGetStarted().click(); }
 
         private String address = baddress + "auth/register/";
         public Registration(){}
@@ -142,8 +204,10 @@ public class Main {
             eFirstName().setValue(firstName);
             eLastName().setValue(lastName);
             eBirthDate().setValue(date);
-            eCountryName().setValue(country);
-            if(!country.isEmpty()) $(".MuiListItem-gutters").click();
+            eCountryName().click();
+            eCountryName().sendKeys(Keys.chord(Keys.COMMAND, country));
+            Selenide.sleep(50000);
+            if(!country.isEmpty()) eEnumCountiesFirst().click();
             ePhoneNumber().setValue(phone);
             return this;
         }
@@ -169,12 +233,8 @@ public class Main {
         public void clickLogin() {
             eLogin().click();
         }
-        public void clickNext1(){
-
-        }
         public void clickNext2(){
-            eCheckBox1().click();
-            eCheckBox2().click();
+            clickCheckBox();
             eGetStarted().click();
         }
         public void clickCheckBox(){
