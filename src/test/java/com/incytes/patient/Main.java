@@ -21,7 +21,7 @@ import static org.openqa.selenium.By.xpath;
 
 /** Главный класс (контейнер) */
 public class Main {
-    interface IMethod{
+    public interface IMethod{
         @Test
         void method();
     }
