@@ -1,6 +1,7 @@
 package com.incytes.patient;
 
 import org.testng.annotations.Test;
+import patient.Main;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.attribute;

@@ -43,6 +43,7 @@ public class Main {
         $$("p.Mui-error").shouldHave(size(size));
         return $("p.Mui-error", number);
     }
+    public static void haveRequired(int size){  $$(byText("Required")).shouldHave(size(size)); }
     /** Открывает новое окно */
     public static void newTab(){ Selenide.executeJavaScript("window.open()"); }
     /** Устанавливает язык браузера */
@@ -124,6 +125,7 @@ public class Main {
             return this;
         }
         public MultipleMethods openWithoutException(IMethod method){ method.method(); Selenide.closeWebDriver(); return this;}
+        public MultipleMethods openWithoutClosing(IMethod method){ method.method(); return this; }
         public void GetExceptions(){
             if(list.length() > 0) try {
                 new Exception("Произошли ошибки в тестах");
@@ -153,7 +155,11 @@ public class Main {
         public SelenideElement eGetStarted(){ return $("button"); }
         public SelenideElement eLogin(){return $(".MuiButton-sizeLarge");}
         public SelenideElement eEnumCountiesFirst(){ return $(".MuiListItem-gutters");}
-
+        public SelenideElement eTextOfCheckBox1(){ return $(".MuiTypography-root", 3); }
+        public SelenideElement eTextOfCheckBox2(){ return $(".MuiTypography-root", 5); }
+        public SelenideElement eBlueMarker(int count, int number){$$(".MuiSvgIcon-colorSecondary").shouldBe(size(count)); return $(".MuiSvgIcon-colorSecondary", number); }
+        public SelenideElement eBlueMarker(){ return $(".MuiSvgIcon-colorSecondary");}
+        public void eBlueMarker(int count){ $$(".MuiSvgIcon-colorSecondary").shouldBe(size(count));}
         public void clickGetStarted(){ eGetStarted().click(); }
 
         private String address = baddress + "auth/register/";
@@ -195,7 +201,7 @@ public class Main {
         }
              /** Вводит записанные данные на страницу регистрации / в случае их отсутствия введутся пустые строки */
         public Registration wRegistration() {
-            eEmail().setValue(email);
+            if(!email.isEmpty()) eEmail().setValue(email);
             ePassword().setValue(password);
             eConfirmPassword().setValue(verifyPassword);
             return this;
@@ -204,10 +210,13 @@ public class Main {
             eFirstName().setValue(firstName);
             eLastName().setValue(lastName);
             eBirthDate().setValue(date);
-            eCountryName().click();
-            eCountryName().sendKeys(Keys.chord(Keys.COMMAND, country));
-            Selenide.sleep(50000);
-            if(!country.isEmpty()) eEnumCountiesFirst().click();
+            if(!country.isEmpty()) {
+                for (int step = 0; step < country.length(); step++) {
+                    eCountryName().sendKeys(Keys.chord(Keys.COMMAND, String.valueOf(country.toCharArray()[step])));
+                    sleep(20);
+                }
+                eEnumCountiesFirst().click();
+            }
             ePhoneNumber().setValue(phone);
             return this;
         }
