@@ -2,6 +2,7 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
 
 import java.io.FileReader;
@@ -297,7 +298,7 @@ public class Main {
             }}
 
             public SelenideElement eSearch(){ return $(".MuiGrid-align-items-xs-center", 0).parent().parent().parent(); }
-            public SelenideElement eNewCase(){ return $(".MuiGrid-align-items-xs-center", 1).parent(); }
+            public SelenideElement eNewCase(){ return $(".MuiSvgIcon-root", 1).parent(); }
             public SelenideElement eReports(){ return $(".MuiTypography-body2", 4).parent().parent().parent(); }
             public SelenideElement eCircles(){ return $(".MuiTypography-body2", 5).parent().parent().parent(); }
             public SelenideElement ePatients(){ return $(".MuiTypography-body2", 6).parent().parent().parent(); }
@@ -324,9 +325,10 @@ public class Main {
                 private String lastName = "";
                 private String country = "";
                 private String phone = "";
+                private String protocol = "";
                 public SelenideElement eUseExistingPatient(){ return $(".MuiTypography-subtitle2"); }
                 public SelenideElement ePatientEmail(){ return $(By.name("email")); }
-                public SelenideElement eDateOfBirth(){ return $(By.name("BirthDate")); }
+                public SelenideElement eDateOfBirth(){ return $(By.name("birthDate")); }
                 public SelenideElement eShowOptionalFields(){ return $(".MuiButton-textSecondary"); }
                 public SelenideElement eFirstName(){ return $(By.name("firstName")); }
                 public SelenideElement eLastName(){ return $(By.name("lastName")); }
@@ -335,17 +337,19 @@ public class Main {
                 public SelenideElement eSponsoredBy(){ return $("#sponsorId"); }
                 public SelenideElement eSharedWithCircles(){ return $(".#sharedCircles"); }
                 public SelenideElement eCreateCase(){ return $(".MuiButton-textSizeLarge"); }
+                public SelenideElement eForm(){ return $(".MuiDialogContent-root"); }
 
                 public void clickCreateCase(){ eCreateCase().click(); }
                 public void clickUseExistingPatient(){ eUseExistingPatient().click(); }
                 public void clickShowOptionalFields(){ eShowOptionalFields().click(); }
-                public NewCase_abstract setAll(String email, String date, String firstName, String lastName, String country, String phone){
+                public NewCase_abstract setAll(String email, String date, String firstName, String lastName, String country, String phone, String protocol){
                     this.email = email;
                     this.date = date;
                     this.firstName = firstName;
                     this.lastName = lastName;
                     this.country = country;
                     this.phone = phone;
+                    this.protocol = protocol;
                     return this;
                 }
                 public NewCase_abstract writeAll(){
@@ -358,15 +362,20 @@ public class Main {
                         eCountry().setValue(country);
                         ePhone().setValue(phone);
                     }
+                    eSponsoredBy().setValue(protocol);
+                    if(!protocol.isEmpty())Wait().until(ExpectedConditions.visibilityOf($(byText(protocol), 0))).click();
                     return this;
                 }
                 public NewCase_abstract checkAll(){
                     eEmail().shouldHave(value(email));
                     eDateOfBirth().shouldHave(value(date));
-                    eFirstName().shouldHave(value(firstName));
-                    eLastName().shouldHave(value(lastName));
-                    eCountry().shouldHave(value(country));
-                    ePhone().shouldHave(value(phone));
+                    if(!firstName.isEmpty() || !lastName.isEmpty() || !country.isEmpty() || !phone.isEmpty()) {
+                        eFirstName().shouldHave(value(firstName));
+                        eLastName().shouldHave(value(lastName));
+                        eCountry().shouldHave(value(country));
+                        ePhone().shouldHave(value(phone));
+                    }
+                    eSponsoredBy().shouldHave(value(protocol));
                     return this;
                 }
             }
