@@ -1,6 +1,7 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.*;
+import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
 import java.io.FileReader;
@@ -9,8 +10,7 @@ import java.io.IOException;
 
 import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byAttribute;
-import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.By.name;
 
@@ -297,7 +297,7 @@ public class Main {
             }}
 
             public SelenideElement eSearch(){ return $(".MuiGrid-align-items-xs-center", 0).parent().parent().parent(); }
-            public SelenideElement eNewCase(){ return $(".MuiGrid-align-items-xs-center", 1).parent().parent().parent(); }
+            public SelenideElement eNewCase(){ return $(".MuiGrid-align-items-xs-center", 1).parent(); }
             public SelenideElement eReports(){ return $(".MuiTypography-body2", 4).parent().parent().parent(); }
             public SelenideElement eCircles(){ return $(".MuiTypography-body2", 5).parent().parent().parent(); }
             public SelenideElement ePatients(){ return $(".MuiTypography-body2", 6).parent().parent().parent(); }
@@ -305,6 +305,7 @@ public class Main {
             public SelenideElement eAccount(){ return $(".MuiGrid-align-items-xs-center", 3).parent().parent().parent(); }
             public SelenideElement eProfile(){ return $(".MuiGrid-align-items-xs-center", 4).parent().parent().parent(); }
             public SelenideElement eLogout(){ return $(".MuiGrid-align-items-xs-center", 5).parent().parent().parent(); }
+            public SelenideElement eCases(){ return $(".MuiTypography-body2", 3); }
 
             public void clickSearch(){ eSearch().click(); }
             public void clickNewCase(){ eNewCase().click(); }
@@ -315,7 +316,61 @@ public class Main {
             public void clickAccount(){ eAccount().click(); }
             public void clickProfile(){ eProfile().click(); }
             public void clickLogout(){ eLogout().click(); }
+            public void clickCases(){ eCases().click(); }
+            public abstract class NewCase_abstract{
+                private String email = "";
+                private String date = "";
+                private String firstName = "";
+                private String lastName = "";
+                private String country = "";
+                private String phone = "";
+                public SelenideElement eUseExistingPatient(){ return $(".MuiTypography-subtitle2"); }
+                public SelenideElement ePatientEmail(){ return $(By.name("email")); }
+                public SelenideElement eDateOfBirth(){ return $(By.name("BirthDate")); }
+                public SelenideElement eShowOptionalFields(){ return $(".MuiButton-textSecondary"); }
+                public SelenideElement eFirstName(){ return $(By.name("firstName")); }
+                public SelenideElement eLastName(){ return $(By.name("lastName")); }
+                public SelenideElement eCountry(){ return $(By.name("countryName")); }
+                public SelenideElement ePhone(){ return $(By.name("phoneNumber")); }
+                public SelenideElement eSponsoredBy(){ return $("#sponsorId"); }
+                public SelenideElement eSharedWithCircles(){ return $(".#sharedCircles"); }
+                public SelenideElement eCreateCase(){ return $(".MuiButton-textSizeLarge"); }
 
+                public void clickCreateCase(){ eCreateCase().click(); }
+                public void clickUseExistingPatient(){ eUseExistingPatient().click(); }
+                public void clickShowOptionalFields(){ eShowOptionalFields().click(); }
+                public NewCase_abstract setAll(String email, String date, String firstName, String lastName, String country, String phone){
+                    this.email = email;
+                    this.date = date;
+                    this.firstName = firstName;
+                    this.lastName = lastName;
+                    this.country = country;
+                    this.phone = phone;
+                    return this;
+                }
+                public NewCase_abstract writeAll(){
+                    eEmail().setValue(email);
+                    eDateOfBirth().setValue(date);
+                    if(!firstName.isEmpty() || !lastName.isEmpty() || !country.isEmpty() || !phone.isEmpty()) {
+                        if(!eFirstName().is(visible)) clickShowOptionalFields();
+                        eFirstName().setValue(firstName);
+                        eLastName().setValue(lastName);
+                        eCountry().setValue(country);
+                        ePhone().setValue(phone);
+                    }
+                    return this;
+                }
+                public NewCase_abstract checkAll(){
+                    eEmail().shouldHave(value(email));
+                    eDateOfBirth().shouldHave(value(date));
+                    eFirstName().shouldHave(value(firstName));
+                    eLastName().shouldHave(value(lastName));
+                    eCountry().shouldHave(value(country));
+                    ePhone().shouldHave(value(phone));
+                    return this;
+                }
+            }
+            public class NewCase extends NewCase_abstract{}
             public class Profile{
                 public SelenideElement eEDIT(){ return $(".MuiTypography-body1", 0); }
                 public SelenideElement eChangePassword(){ return $(".MuiTypography-body1", 1); }
@@ -374,6 +429,16 @@ public class Main {
                     public void notHaveErrors(){ eErrors_Invite().shouldHave(size(0)); }
                     public void haveCircleMember(String email){ eCircleMembers().findBy(text(email)).exists(); }
                 }
+            }
+            public class Cases{
+                public SelenideElement eAddCase(){ return $(".MuiButton-contained"); }
+                public SelenideElement eSearch(){ return $(".MuiInputBase-inputAdornedStart"); }
+                public SelenideElement eTitle(){ return $("#headerText"); }
+                public ElementsCollection eItems(){ ElementsCollection collection = $$("MuiTableRow-root"); collection.remove(collection.last()); return collection; }
+
+                public void clickAddCase() { eAddCase().click(); }
+                public void clickSearch() { eSearch().click(); }
+                public class NewCase extends NewCase_abstract{}
             }
         }
     }
