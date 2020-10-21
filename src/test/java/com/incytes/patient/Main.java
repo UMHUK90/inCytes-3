@@ -10,11 +10,11 @@ import org.testng.annotations.Test;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Random;
 
 import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byAttribute;
-import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.By.name;
 import static org.openqa.selenium.By.xpath;
@@ -34,6 +34,13 @@ public class Main {
     }
     public static String currentPage(){
         return WebDriverRunner.url();
+    }
+    public static String randomText(int count){
+        String text = "";
+        Random rand = new Random();
+        char[] mass = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+        for(int step = 0; step < count; step++) text+= mass[rand.nextInt(26)];
+        return text;
     }
     public static void muiError(int size){
         $$("p.Mui-error").shouldHave(size(size));
@@ -258,6 +265,29 @@ public class Main {
         public SelenideElement eLogin(){return $(".MuiButton-sizeLarge");}
         public SelenideElement eSignIn(){return $(".MuiButton-label", 1) ;}
         public SelenideElement eForgotPassword(){return $(".MuiButtonBase-root", 0);}
+        public SelenideElement eTitle_forgotPassword(){ return $(".MuiTypography-body1"); }
+        public SelenideElement eBackToLogin_forgotPassword(){ return $(".MuiButton-label");  }
+        public SelenideElement eSubmit_forgotPassword(){ return $(".MuiButton-label", 1);  }
+        public SelenideElement eAccessCode_ResetPassword(){ return $(byName("code")); }
+        public SelenideElement eConfirmPassword_resetPassword(){ return $(byName("confirmPassword")); }
+        public SelenideElement eResetPassword_resetPassword(){ return eSubmit_forgotPassword();}
+        public SelenideElement eTitle_resetPassword(){ return eTitle_forgotPassword(); }
+
+        public void checkResetPasswordForm(){
+            eResetPassword_resetPassword().shouldBe(visible);
+            eConfirmPassword_resetPassword().shouldBe(visible);
+            eTitle_resetPassword().shouldBe(visible);
+            eAccessCode_ResetPassword().shouldBe(visible);
+        }
+        public void checkForgotPasswordForm(){
+            eTitle_forgotPassword().shouldBe(visible);
+            eEmail().shouldBe(visible);
+            eBackToLogin_forgotPassword().shouldBe(visible);
+            eSubmit_forgotPassword().shouldBe(visible);
+        }
+        public void clickBackToLogin_forgotPassword(){ eBackToLogin_forgotPassword().click(); }
+        public void clickSubmit_forgotPassword(){ eSubmit_forgotPassword().click(); }
+        public void writeEmail_forgotPassword(String email){ eEmail().setValue(email); }
         private String address = baddress + "auth/login";
         public String email = "", password = "", newPassword = "", confirmNewPassword = "";
         /** Открывает страницу входа */
@@ -380,14 +410,10 @@ public class Main {
             $(".user-account__name").click(); //
             $(byAttribute("href", "https://mail.yandex.by")).click();
         }
+        public String time;
         private String lastCode(){
-            if (!$(".mail-MessageSnippet-Item_threadExpand").parent().getText().equals($(".mail-MessageSnippet-Item_subjectWrapper").getText())) {
-                $$(byText("Your verification code to inCytes™")).first().click();
-                String code;
-                code = $(".mail-MessageSnippet-Item_firstline").closest("span").getText().substring(64).replace(".", "");}
-            else code = $(".mail-Message-Body-Content").getText().substring(64).replace(".", "");
-            this.code = code;
-            return code;
+            time = $(".mail-MessageSnippet-Item_dateText").getAttribute("title").substring(18);
+            return $(".js-message-snippet-firstline").getText().substring(26);
         }
     }
     public class GetInvitationWithYandex extends GetCodeWithYandex {
