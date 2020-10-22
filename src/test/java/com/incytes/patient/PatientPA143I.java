@@ -3,7 +3,7 @@ package com.incytes.patient;
 import com.codeborne.selenide.Condition;
 import org.testng.annotations.Test;
 
-public class PatientPA143D {
+public class PatientPA143I {
     @Test
     public void c_test() {
         Main main = new Main();
@@ -12,8 +12,8 @@ public class PatientPA143D {
         Main.Login.Home home = login.new Home();
         home.openInNewTab();
         home.clickChangePassword();
-        home.setAllPassword_changePassword("", Main.randomText(5) + " G5", "").writeAll_changePassword().checkAll_changePassword();
+        home.setAllPassword_changePassword(Main.password, Main.randomText(7)+"5", Main.password).writeAll_changePassword().checkAll_changePassword();
         home.clickSave_changePassword();
-        Main.muiError(3,1).shouldHave(Condition.text("Spaces are not allowed"));
+        Main.muiError(2,0).shouldHave(Condition.text("8 character minimum. Must contain at least 1 upper case, 1 lower case, 1 number."));
     }
 }

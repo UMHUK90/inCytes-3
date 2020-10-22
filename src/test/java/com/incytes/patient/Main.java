@@ -35,6 +35,7 @@ public class Main {
     public static String currentPage(){
         return WebDriverRunner.url();
     }
+    public static void clickOutSide(SelenideElement elementOutSide, int x, int y){ Selenide.actions().moveToElement(elementOutSide, x, y).click().build().perform(); }
     public static String randomText(int count){
         String text = "";
         Random rand = new Random();
@@ -290,9 +291,11 @@ public class Main {
         public void writeEmail_forgotPassword(String email){ eEmail().setValue(email); }
         private String address = baddress + "auth/login";
         public String email = "", password = "", newPassword = "", confirmNewPassword = "";
-        /** Открывает страницу входа */
-        public void open(){
+        /** Открывает страницу входа
+         * @return*/
+        public Login open(){
             Selenide.open(address);
+            return this;
         }
         /** Устанавливает для класса email и password */
         public Login setAll(String email, String password){
@@ -361,6 +364,61 @@ public class Main {
                 eNewPassword().setValue(newPassword);
                 eConfirmNewPassword().setValue(confirmNewPassword);
                 return this;
+            }
+        }
+        public class Home{
+            public SelenideElement eChangePassword(){ return $(".MuiSvgIcon-root", 2); }
+            public SelenideElement eInformation(){ return $(".MuiSvgIcon-root", 1);}
+            public SelenideElement eLogOut(){ return $(".MuiSvgIcon-root", 3);}
+            public SelenideElement eHome(){ return $(".MuiSvgIcon-root", 0);}
+            public SelenideElement eExistingPassword_changePassword(){ return $(byName("existingPassword")); }
+            public SelenideElement eNewPassword_changePassword(){ return $(".MuiInputBase-fullWidth", 1).lastChild(); }
+            public SelenideElement eConfirmPassword_changePassword(){ return $(".MuiInputBase-fullWidth", 2).lastChild(); }
+            public SelenideElement eSave_changePassword(){ return $(".MuiButton-text", 5); }
+            public SelenideElement eX_changePassword(){ return $(".MuiIconButton-root"); }
+            public SelenideElement eCaseInformationForm(){ return $(".MuiGrid-direction-xs-column", 3); }
+            public SelenideElement eDate_Information(){ return $(".MuiGrid-root.MuiGrid-item", 31).lastChild(); }
+            public SelenideElement eTitle_Information(){ return $(".MuiTypography-root.MuiTypography-body1", 11); }
+            public SelenideElement eClinicianName_Information(){ return $(".MuiTypography-root.MuiTypography-body2", 1); }
+            public SelenideElement ePhone_Information(){ return $(".MuiTypography-root.MuiTypography-body2", 2); }
+
+            String existingPassword = "";
+            String newPassword = "";
+            String confirmPassword = "";
+            public Home clickInformation(){ eInformation().click(); return this; }
+            public Home clickLogOut(){ eLogOut().click(); return this; }
+            public Home clickHome() { eHome().click(); return this; }
+            public void clickX_changePassword(){ eX_changePassword().click(); }
+            public void clickChangePassword(){ eChangePassword().click(); }
+            public void clickSave_changePassword(){ eSave_changePassword().click();}
+            public Home writeExistingPassword_changePassword(String existingPassword){ eExistingPassword_changePassword().setValue(existingPassword); return this;}
+            public Home writeNewPassword_changePassword(String newPassword){ eNewPassword_changePassword().setValue(newPassword); return this;}
+            public Home writeConfirmPassword_changePassword(String confirmPassword){ eConfirmPassword_changePassword().setValue(confirmPassword); return this;}
+            public Home setAllPassword_changePassword(String existingPassword, String newPassword, String confirmPassword){
+                this.existingPassword = existingPassword;
+                this.newPassword = newPassword;
+                this.confirmPassword = confirmPassword;
+                return this;
+            }
+            public Home writeAll_changePassword(){
+                writeExistingPassword_changePassword(existingPassword);
+                writeNewPassword_changePassword(newPassword);
+                writeConfirmPassword_changePassword(confirmPassword);
+                return this;
+            }
+            public Home checkAll_changePassword(){
+                eExistingPassword_changePassword().shouldHave(value(existingPassword)).shouldBe(visible);
+                eNewPassword_changePassword().shouldHave(value(newPassword)).shouldBe(visible);
+                eConfirmPassword_changePassword().shouldHave(value(confirmPassword)).shouldBe(visible);
+                eSave_changePassword().shouldBe(visible);
+                eX_changePassword().shouldBe(visible);
+                return this;
+            }
+            public void openInNewTab(){
+                Main.newTab();
+                Selenide.switchTo().window(1);
+                Selenide.open("https://alpha-patient.incytesdata-dev.com/");
+                while(true) if($$(".MuiSvgIcon-root").size() == 7) break; else sleep(50);
             }
         }
     }
