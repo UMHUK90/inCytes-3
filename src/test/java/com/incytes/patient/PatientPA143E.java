@@ -1,20 +1,19 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Condition;
 import org.testng.annotations.Test;
-
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
 
 public class PatientPA143E {
     @Test
     public void c_test() {
         Main main = new Main();
-        Main.Login login = main.new Login();
-        login.open();
-        login.setAll("andrew.grabovskiy+patient1@gmail.com", "261090inCytes").wLogin().signIn();
-        Main.Login.Portal portal = login.new Portal();
-        portal.clickChangePassword();
-        portal.setPassword("261090inCytes", "261090inCytes", "261090inCyted").wPassword().clickSavePassword();
-        $$(".Mui-error").findBy(exactText("Passwords must match")).shouldBe(visible);
+        Main.Login login = main.new Login().open();
+        login.setAll("andrew.grabovskiy+alphapat1@gmail.com", Main.password).wLogin().signIn();
+        Main.Login.Home home = login.new Home();
+        home.openInNewTab();
+        home.clickChangePassword();
+        home.setAllPassword_changePassword("", Main.password, Main.randomText(6) + "G5").writeAll_changePassword().checkAll_changePassword();
+        home.clickSave_changePassword();
+        Main.muiError(2,1).shouldHave(Condition.text("Passwords must match"));
     }
 }

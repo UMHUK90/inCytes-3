@@ -1,23 +1,19 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Condition;
 import org.testng.annotations.Test;
-
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
-import static org.openqa.selenium.By.name;
-import static org.openqa.selenium.By.xpath;
 
 public class PatientPA143G {
     @Test
     public void c_test() {
         Main main = new Main();
-        Main.Login login = main.new Login();
-        login.open();
-        login.setAll("andrew.grabovskiy+patient1@gmail.com", "261090inCytes").wLogin().signIn();
-        Main.Login.Portal portal = login.new Portal();
-        portal.clickChangePassword();
-        portal.setPassword("261090inCyt", "261090inCytes", "261090inCytes").wPassword().clickSavePassword();
-        $(byText("Action failed, please try again")).waitUntil(visible, 6000);
+        Main.Login login = main.new Login().open();
+        login.setAll("andrew.grabovskiy+alphapat1@gmail.com", Main.password).wLogin().signIn();
+        Main.Login.Home home = login.new Home();
+        home.openInNewTab();
+        home.clickChangePassword();
+        home.setAllPassword_changePassword(Main.randomText(5)+"G5", Main.password, Main.password).writeAll_changePassword().checkAll_changePassword();
+        home.clickSave_changePassword();
+        Main.eBottomMessage().shouldHave(Condition.text("Action failed, Please try again"));
     }
 }

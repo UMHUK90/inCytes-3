@@ -1,21 +1,19 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Condition;
 import org.testng.annotations.Test;
-
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
 
 public class PatientPA143C {
     @Test
     public void c_test() {
         Main main = new Main();
-        Main.Login login = main.new Login();
-        login.open();
-        login.setAll("andrew.grabovskiy+patient1@gmail.com", "261090inCytes").wLogin().signIn();
-        Main.Login.Portal portal = login.new Portal();
-        portal.clickChangePassword();
-        portal.setPassword("261090inCytes", "inCyte1", "inCyte1").wPassword().clickSavePassword();
-        $(byText("8 character minimum. Must contain at least 1 upper case, 1 lower case, 1 number."));
-        sleep(2000);
+        Main.Login login = main.new Login().open();
+        login.setAll("andrew.grabovskiy+alphapat1@gmail.com", Main.password).wLogin().signIn();
+        Main.Login.Home home = login.new Home();
+        home.openInNewTab();
+        home.clickChangePassword();
+        home.setAllPassword_changePassword("", Main.randomText(5) + "G5", "").writeAll_changePassword().checkAll_changePassword();
+        home.clickSave_changePassword();
+        Main.muiError(3,1).shouldHave(Condition.text("8 character minimum. Must contain at least 1 upper case, 1 lower case, 1 number."));
     }
 }
