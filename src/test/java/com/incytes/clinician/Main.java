@@ -17,7 +17,7 @@ import static org.openqa.selenium.By.name;
 
 /** Главный класс (контейнер) */
 public class Main {
-    interface IMethod{
+    public interface IMethod{
         @Test
         void method();
     }
@@ -49,6 +49,8 @@ public class Main {
             case "Sp": language = "es";
             break;
             case "It" : language = "it";
+            break;
+            case "De": language = "de";
             break;
             default: language = "en";
             break;
@@ -495,7 +497,9 @@ public class Main {
             $(".user-account__name").click(); //
             $(byAttribute("href", "https://mail.yandex.by")).click();
         }
+        public String time;
         private String lastCode(){
+            time = $(".mail-MessageSnippet-Item_dateText").getAttribute("title").substring(18);
             if (!$(".mail-MessageSnippet-Item_threadExpand").parent().getText().equals($(".mail-MessageSnippet-Item_subjectWrapper").getText())) {
             $$(byText("Your verification code to inCytes™")).first().click();
             String code;
