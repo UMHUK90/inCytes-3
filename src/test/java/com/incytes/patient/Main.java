@@ -273,6 +273,10 @@ public class Main {
         public SelenideElement eResetPassword_resetPassword(){ return eSubmit_forgotPassword();}
         public SelenideElement eTitle_resetPassword(){ return eTitle_forgotPassword(); }
 
+        public void clickReset_resetPassword(){ eResetPassword_resetPassword().click(); }
+        public Login writePassword_resetPassword(String password){ePassword().setValue(password); return this;}
+        public Login writeConfirmPassword_resetPassword(String password){eConfirmPassword_resetPassword().setValue(password); return this;}
+        public void writeCode_resetPassword(String code){ eAccessCode_ResetPassword().setValue(code); }
         public void checkResetPasswordForm(){
             eResetPassword_resetPassword().shouldBe(visible);
             eConfirmPassword_resetPassword().shouldBe(visible);
@@ -542,7 +546,7 @@ public class Main {
         public String time;
         private String lastCode(){
             time = $(".mail-MessageSnippet-Item_dateText").getAttribute("title").substring(18);
-            return $(".js-message-snippet-firstline").getText().substring(26);
+            return $(".js-message-snippet-firstline").getText().substring(26).replace(".", "");
         }
     }
     public class GetInvitationWithYandex extends GetCodeWithYandex {
