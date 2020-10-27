@@ -1,14 +1,16 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Condition;
 import org.testng.annotations.Test;
 
-public class PatientPA183С {
+public class PatientPA187A {
     @Test
     public void c_test() {
-        Main main = new Main();
+        Main main = new Main("It");
         Main.Login login = main.new Login();
         login.open().setAll("andrew.grabovskiy+alphapat1@gmail.com", Main.password + "!").wLogin().signIn();
         Main.Login.Home home = login.new Home();
-        home.checkHome();
+        home.eEmail_Managing().click();
+        home.eEmail_Managing().shouldHave(Condition.attribute("style", "cursor: pointer; margin-top: 3px; word-break: break-word;"));
     }
 }

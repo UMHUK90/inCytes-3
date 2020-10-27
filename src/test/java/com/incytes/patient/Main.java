@@ -1,9 +1,6 @@
 package com.incytes.patient;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
 
@@ -66,6 +63,8 @@ public class Main {
             case "Sp": language = "es";
             break;
             case "It": language = "it";
+            break;
+            case "De": language = "de";
             break;
             default: language = "en";
             break;
@@ -374,17 +373,50 @@ public class Main {
             public SelenideElement eExistingPassword_changePassword(){ return $(byName("existingPassword")); }
             public SelenideElement eNewPassword_changePassword(){ return $(".MuiInputBase-fullWidth", 1).lastChild(); }
             public SelenideElement eConfirmPassword_changePassword(){ return $(".MuiInputBase-fullWidth", 2).lastChild(); }
-            public SelenideElement eSave_changePassword(){ return $(".MuiButton-text", 5); }
+            public SelenideElement eSave_changePassword(){ return $$(".MuiButton-text").last(); }
             public SelenideElement eX_changePassword(){ return $(".MuiIconButton-root"); }
-            public SelenideElement eCaseInformationForm(){ return $(".MuiGrid-direction-xs-column", 3); }
-            public SelenideElement eDate_Information(){ return $(".MuiGrid-root.MuiGrid-item", 31).lastChild(); }
-            public SelenideElement eTitle_Information(){ return $(".MuiTypography-root.MuiTypography-body1", 11); }
+            public SelenideElement eDate_Information(){ return eInformationForm().lastChild().$$(".MuiGrid-root.MuiGrid-item").last(); }
+            public SelenideElement eTitle_Information(){ return eInformationForm().lastChild().$$(".MuiGrid-root.MuiGrid-item").first(); }
+            public SelenideElement eInformationForm(){ return $(".MuiList-root.MuiMenu-list.MuiList-padding"); }
             public SelenideElement eClinicianName_Information(){ return $(".MuiTypography-root.MuiTypography-body2", 1); }
-            public SelenideElement ePhone_Information(){ return $(".MuiTypography-root.MuiTypography-body2", 2); }
+            public SelenideElement ePhone_Information(){ return $(".MuiTypography-root.MuiTypography-body2", 4); }
+            public SelenideElement eFacilityName_Information(){ return $(".MuiTypography-root.MuiTypography-body2", 2); }
+            public SelenideElement eAddress_Information(){ return $(".MuiTypography-root.MuiTypography-body2", 3); }
+            public SelenideElement eInCytesLabel(){ return $(".MuiGrid-root.MuiGrid-container.MuiGrid-align-items-xs-center.MuiGrid-justify-xs-space-between").$(byTagName("img")); }
+            public SelenideElement eTitle(){ return $(".MuiTypography-root.MuiTypography-h3"); }
+            public SelenideElement ePatientName(){ return $(".MuiTypography-root.MuiTypography-body1"); }
+            public SelenideElement eProtocolName(){ return $(".MuiTypography-root.MuiTypography-body1", 1); }
+            public SelenideElement eScoringGroup_MyResults(){ return $(".y.axis"); }
+            public SelenideElement eGrid_MyResults(){ return $(".grid"); }
+            public SelenideElement eChartKey_MyResults(){ return $(".MuiTypography-root.MuiTypography-body1", 3); }
+            public SelenideElement eAboutGraphButton_MyResults(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text", 4); }
+            public SelenideElement eAboutGraph_MyResults(){ return $(".MuiTypography-root.MuiTypography-body1"); }
+            public SelenideElement eTreatment(){ return $(".MuiContainer-root.MuiContainer-maxWidthLg",3); }
+            public SelenideElement eIndication(){ return $(".MuiContainer-root.MuiContainer-maxWidthLg",4); }
+            public ElementsCollection eImages_Treatment(){ return eTreatment().$$("img"); }
+            public ElementsCollection eTitles_Treatment(){ return eTreatment().$$(".MuiTypography-root.MuiTypography-h4"); }
+            public ElementsCollection eTextBodies_Treatment(){ return eTreatment().$$("p"); }
+            public ElementsCollection eImages_Indication(){ return eIndication().$$("img"); }
+            public ElementsCollection eTitles_Indication(){ return eIndication().$$(".MuiTypography-root.MuiTypography-h4"); }
+            public ElementsCollection eTextBodies_Indication(){ return eIndication().$$("p"); }
+            public SelenideElement eManaging(){ return $(".MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-10"); }
+            public SelenideElement eName_Managing(){ return $(".MuiTypography-root.MuiTypography-body1"); }
+            public SelenideElement ePhoto_Managing(){ return $(".grid"); }
+            public SelenideElement eEmail_Managing(){ return $(".MuiTypography-root.MuiTypography-body2"); }
+            public SelenideElement eLogo_Managing(){ return $(".MuiAvatar-img"); }
+            public SelenideElement eFacilityAddress_Managing(){ return $(".MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12").lastChild().$(".MuiGrid-root"); }
+            public SelenideElement eFacilityPhone_Managing(){ return $(".MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12").lastChild().lastChild(); }
+            public SelenideElement eChartKeyText_MyResults(){ return $(".MuiTypography-root.MuiTypography-body1", 3); }
+            public SelenideElement eMoreButton_MyResults(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text", 5); }
+            public SelenideElement eResultGraph_MyResults(){ return $("rect"); }
+            public SelenideElement ePRPCodingSystem_MyResults(){ return $(".MuiButtonBase-root.MuiTab-root.MuiTab-textColorInherit"); }
+            public SelenideElement eAllTypesOfQuestions_MyResults(){ return $(".MuiButtonBase-root.MuiTab-root.MuiTab-textColorInherit", 1); }
 
             String existingPassword = "";
             String newPassword = "";
             String confirmPassword = "";
+            public Home clickPRPCodingSystem_MyResults(){ ePRPCodingSystem_MyResults().click(); return this;}
+            public Home clickAllTypesOfQuestions_MyResults(){ eAllTypesOfQuestions_MyResults().click(); return this;}
             public Home clickInformation(){ eInformation().click(); return this; }
             public Home clickLogOut(){ eLogOut().click(); return this; }
             public Home clickHome() { eHome().click(); return this; }
@@ -399,6 +431,45 @@ public class Main {
                 this.newPassword = newPassword;
                 this.confirmPassword = confirmPassword;
                 return this;
+            }
+            public void checkHome(){ ///////////////////////////////////////////////////////////////////////////////////
+                while(true) if($$(".MuiSvgIcon-root").size() == 7) break; else sleep(50);
+                eInCytesLabel().shouldBe(visible);
+                eTitle().shouldBe(visible);
+                eHome().shouldBe(visible);
+                eInformation().click();
+                eTitle_Information().shouldBe(visible);
+                eDate_Information().shouldBe(visible);
+                eClinicianName_Information().shouldBe(visible);
+                eFacilityName_Information().shouldBe(visible);
+                ePhone_Information().shouldBe(visible);
+                eAddress_Information().shouldBe(visible);
+                Main.clickOutSide(eAboutGraph_MyResults(), -50, -50);
+                clickChangePassword();
+                checkAll_changePassword();
+                clickX_changePassword();
+                eLogOut().shouldBe(visible);
+                ePatientName().shouldBe(visible);
+                eProtocolName().shouldBe(visible);
+                eScoringGroup_MyResults().shouldBe(visible);
+                eGrid_MyResults().shouldBe(visible);
+                eChartKey_MyResults().shouldBe(visible);
+                eAboutGraph_MyResults().shouldBe(visible);
+                eAboutGraphButton_MyResults().shouldBe(visible);
+                for (SelenideElement step:eImages_Treatment()) { step.shouldBe(visible); };
+                for (SelenideElement step:eTitles_Treatment()) { step.shouldBe(visible); };
+                for (SelenideElement step:eTextBodies_Treatment()) { step.shouldBe(visible); };
+                for (SelenideElement step:eImages_Indication()) { step.shouldBe(visible); };
+                for (SelenideElement step:eTitles_Indication()) { step.shouldBe(visible); };
+                for (SelenideElement step:eTextBodies_Indication()) { step.shouldBe(visible); };
+                eName_Managing().shouldBe(visible);
+                ePhoto_Managing().shouldBe(visible);
+                eEmail_Managing().shouldBe(visible);
+                eLogo_Managing().shouldBe(visible);
+                eFacilityAddress_Managing().shouldBe(visible);
+                eFacilityPhone_Managing().shouldBe(visible);
+                eChartKeyText_MyResults().shouldBe(visible);
+                eResultGraph_MyResults().shouldBe(visible);
             }
             public Home writeAll_changePassword(){
                 writeExistingPassword_changePassword(existingPassword);
@@ -475,7 +546,7 @@ public class Main {
         }
     }
     public class GetInvitationWithYandex extends GetCodeWithYandex {
-
+        public SelenideElement eFullMessage(){ return $(".js-message-body-content.mail-Message-Body-Content"); }
         public SelenideElement eForwardLink() {
             return $$("a").findBy(attribute("data-cke-saved-href"));
         }
@@ -485,7 +556,7 @@ public class Main {
         }
 
         public void clickForwardLink() {
-            eForwardLink().click();
+            eForwardLink().waitUntil(visible,10000).click();
         }
 
         public GetInvitationWithYandex(String email, String password, String phone) {
@@ -493,29 +564,20 @@ public class Main {
         }
 
         public void clickInvitation() {
-            super.enter();
-            if ($(".mail-MessageSnippet-Item_threadExpand").parent().getText().equals($(".mail-MessageSnippet-Item_subjectWrapper").getText())) {
-                int size;
-                while(true) if($$(".mail-MessageSnippet-Checkbox-Nb").size() > 0) { size = $$(".mail-MessageSnippet-Checkbox-Nb").size(); break;}
-                super.clickLastTitle();
-                while (true) {
-                    if ($$(".mail-MessageSnippet-Checkbox-Nb").size() > size && eLastCheckBox().is(enabled)) {
-                        super.clickLastCheckBox();
-                        break;
-                    }
-                    sleep(50);
-                }
-                while(true) { if(eLastCheckBox().has(attribute("id"))) { super.clickForward(); break; } sleep(50); }
-                clickForwardLink();
-            } else {
-                super.clickLastTitle();
-                while (true) {
-                    if (eSimpleLink().is(enabled)) {
-                        eSimpleLink().click();
-                        break;
-                    }
-                    sleep(50);
-                }
+            toInvitation();
+            //if(eLastCheckBox().is(visible)) clickForwardLink();
+            eSimpleLink().click();
+        }
+        public void toInvitation(){
+            super.enter(); //
+            if(!$(".js-message-snippet-subject").waitUntil(visible, 5000).$$("span").get(2).getText().isEmpty()){
+                $(".mail-MessageSnippet-Content").click();
+                int x = $$(".mail-MessageSnippet-Wrap").size();
+                while(true) if($$(".mail-MessageSnippet-Wrap").size() > x) break; else sleep(50);
+                $(".toggles-svgicon-on-unread", 1).click();
+            }
+            else{
+                $(".mail-MessageSnippet-Content").click();
             }
         }
     }
