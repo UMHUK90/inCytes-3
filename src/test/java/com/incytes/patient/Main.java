@@ -147,7 +147,15 @@ public class Main {
 
     // Работа с регистрацией
     public class Registration {
+        private abstract class Survey_abstract{
+            public ElementsCollection eAnswers(){ return $$("MuiFormControl-root"); }
+            public ElementsCollection eRadioButtons(){ return $$(byAttribute("type", "radio")); }
+            public ElementsCollection eCheckBoxes(){ return $$(byAttribute("type", "checkBox")); }
+            public SelenideElement eSubmit(){ return $(".MuiButton-containedSecondary"); }
 
+            public Survey_abstract clickSubmit(){ eSubmit().click(); return this;}
+        }
+        public class Survey extends Survey_abstract{};
         //Элементы Регистрации
         public SelenideElement eFirstName(){ return $(name("firstName")); }
         public SelenideElement eLastName(){ return  $(name("lastName"));}
