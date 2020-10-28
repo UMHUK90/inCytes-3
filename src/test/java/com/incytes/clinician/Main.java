@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Random;
 
 import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.*;
@@ -36,6 +37,21 @@ public class Main {
     public static void haveRequired(int size){  $$(byText("Required")).shouldHave(size(size)); }
     public static String currentPage(){
         return WebDriverRunner.url();
+    }
+    public static SelenideElement eBottomMessage(){ return $(".MuiSnackbarContent-root"); }
+    public static String randomText(int count){
+        String text = "";
+        Random rand = new Random();
+        char[] mass = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+        for(int step = 0; step < count; step++) text+= mass[rand.nextInt(26)];
+        return text;
+    }
+    public static void muiError(int size){
+        $$("p.Mui-error").shouldHave(size(size));
+    }
+    public static SelenideElement muiError(int size, int number){
+        $$("p.Mui-error").shouldHave(size(size));
+        return $("p.Mui-error", number);
     }
     /** Устанавливает язык браузера */
     public static void setLang(String language){
@@ -222,13 +238,35 @@ public class Main {
         public SelenideElement eSignIn(){return $(".MuiButton-label", 2) ;}
         public SelenideElement eForgotPassword(){return $(".MuiButtonBase-root", 0);}
         public SelenideElement eSignUp(){return $(".MuiButton-label", 1);}
-        public SelenideElement eBackToLogin_forgotPassword() { return $("a", 0); }
+        public SelenideElement eBackToLogin_forgotPassword() { return $("a"); }
         public SelenideElement eTitle_forgotPassword(){ return $(".MuiTypography-h3"); }
         public SelenideElement eSubmit_forgotPassword(){ return $(".MuiButton-label", 1); }
         public SelenideElement eSignUp_forgotPassword(){ return $(".MuiButton-label", 0); }
         public SelenideElement eInvalid_forgotPassoword() { return $(".MuiFormHelperText-filled"); }
         public SelenideElement eMessage_forgotPassword() { return $(".MuiTypography-body1"); }
         public SelenideElement eInvitation(){ return $(".MuiTypography-root"); }
+        public SelenideElement eTitle_resetPassword(){ return $("h3");}
+        public SelenideElement eNote_resetPassword(){ return $("h6");}
+        public SelenideElement eConfirmPassword_resetPassword(){ return $(byName("confirmPassword")); }
+        public SelenideElement eAccessCode_resetPassword(){ return $(byName("code"));}
+        public SelenideElement eBackToLogin_resetPassword(){ return eBackToLogin_forgotPassword().parent();}
+        public SelenideElement eResetPassword_resetPassword(){ return $(".MuiButtonBase-root");}
+
+        public Login writePassword_resetPassword(String password){ ePassword().setValue(password); return this;}
+        public Login writeConfirmPassword_resetPassword(String password){ eConfirmPassword_resetPassword().setValue(password); return this; }
+        public Login writeAccessCode_resetPassword(String code){ eAccessCode_resetPassword().setValue(code); return this;}
+        public void clickBackToLogin_resetPassword(){ eResetPassword_resetPassword().click(); }
+        public void clickReset_resetPassword(){eResetPassword_resetPassword().click();}
+
+        public Login checkResetPasswordForm(){
+            eTitle_resetPassword().shouldBe(visible);
+            eNote_resetPassword().shouldBe(visible);
+            eConfirmPassword_resetPassword().shouldBe(visible);
+            eAccessCode_resetPassword().shouldBe(visible);
+            eBackToLogin_forgotPassword().shouldBe(visible);
+            eResetPassword_resetPassword().shouldBe(visible);
+            return this;
+        }
         public void clickBackToLogin_forgotPassword(){ eBackToLogin_forgotPassword().click(); }
         public void clickSignUp_forgotPassword(){ eSignUp_forgotPassword().click(); }
         public void clickSubmit_forgotPassword(){ eSubmit_forgotPassword().click(); }
@@ -459,9 +497,9 @@ public class Main {
         public SelenideElement eLastSender(){ return $(".mail-MessageSnippet-FromText"); }
         public SelenideElement eLastTitle(){ return $(".mail-MessageSnippet-Item_body"); }
         public SelenideElement eLastText(){ return $(".mail-MessageSnippet-Item_firstline"); }
-        public SelenideElement eLastCheckBox(){ return $(".mail-MessageSnippet-Checkbox-Nb", 1); }
+        public SelenideElement eLastCheckBox(){ return $(".mail-MessageSnippet-Checkbox-Nb", 0); }
         public SelenideElement eForward(){ return $(".ns-view-toolbar-button-forward"); }
-
+        public SelenideElement eDelete(){ return $(".js-toolbar-item-delete"); }
         public void clickLastTitle(){eLastTitle().click();}
         public void clickLastCheckBox(){ eLastCheckBox().click(); }
         public void clickForward(){ eForward().click(); }
@@ -488,7 +526,7 @@ public class Main {
             return lastCode();
         }
         private void enter(){
-            $(name("login")).setValue(email);
+            $(name("login")).waitUntil(visible, 10000).setValue(email);
             $(byAttribute("type", "submit")).click();
             $(byAttribute("type", "password")).setValue(password);
             $(byAttribute("type", "submit")).click();
@@ -500,17 +538,11 @@ public class Main {
         public String time;
         private String lastCode(){
             time = $(".mail-MessageSnippet-Item_dateText").getAttribute("title").substring(18);
-            if (!$(".mail-MessageSnippet-Item_threadExpand").parent().getText().equals($(".mail-MessageSnippet-Item_subjectWrapper").getText())) {
-            $$(byText("Your verification code to inCytes™")).first().click();
-            String code;
-            code = $(".mail-MessageSnippet-Item_firstline").closest("span").getText().substring(64).replace(".", "");}
-            else code = $(".mail-Message-Body-Content").getText().substring(64).replace(".", "");
-            this.code = code;
-            return code;
+            return $(".js-message-snippet-firstline").getText().substring(26).replace(".", "");
         }
     }
     public class GetInvitationWithYandex extends GetCodeWithYandex {
-
+        public SelenideElement eFullMessage(){ return $(".js-message-body-content.mail-Message-Body-Content"); }
         public SelenideElement eForwardLink() {
             return $$("a").findBy(attribute("data-cke-saved-href"));
         }
@@ -520,7 +552,7 @@ public class Main {
         }
 
         public void clickForwardLink() {
-            eForwardLink().click();
+            eForwardLink().waitUntil(visible,10000).click();
         }
 
         public GetInvitationWithYandex(String email, String password, String phone) {
@@ -528,29 +560,20 @@ public class Main {
         }
 
         public void clickInvitation() {
-            super.enter();
-            if ($(".mail-MessageSnippet-Item_threadExpand").parent().getText().equals($(".mail-MessageSnippet-Item_subjectWrapper").getText())) {
-                int size;
-                while(true) if($$(".mail-MessageSnippet-Checkbox-Nb").size() > 0) { size = $$(".mail-MessageSnippet-Checkbox-Nb").size(); break;}
-                super.clickLastTitle();
-                while (true) {
-                    if ($$(".mail-MessageSnippet-Checkbox-Nb").size() > size && eLastCheckBox().is(enabled)) {
-                        super.clickLastCheckBox();
-                        break;
-                    }
-                    sleep(50);
-                }
-                while(true) { if(eLastCheckBox().has(attribute("id"))) { super.clickForward(); break; } sleep(50); }
-                clickForwardLink();
-            } else {
-                super.clickLastTitle();
-                while (true) {
-                    if (eSimpleLink().is(enabled)) {
-                        eSimpleLink().click();
-                        break;
-                    }
-                    sleep(50);
-                }
+            toInvitation();
+            //if(eLastCheckBox().is(visible)) clickForwardLink();
+            eSimpleLink().click();
+        }
+        public void toInvitation(){
+            super.enter(); //
+            if(!$(".js-message-snippet-subject").waitUntil(visible, 5000).$$("span").get(2).getText().isEmpty()){
+                $(".mail-MessageSnippet-Content").click();
+                int x = $$(".mail-MessageSnippet-Wrap").size();
+                while(true) if($$(".mail-MessageSnippet-Wrap").size() > x) break; else sleep(50);
+                $(".toggles-svgicon-on-unread", 1).click();
+            }
+            else{
+                $(".mail-MessageSnippet-Content").click();
             }
         }
     }
@@ -583,4 +606,5 @@ public class Main {
             $(".MuiButton-label", 1).shouldBe(visible);
         }
     }
+    public static String password = "261090inCytes";
 }
