@@ -2,7 +2,6 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
 
 import java.io.FileReader;
@@ -209,8 +208,8 @@ public class Main {
             eSubmitCode().click();
         }
         public void resendCode() {
-            $("span.MuiButton-label", 1).click();
-            $(byAttribute("var","body1")).waitUntil(visible, 6000);
+            $("button", 1).click();
+            $(byAttribute("var","body1")).waitUntil(visible, 12000);
         }
         public void haveNextButton() {
             eNext().shouldBe(visible);
@@ -367,7 +366,7 @@ public class Main {
                 private String phone = "";
                 private String protocol = "";
                 public SelenideElement eUseExistingPatient(){ return $(".MuiTypography-subtitle2"); }
-                public SelenideElement ePatientEmail(){ return $(By.name("email")); }
+                public SelenideElement ePatientIdentity(){ return $("#patientId"); }
                 public SelenideElement eDateOfBirth(){ return $(By.name("birthDate")); }
                 public SelenideElement eShowOptionalFields(){ return $(".MuiButton-textSecondary"); }
                 public SelenideElement eFirstName(){ return $(By.name("firstName")); }
@@ -393,8 +392,14 @@ public class Main {
                     return this;
                 }
                 public NewCase_abstract writeAll(){
-                    eEmail().setValue(email);
-                    eDateOfBirth().setValue(date);
+                    if(eEmail().is(exist)){
+                        eEmail().setValue(email);
+                        eDateOfBirth().setValue(date);
+                    }
+                    else {
+                        ePatientIdentity().setValue(email);
+                        /// - Здесь
+                    }
                     if(!firstName.isEmpty() || !lastName.isEmpty() || !country.isEmpty() || !phone.isEmpty()) {
                         if(!eFirstName().is(visible)) clickShowOptionalFields();
                         eFirstName().setValue(firstName);
@@ -403,11 +408,13 @@ public class Main {
                         ePhone().setValue(phone);
                     }
                     eSponsoredBy().setValue(protocol);
-                    if(!protocol.isEmpty())Wait().until(ExpectedConditions.visibilityOf($(byText(protocol), 0))).click();
+                    if(!protocol.isEmpty()) {
+                        while(true) if($(byAttribute("role", "tooltip")).waitUntil(visible, 5000).$("div").$("ul").$$("li").toArray().length == 1) { $(byAttribute("role", "tooltip")).$("div").$("ul").click(); break;}
+                    }
                     return this;
                 }
                 public NewCase_abstract checkAll(){
-                    eEmail().shouldHave(value(email));
+                    if(!eFirstName().is(visible))eEmail().shouldHave(value(email));
                     eDateOfBirth().shouldHave(value(date));
                     if(!firstName.isEmpty() || !lastName.isEmpty() || !country.isEmpty() || !phone.isEmpty()) {
                         eFirstName().shouldHave(value(firstName));
