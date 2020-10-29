@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.*;
@@ -14,6 +16,9 @@ public class ClinicianR21A {
         $$("input").findBy(attribute("placeholder", "Код подтверждения")).shouldBe(visible);
         $(byAttribute("placeholder", "Код подтверждения")).setValue("1234567890123456");
         $(byAttribute("placeholder", "Код подтверждения")).shouldHave(value("1234567890123456"));
-        close();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

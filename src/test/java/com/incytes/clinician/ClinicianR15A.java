@@ -1,11 +1,12 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.*;
 
 public class ClinicianR15A {
     @Test
@@ -17,6 +18,9 @@ public class ClinicianR15A {
         reg.setAll("","","","261090inCytes","261090inCytes!").wRegistration().cRegistration();
         reg.clickNext();
         $$(".MuiFormHelperText-filled").findBy(text("Passwords must match")).shouldBe(visible);
-        close();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

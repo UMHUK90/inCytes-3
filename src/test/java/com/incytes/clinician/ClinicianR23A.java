@@ -1,8 +1,9 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Selenide.close;
 import static com.codeborne.selenide.Selenide.switchTo;
 
 public class ClinicianR23A {
@@ -33,6 +34,9 @@ public class ClinicianR23A {
             reg.setAll("NewName", "NewLastName", "", "261090inCytes!", "261090inCytes!").wRegistration().cRegistration().clickNext();
             file.writeText(String.valueOf(count+1), false);
             dashBoard.isThisLanguage("En");
-            close();
+    }
+    @AfterMethod
+    public static void close(){
+                Selenide.close();
     }
 }

@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -13,6 +15,9 @@ public class ClinicianL30D {
         login.open();
         login.forgotPassword();
         $("h3").shouldHave(text("Сброс пароля"));
-        close();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

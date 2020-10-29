@@ -1,8 +1,8 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-
-import static com.codeborne.selenide.Selenide.*;
 
 public class ClinicianR11A {
     @Test
@@ -14,6 +14,9 @@ public class ClinicianR11A {
         reg.setAll("Андрей","","","","").wRegistration().cRegistration();
         reg.clickNext();
         reg.haveFourRequired();
-        close();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

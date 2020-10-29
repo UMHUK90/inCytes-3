@@ -1,11 +1,12 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.close;
 
 public class ClinicianR12A {
     @Test
@@ -17,6 +18,9 @@ public class ClinicianR12A {
         reg.setAll("", "Грабовский", "", "", "").wRegistration().cRegistration();
         reg.clickNext();
         reg.haveFourRequired();
-        close();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

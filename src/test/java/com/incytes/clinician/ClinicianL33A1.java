@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -14,6 +16,9 @@ public class ClinicianL33A1 {
         login.open();
         login.isVisible().setAll("andrew.grabovskiy+1001@gmail.com","261090inCytes").wLogin().signIn();
         $$("p").findBy(text("Введён неверный адрес или пароль, пожалуйста, повторите попытку. Новые пользователи должны сначала зарегистрироваться.")).shouldBe(visible);
-        close();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

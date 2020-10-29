@@ -1,8 +1,8 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-
-import static com.codeborne.selenide.Selenide.*;
 
 public class ClinicianRP40A {
     @Test
@@ -12,5 +12,9 @@ public class ClinicianRP40A {
         login.open();
         login.forgotPassword();
         login.forgotPasswordIsCorrect();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

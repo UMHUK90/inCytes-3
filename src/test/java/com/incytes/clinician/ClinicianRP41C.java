@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRP41C {
@@ -15,5 +17,9 @@ public class ClinicianRP41C {
         login.diplayedEmail_forgotPassword();
         login.clickSubmit_forgotPassword();
         login.eMessage_forgotPassword().shouldHave(Condition.text("That email address is not registered in our system, please try again."));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.*;
@@ -21,6 +23,9 @@ public class ClinicianR20A {
         $$("input").findBy(attribute("placeholder", "Код подтверждения")).shouldBe(visible);
         $$("span.MuiButton-label").findBy(text("SUBMIT")).shouldBe(visible);
         $$("span.MuiButton-label").findBy(text("Отправить код подтверждения ещё раз")).shouldBe(visible);
-        close();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

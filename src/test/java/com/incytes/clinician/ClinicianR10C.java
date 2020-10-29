@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -14,6 +16,9 @@ public class ClinicianR10C {
         reg.open();
         reg.clickHaveAnAccount();
         $("h3").shouldHave(text("Вход")).shouldBe(visible);
-        close();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

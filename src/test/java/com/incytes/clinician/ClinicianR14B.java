@@ -1,10 +1,11 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.close;
 
 public class ClinicianR14B {
     @Test
@@ -14,6 +15,9 @@ public class ClinicianR14B {
         reg.open();
         reg.setAll("", "", "Tkkjdsg@gmail.com", "Alpha77", "").clickNext();
         $("p.Mui-error").shouldBe(Condition.visible);
-        close();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

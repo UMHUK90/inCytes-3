@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRP41A {
@@ -14,5 +16,9 @@ public class ClinicianRP41A {
         login.writeEmail_forgotPassword(email);
         System.out.println(email.length());
         login.diplayedEmail_forgotPassword();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

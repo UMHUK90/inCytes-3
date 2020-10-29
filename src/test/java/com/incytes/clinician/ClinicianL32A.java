@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.value;
@@ -15,6 +17,9 @@ public class ClinicianL32A {
         login.isVisible();
         login.setAll("", "261090inCytes!261090inCytes!261090inCytes!261090inCytes!261090inCytes!261090inCytes!261090inCytes!!").wLogin();
         $(name("password")).shouldHave(value("261090inCytes!261090inCytes!261090inCytes!261090inCytes!261090inCytes!261090inCytes!261090inCytes!!"));
-        close();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

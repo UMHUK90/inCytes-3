@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -15,6 +17,9 @@ public class ClinicianR10A {
         reg.clickTCradio();
         reg.haveNextButton();
         $(".MuiButton-label", 1).shouldBe(visible); /* "Already Have an Account?" button  */
-        close();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -18,6 +20,9 @@ public class ClinicianR10D_Partial {
         reg.setAll("Andrew", "Grabovskiy", "qwertyuiop17091709+" + count + "@yandex.by", "261090inCytes", "261090inCytes").wRegistration().clickNext();
         $$("h4").findBy(text("Код подтверждения")).shouldBe(visible);
         file.writeText(String.valueOf(count+1), false);
-        close();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

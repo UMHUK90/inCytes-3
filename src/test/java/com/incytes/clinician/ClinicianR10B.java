@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.CollectionCondition.size;
@@ -16,6 +18,9 @@ public class ClinicianR10B {
         $(".MuiButton-label", 1).shouldBe(visible); /* "Already Have an Account?" button  */
         reg.clickNext();
         $$(byText("Required")).shouldHave(size(5));
-        close();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -1,9 +1,10 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.close;
 import static com.codeborne.selenide.Selenide.switchTo;
 
 public class ClinicianR22A {
@@ -31,6 +32,9 @@ public class ClinicianR22A {
             reg.clickNext();
             file.writeText(String.valueOf(count + 1), false);
             profile.eI_Invite().shouldBe(visible);
-            close();
+    }
+    @AfterMethod
+    public static void close(){
+            Selenide.close();
     }
 }

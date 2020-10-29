@@ -1,9 +1,9 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.enabled;
 
 public class ClinicianRP40Efail {
@@ -21,7 +21,10 @@ public class ClinicianRP40Efail {
         login.eEmail().shouldNotBe(enabled);
         Main.GetCodeWithYandex getcode = main.new GetCodeWithYandex("qwertyuiop17091709@yandex.ru", "cilaCILA17097938", "+375298746833");
         String code = getcode.fastCode();
-
         if(code.isEmpty()) new Exception("Код не пришёл");
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }
