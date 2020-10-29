@@ -5,7 +5,7 @@ import com.codeborne.selenide.Condition;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.Selenide.*;
 
 public class ClinicianR10F {
     @Test
@@ -18,5 +18,6 @@ public class ClinicianR10F {
         Main.Registration.TermsAndConditions terms = reg.new TermsAndConditions();
         terms.eHeading().shouldHave(Condition.exactText("Termes et conditions"));
         terms.firstText().shouldHave(text("™"));
+        close();
     }
 }

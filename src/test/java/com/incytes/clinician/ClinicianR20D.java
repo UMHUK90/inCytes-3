@@ -3,7 +3,6 @@ package com.incytes.clinician;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selenide.*;
 
 public class ClinicianR20D {
@@ -26,5 +25,6 @@ public class ClinicianR20D {
         reg.submitCode(code);
         $$("h3").findBy(text("Sign in")).shouldBe(visible);
         $$("").findBy(text("Verification confirmed."));
+        close();
     }
 }

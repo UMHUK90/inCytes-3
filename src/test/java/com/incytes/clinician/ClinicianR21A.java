@@ -14,5 +14,6 @@ public class ClinicianR21A {
         $$("input").findBy(attribute("placeholder", "Код подтверждения")).shouldBe(visible);
         $(byAttribute("placeholder", "Код подтверждения")).setValue("1234567890123456");
         $(byAttribute("placeholder", "Код подтверждения")).shouldHave(value("1234567890123456"));
+        close();
     }
 }

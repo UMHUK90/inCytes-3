@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.close;
 
 public class ClinicianR16A {
     @Test
@@ -15,5 +16,6 @@ public class ClinicianR16A {
         reg.setAll("NewNameForYou", "Your_s LastName", "andrew.grabovskiy+8@gmail.com", "Alpha54p", "Alpha54p").wRegistration().cRegistration();
         reg.clickNext();
         $(byText( "Account creation failed. Please try again. If this problem persists, please contact us at incytes@rgnmed.com")).shouldBe(Condition.visible);
+        close();
     }
 }

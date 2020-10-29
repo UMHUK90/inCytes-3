@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.close;
 import static com.codeborne.selenide.Selenide.switchTo;
 
 public class ClinicianR22B {
@@ -14,7 +15,7 @@ public class ClinicianR22B {
         int count = Integer.parseInt(file.getText());
         Main.Login login = main.new Login();
         login.open();
-        login.setAll("qwertyuiop17091709+1@yandex.by", "261090inCytes!").wLogin().signIn();
+        login.setAll("andrew.grabovskiy@gmail.com", "261090inCytes").wLogin().signIn();
         Main.Login.DashBoard dashBoard = login.new DashBoard();
         dashBoard.clickProfile();
         Main.Login.DashBoard.Profile profile = dashBoard.new Profile();
@@ -33,5 +34,6 @@ public class ClinicianR22B {
         Main.Registration.TermsAndConditions terms = reg.new TermsAndConditions();
         terms.eHeading().shouldHave(Condition.exactText("Terms and Conditions"));
         terms.firstText().shouldHave(text("™"));
+        close();
     }
 }

@@ -20,5 +20,6 @@ public class ClinicianR20C {
         switchTo().window(1);
         Main.GetCodeWithYandex getcode = main.new GetCodeWithYandex("qwertyuiop17091709@yandex.ru", "cilaCILA17097938", "+375298746833");
         String code = getcode.fastCode();
+        close();
     }
 }

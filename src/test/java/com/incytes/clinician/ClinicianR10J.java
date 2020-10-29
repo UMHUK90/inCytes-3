@@ -1,11 +1,10 @@
 package com.incytes.clinician;
 
-
 import com.codeborne.selenide.Condition;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.Selenide.*;
 
 public class ClinicianR10J {
     @Test
@@ -18,5 +17,6 @@ public class ClinicianR10J {
         Main.Registration.TermsAndConditions terms = reg.new TermsAndConditions();
         terms.eHeading().shouldHave(Condition.exactText("Términos y Condiciones"));
         terms.firstText().shouldHave(text("™"));
+        close();
     }
 }

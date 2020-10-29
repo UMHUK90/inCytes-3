@@ -15,5 +15,6 @@ public class ClinicianR21B {
         $(byAttribute("placeholder", "Код подтверждения")).shouldHave(value("123456"));
         $$(".MuiButton-label").findBy(text("SUBMIT")).click();
         $$("p").findBy(text("Не удалось подтвердить ваш адрес электронной почты")).shouldBe(visible);
+        close();
     }
 }

@@ -2,7 +2,6 @@ package com.incytes.clinician;
 
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class ClinicianR12D {
@@ -15,5 +14,6 @@ public class ClinicianR12D {
         reg.setAll("Scoring Group Test #6 Description - Single Questions Only. Scoring Group Test #6 Description - Single Questions Only. Scoring Group Test #6 Description - Single Questions Only. Scoring Group Test #6 Description - Single Questions Only. Scoring Group TestA","","","","").wRegistration().cRegistration();
         reg.clickNext();
         reg.haveFourRequired();
+        close();
     }
 }
