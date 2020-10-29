@@ -2,7 +2,6 @@ package com.incytes.clinician;
 
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$;
@@ -18,5 +17,6 @@ public class ClinicianR14C {
         reg.setAll("","","","261090 inCytes","").wRegistration().cRegistration();
         reg.clickNext();
         $$(".MuiFormHelperText-filled").findBy(text("Spaces are not allowed")).shouldBe(visible);
+        close();
     }
 }

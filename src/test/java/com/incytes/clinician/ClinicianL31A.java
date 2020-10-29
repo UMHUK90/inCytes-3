@@ -3,7 +3,7 @@ package com.incytes.clinician;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.value;
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.By.name;
 
 public class ClinicianL31A {
@@ -14,5 +14,6 @@ public class ClinicianL31A {
         login.open();
         login.isVisible().setAll("andrew.grabovskiyandrew.grabovskiyandre.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.g@gmail.com", "").wLogin();
         $(name("email")).shouldHave(value("andrew.grabovskiyandrew.grabovskiyandre.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.grabovskiyandrew.g@gmail.com"));
+        close();
     }
 }

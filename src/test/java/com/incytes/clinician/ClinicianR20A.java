@@ -21,5 +21,6 @@ public class ClinicianR20A {
         $$("input").findBy(attribute("placeholder", "Код подтверждения")).shouldBe(visible);
         $$("span.MuiButton-label").findBy(text("SUBMIT")).shouldBe(visible);
         $$("span.MuiButton-label").findBy(text("Отправить код подтверждения ещё раз")).shouldBe(visible);
+        close();
     }
 }

@@ -14,5 +14,6 @@ public class ClinicianR11A {
         reg.setAll("Андрей","","","","").wRegistration().cRegistration();
         reg.clickNext();
         reg.haveFourRequired();
+        close();
     }
 }

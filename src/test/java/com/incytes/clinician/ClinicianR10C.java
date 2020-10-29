@@ -4,7 +4,6 @@ import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.*;
 
 public class ClinicianR10C {
@@ -15,5 +14,6 @@ public class ClinicianR10C {
         reg.open();
         reg.clickHaveAnAccount();
         $("h3").shouldHave(text("Вход")).shouldBe(visible);
+        close();
     }
 }

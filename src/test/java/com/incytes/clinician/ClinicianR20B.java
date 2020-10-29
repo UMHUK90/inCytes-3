@@ -19,6 +19,8 @@ public class ClinicianR20B {
         reg.wRegistration().cRegistration().clickNext();
         file.writeText(String.valueOf(count+1), false);
         $$("span.MuiButton-label").findBy(text("Отправить код подтверждения ещё раз")).shouldBe(visible);
+        $(".MuiButton-label").click();
         $$(byText("Required")).shouldHave(size(1));
+        close();
     }
 }

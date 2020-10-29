@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 
 public class ClinicianL33A1 {
     @Test
@@ -13,6 +13,7 @@ public class ClinicianL33A1 {
         Main.Login login = main.new Login();
         login.open();
         login.isVisible().setAll("andrew.grabovskiy+1001@gmail.com","261090inCytes").wLogin().signIn();
-        $$("p").findBy(text("Адрес электронной почты или пароль неверны, пожалуйста")).shouldBe(visible);
+        $$("p").findBy(text("Введён неверный адрес или пароль, пожалуйста, повторите попытку. Новые пользователи должны сначала зарегистрироваться.")).shouldBe(visible);
+        close();
     }
 }

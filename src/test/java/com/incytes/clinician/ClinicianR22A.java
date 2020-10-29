@@ -3,6 +3,7 @@ package com.incytes.clinician;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.close;
 import static com.codeborne.selenide.Selenide.switchTo;
 
 public class ClinicianR22A {
@@ -13,7 +14,7 @@ public class ClinicianR22A {
             int count = Integer.parseInt(file.getText());
             Main.Login login = main.new Login();
             login.open();
-            login.setAll("qwertyuiop17091709+1@yandex.by", "261090inCytes!").wLogin().signIn();
+            login.setAll("andrew.grabovskiy@gmail.com", "261090inCytes").wLogin().signIn();
             Main.Login.DashBoard dashBoard = login.new DashBoard();
             dashBoard.clickProfile();
             Main.Login.DashBoard.Profile profile = dashBoard.new Profile();
@@ -30,5 +31,6 @@ public class ClinicianR22A {
             reg.clickNext();
             file.writeText(String.valueOf(count + 1), false);
             profile.eI_Invite().shouldBe(visible);
+            close();
     }
 }

@@ -2,7 +2,7 @@ package com.incytes.clinician;
 
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.close;
 
 public class ClinicianR12B {
     @Test
@@ -14,5 +14,6 @@ public class ClinicianR12B {
         reg.setAll("","éèêëçñøðåæœēčŭ","","","").wRegistration().cRegistration();
         reg.clickNext();
         reg.haveFourRequired();
+        close();
     }
 }

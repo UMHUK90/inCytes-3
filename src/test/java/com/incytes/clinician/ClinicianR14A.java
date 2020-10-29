@@ -2,7 +2,6 @@ package com.incytes.clinician;
 
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class ClinicianR14A {
@@ -15,5 +14,6 @@ public class ClinicianR14A {
         reg.setAll("","","","261090inCytes261090inCytes261090inCytes261090inCytes261090inCytes261090inCytes261090inCytes261090in","").wRegistration().cRegistration();
         reg.clickNext();
         reg.haveFourRequired();
+        close();
     }
 }

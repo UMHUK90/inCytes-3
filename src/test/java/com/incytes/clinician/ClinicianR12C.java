@@ -14,5 +14,6 @@ public class ClinicianR12C {
         reg.setAll("","æÆŒœʣʤʥʦʧʨꜷæœᵫꭡɮʩʪʫꜳꜵꜷꜹꜻꜽꝏᵺỻꜩᴂᴔꭣ₧ƕꭢﬆᵫỻﬄꭁꜼꜶꬱ","","","").wRegistration().cRegistration();
         reg.clickNext();
         reg.haveFourRequired();
+        close();
     }
 }

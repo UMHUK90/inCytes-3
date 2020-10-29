@@ -2,6 +2,7 @@ package com.incytes.clinician;
 
 import org.testng.annotations.Test;
 
+import static com.codeborne.selenide.Selenide.close;
 import static com.codeborne.selenide.Selenide.switchTo;
 
 public class ClinicianR17B {
@@ -19,5 +20,6 @@ public class ClinicianR17B {
         switchTo().window(1);
         Main.GetCodeWithYandex getcode = main.new GetCodeWithYandex("qwertyuiop17091709@yandex.ru", "cilaCILA17097938", "+375298746833");
         getcode.checkMessage();
+        close();
     }
 }
