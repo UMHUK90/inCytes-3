@@ -13,5 +13,6 @@ public class ClinicianL30E {
         login.wLogin();
         login.forgotPassword();
         login.backToLoginShouldBe_forgotPassword();
+        close();
     }
 }
