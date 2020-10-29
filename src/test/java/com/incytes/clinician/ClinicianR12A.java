@@ -13,7 +13,7 @@ public class ClinicianR12A {
         Main main = new Main("Ru");
         Main.Registration reg = main.new Registration();
         reg.open();
-        $$(".MuiButton-label").findBy(text("УЖЕ ЕСТЬ УЧЁТНАЯ ЗАПИСЬ?")).shouldBe(visible);
+        $$(".MuiButton-label").findBy(text("УЖЕ ЗАРЕГИСТРИРОВАНЫ?")).shouldBe(visible);
         reg.setAll("", "Грабовский", "", "", "").wRegistration().cRegistration();
         reg.clickNext();
         reg.haveFourRequired();
