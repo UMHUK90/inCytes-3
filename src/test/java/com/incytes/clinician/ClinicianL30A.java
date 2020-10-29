@@ -2,6 +2,8 @@ package com.incytes.clinician;
 
 import org.testng.annotations.Test;
 
+import static com.codeborne.selenide.Selenide.close;
+
 public class ClinicianL30A {
     @Test
     public void c_test() {
@@ -10,5 +12,6 @@ public class ClinicianL30A {
         login.open();
         login.isVisible();
         login.signIn();
+        close();
     }
 }
