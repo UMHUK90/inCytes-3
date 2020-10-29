@@ -1,5 +1,6 @@
 package com.incytes.clinician;
 
+import org.openqa.selenium.ElementNotVisibleException;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -21,5 +22,6 @@ public class ClinicianR20C {
         Main.GetCodeWithYandex getcode = main.new GetCodeWithYandex("qwertyuiop17091709@yandex.ru", "cilaCILA17097938", "+375298746833");
         String code = getcode.fastCode();
         close();
+        if (code.isEmpty()) throw new ElementNotVisibleException("Code is empty");
     }
 }
