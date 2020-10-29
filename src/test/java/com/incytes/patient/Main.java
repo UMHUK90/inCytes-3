@@ -43,6 +43,14 @@ public class Main {
     public static void muiError(int size){
         $$("p.Mui-error").shouldHave(size(size));
     }
+    private abstract class Survey_abstract{
+        public ElementsCollection eAnswers(){ return $$("MuiFormControl-root"); }
+        public ElementsCollection eRadioButtons(){ return $$(byAttribute("type", "radio")); }
+        public ElementsCollection eCheckBoxes(){ return $$(byAttribute("type", "checkBox")); }
+        public SelenideElement eSubmit(){ return $(".MuiButton-containedSecondary"); }
+
+        public Survey_abstract clickSubmit(){ eSubmit().click(); return this;}
+    }
     public static SelenideElement eBottomMessage(){ return $(".MuiSnackbarContent-root"); }
     public static SelenideElement muiError(int size, int number){
         $$("p.Mui-error").shouldHave(size(size));
@@ -147,14 +155,6 @@ public class Main {
 
     // Работа с регистрацией
     public class Registration {
-        private abstract class Survey_abstract{
-            public ElementsCollection eAnswers(){ return $$("MuiFormControl-root"); }
-            public ElementsCollection eRadioButtons(){ return $$(byAttribute("type", "radio")); }
-            public ElementsCollection eCheckBoxes(){ return $$(byAttribute("type", "checkBox")); }
-            public SelenideElement eSubmit(){ return $(".MuiButton-containedSecondary"); }
-
-            public Survey_abstract clickSubmit(){ eSubmit().click(); return this;}
-        }
         public class Survey extends Survey_abstract{};
         //Элементы Регистрации
         public SelenideElement eFirstName(){ return $(name("firstName")); }
@@ -423,7 +423,16 @@ public class Main {
             public SelenideElement eResultGraph_MyResults(){ return $("rect"); }
             public SelenideElement ePRPCodingSystem_MyResults(){ return $(".MuiButtonBase-root.MuiTab-root.MuiTab-textColorInherit"); }
             public SelenideElement eAllTypesOfQuestions_MyResults(){ return $(".MuiButtonBase-root.MuiTab-root.MuiTab-textColorInherit", 1); }
+            public ElementsCollection eAllResults_MyResults(){ return $$(".tooltip"); }
+            public SelenideElement eY_MyResults(){ return $(".y"); }
+            public SelenideElement eX_MyResults(){ return $(".x"); }
+            public SelenideElement eCompleteNow_Survey(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textSizeLarge.MuiButton-sizeLarge"); }
+            public ElementsCollection eGrids_MyResults(){ return $(".grid").parent().lastChild().$$("g"); }
+            public ElementsCollection ePoints_MyResults(){ return $$("circle"); }
+            public SelenideElement eLine_MyResults(){ return $(".line"); }
 
+            public void clickCompleteNow_Survey(){ eCompleteNow_Survey().click(); }
+            public class Survey extends Survey_abstract{};
             String existingPassword = "";
             String newPassword = "";
             String confirmPassword = "";
