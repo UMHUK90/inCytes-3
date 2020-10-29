@@ -2,6 +2,7 @@ package com.incytes.clinician;
 
 import org.testng.annotations.Test;
 
+import static com.codeborne.selenide.Selenide.close;
 import static com.codeborne.selenide.Selenide.switchTo;
 
 public class ClinicianR23A {
@@ -12,7 +13,7 @@ public class ClinicianR23A {
             int count = Integer.parseInt(file.getText());
             Main.Login login = main.new Login();
             login.open();
-            login.setAll("qwertyuiop17091709+1@yandex.by", "261090inCytes!").wLogin().signIn();
+            login.setAll("andrew.grabovskiy@gmail.com", "261090inCytes").wLogin().signIn();
             Main.Login.DashBoard dashBoard = login.new DashBoard();
             dashBoard.clickCircles();
             Main.Login.DashBoard.Circles circles = dashBoard.new Circles();
@@ -32,5 +33,6 @@ public class ClinicianR23A {
             reg.setAll("NewName", "NewLastName", "", "261090inCytes!", "261090inCytes!").wRegistration().cRegistration().clickNext();
             file.writeText(String.valueOf(count+1), false);
             dashBoard.isThisLanguage("En");
+            close();
     }
 }
