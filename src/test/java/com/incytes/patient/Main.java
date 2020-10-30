@@ -22,12 +22,17 @@ public class Main {
         @Test
         void method();
     }
+    private String cite = "alpha";
     private String baddress = "https://alpha-patient.incytesdata-dev.com/";
     public Main(String language){
         setLang(language);
     }
     public Main(){
         setLang("En");
+    }
+    public Main(String language, String cite){
+        setLang(language);
+        baddress = "https://"+cite+"-patient.incytesdata-dev.com/";
     }
     public static String currentPage(){
         return WebDriverRunner.url();
@@ -51,7 +56,7 @@ public class Main {
 
         public Survey_abstract clickSubmit(){ eSubmit().click(); return this;}
     }
-    public static SelenideElement eBottomMessage(){ return $(".MuiSnackbarContent-root"); }
+    public static SelenideElement eBottomMessage(){ if($(".MuiSnackbarContent-root") != null) return $(".MuiSnackbarContent-root"); else return $("MuiSnackbarContent-message");}
     public static SelenideElement muiError(int size, int number){
         $$("p.Mui-error").shouldHave(size(size));
         return $("p.Mui-error", number);
@@ -528,7 +533,6 @@ public class Main {
         public void clickLastTitle(){eLastTitle().click();}
         public void clickLastCheckBox(){ eLastCheckBox().click(); }
         public void clickForward(){ eForward().click(); }
-
         private String email, password, phone, code;
         /** Возвращает код (Если он уже получен, иначе вернётся пустая строка)*/
         public String getCode() { if(code != null) return code; return "";}
