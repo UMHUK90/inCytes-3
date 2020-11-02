@@ -107,7 +107,7 @@ public class Main {
             Selenide.closeWebDriver();
             return this;
         }
-        public MultipleMethods openWithoutException(IMethod method){ method.method(); return this;}
+        public MultipleMethods openWithoutException(IMethod method){ method.method(); Selenide.closeWebDriver(); return this;}
         public void GetExceptions(){
             if(list.length() > 0) try {
                 new Exception("Произошли ошибки в тестах");
@@ -346,7 +346,25 @@ public class Main {
             public SelenideElement eProfile(){ return $(".MuiGrid-align-items-xs-center", 4).parent().parent().parent(); }
             public SelenideElement eLogout(){ return $(".MuiGrid-align-items-xs-center", 5).parent().parent().parent(); }
             public SelenideElement eCases(){ return $(".MuiTypography-body2", 3); }
-
+            public SelenideElement eMyAlerts(){ return $(".MuiPaper-root.MuiPaper-elevation2", 1); }
+            public ElementsCollection eListOfAlerts(){ return $(".MuiTableBody-root", 1).$$(".MuiTableRow-root");}
+            public SelenideElement eBuySubscription(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-contained"); }
+            public SelenideElement eTitle_Subscription(){ return $("h3"); }
+            public SelenideElement eXClose_Subscription(){ return $(".MuiIconButton-root"); }
+            public SelenideElement eText_Subscription(){return $("h5");}
+            public SelenideElement eCheckOut_Subscription(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text"); }
+            public SelenideElement eCardNumber_Card(){ Selenide.switchTo().frame(0).switchTo().frame($(byTitle("Secure card payment input frame"))); SelenideElement element = $(".InputElement.is-empty.Input.Input--empty", 0); Selenide.switchTo().parentFrame(); return element; }
+            public SelenideElement eCardDate_Card(){ Selenide.switchTo().frame(1); SelenideElement element = $(".InputElement.is-empty.Input.Input--empty", 1); Selenide.switchTo().frame(1); return element; }
+            public SelenideElement eCVC_Card() { Selenide.switchTo().frame(1); SelenideElement element = $(".InputElement.is-empty.Input.Input--empty", 2); Selenide.switchTo().frame(1); return element; }
+            public SelenideElement eZIP_Card(){ Selenide.switchTo().frame(1); SelenideElement element = $(".InputElement.is-complete.Input"); Selenide.switchTo().frame(1); return element; }
+            public SelenideElement eSaveCard_Card(){ return eCheckOut_Subscription(); }
+            public SelenideElement ePay_Paying(){ return eCheckOut_Subscription(); }
+            public void clickSaveCard_Card(){ eSaveCard_Card().click(); }
+            public void writeCardNumber_Card(String number, String date, String CVC, String ZIP) { eCardNumber_Card().setValue(number); eCardDate_Card().setValue(date); eCVC_Card().setValue(CVC); eZIP_Card().setValue(ZIP);}
+            public void saveCard_Card(){ eSaveCard_Card().click(); }
+            public void clickX_Subscription(){ eXClose_Subscription().click(); }
+            public void clickCheckOut_Subscription(){ eCheckOut_Subscription().click(); }
+            public void clickBuySubscription(){ eBuySubscription().click(); }
             public void clickSearch(){ eSearch().click(); }
             public void clickNewCase(){ eNewCase().click(); }
             public void clickReports(){ eReports().click(); }
@@ -398,7 +416,7 @@ public class Main {
                     }
                     else {
                         ePatientIdentity().setValue(email);
-                        /// - Здесь
+                        while(true) if($(byAttribute("role", "tooltip")).waitUntil(visible, 5000).$("div").$("ul").$$("li").toArray().length == 1) { $(byAttribute("role", "tooltip")).$("div").$("ul").click(); break;}
                     }
                     if(!firstName.isEmpty() || !lastName.isEmpty() || !country.isEmpty() || !phone.isEmpty()) {
                         if(!eFirstName().is(visible)) clickShowOptionalFields();
@@ -449,6 +467,13 @@ public class Main {
                 }
                 public Profile isInvitationSent(){ eInvitationSent().shouldBe(visible); return this; }
             }
+            public class Patients{
+                public SelenideElement eSearch(){ return $(".MuiInputBase-inputAdornedStart"); }
+                public SelenideElement eAddPatient(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-contained"); }
+                public ElementsCollection eListOfPatients(){ return $(".MuiTableBody-root").$$(".MuiTableRow-root"); }
+
+
+            }
             public class Circles{
                 public SelenideElement eAllCircles(){ return $(".MuiInput-formControl"); }
                 public SelenideElement eSearch(){ return $(".MuiInputBase-inputAdornedStart"); }
@@ -490,8 +515,7 @@ public class Main {
                 public SelenideElement eAddCase(){ return $(".MuiButton-contained"); }
                 public SelenideElement eSearch(){ return $(".MuiInputBase-inputAdornedStart"); }
                 public SelenideElement eTitle(){ return $("#headerText"); }
-                public ElementsCollection eItems(){ ElementsCollection collection = $$("MuiTableRow-root"); collection.remove(collection.last()); return collection; }
-
+                public ElementsCollection eItems(){ return $(".MuiTableBody-root").$$(".MuiTableRow-root"); }
                 public void clickAddCase() { eAddCase().click(); }
                 public void clickSearch() { eSearch().click(); }
                 public class NewCase extends NewCase_abstract{}

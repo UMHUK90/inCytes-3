@@ -1,28 +1,46 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.*;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selenide.$;
 
 public class ClinicianD171A {
     @Test
-    public void OpenTwoTabs() {
-        Main main = new Main("En");
+    public void method(){
+        Configuration.timeout = 15000;
+        ClinicianR17A pa182g = new ClinicianR17A();
+        Main main = new Main();
+        Main.MultipleMethods methods = main.new MultipleMethods();
+        methods.openWithoutException(pa182g::OpenTwoTabs);
         Main.FileTXT file = main.new FileTXT("D:\\Path\\count.txt");
         int count = Integer.parseInt(file.getText());
-        Main.Registration reg = main.new Registration();
-        reg.open();
-        reg.setAll("Dmitry", "Polsky", "qwertyuiop17091709+" + count + "@yandex.by", "261090inCytes!", "261090inCytes!");
-        reg.wRegistration().cRegistration().clickNext();
-        file.writeText(String.valueOf(count+1), false);
-        Main.newTab();
-        switchTo().window(1);
-        Main.GetCodeWithYandex getcode = main.new GetCodeWithYandex("qwertyuiop17091709@yandex.ru", "cilaCILA17097938", "+375298746833");
-        String code = getcode.fastCode();
-        switchTo().window(0);
-        reg.submitCode(code);
-        Main.Login login = main.new Login();
-        login.isVisible();
-        login.setAll("qwertyuiop17091709+" + count + "@yandex.by", "261090inCytes!").wLogin().signIn();
+        Main.Login login = main.new Login().open();
+        login.setAll("qwertyuiop17091709+" + (count-1) + "@yandex.by", Main.password + "!").wLogin().signIn();
+        Main.Login.DashBoard dashBoard = login.new DashBoard();
+        dashBoard.clickBuySubscription();
+        dashBoard.eCheckOut_Subscription().shouldBe(Condition.visible);
+        dashBoard.eXClose_Subscription().shouldBe(Condition.visible);
+        dashBoard.eText_Subscription().shouldHave(Condition.text("Subscriptions are month to month, payable in advance, and cancellable at any time."));
+        dashBoard.eTitle_Subscription().shouldHave(Condition.text("Purchase Subscription"));
+        dashBoard.clickCheckOut_Subscription();
+        dashBoard.eXClose_Subscription().shouldBe(Condition.visible);
+        dashBoard.eSaveCard_Card().shouldBe(Condition.visible);
+        $(byText("Add a credit card to your account.")).shouldBe(Condition.visible);
+        $("img").shouldBe(Condition.visible);
+        $(byText("By clicking below I authorize inCytes™ to store and bill my card for new subscriptions and cases.")).shouldBe(Condition.visible);
+        dashBoard.writeCardNumber_Card("4111 1111 1111 1111", "10/25", "111", "11111"); //какая карта
+        dashBoard.clickSaveCard_Card();
+        $("h3").shouldHave(Condition.text("Confirm Changes"));
+        dashBoard.eXClose_Subscription().shouldBe(Condition.visible);
+        $(byText("Updating total users available")).shouldBe(Condition.visible);
+        $(byText("25$")).shouldBe(Condition.visible);
+        $(byText("new monthly cost")).shouldBe(Condition.visible);
+        $(byText("You are adding 0 cases. Select the pay button to pay with visa ending in")).shouldBe(Condition.visible);
+        dashBoard.ePay_Paying().shouldBe(Condition.visible).click();
+        Main.eBottomMessage().shouldHave(Condition.text("Payment Successful"));
+        dashBoard.eBuySubscription().shouldHave(Condition.text("BUY CASES")).shouldBe(Condition.visible);
+        dashBoard.clickCircles();
     }
 }
