@@ -335,7 +335,13 @@ public class Main {
                 case "It" : $(".MuiTypography-h4").shouldHave(text("Benvenuto in inCytes!"));
                 break;
             }}
-
+            public SelenideElement eOpenCasesCount(){ return $(".MuiTypography-root.MuiTypography-body1", 3); }
+            public SelenideElement eTotalPatientsCount(){ return $(".MuiTypography-root.MuiTypography-body1", 5); }
+            public SelenideElement eTotalCasesCount(){ return $(".MuiTypography-root.MuiTypography-body1", 7); }
+            public SelenideElement eGraph(){ return $(".grid"); }
+            public SelenideElement eClosedCasesCount(){ return $(".MuiTypography-root.MuiTypography-body1", 9); }
+            public SelenideElement eTitle(){ return $("svg"); }
+            public SelenideElement eDashBoard(){ return $(".MuiTypography-root.MuiTypography-body2", 2); }
             public SelenideElement eSearch(){ return $(".MuiGrid-align-items-xs-center", 0).parent().parent().parent(); }
             public SelenideElement eNewCase(){ return $(".MuiSvgIcon-root", 1).parent(); }
             public SelenideElement eReports(){ return $(".MuiTypography-body2", 4).parent().parent().parent(); }
@@ -345,22 +351,27 @@ public class Main {
             public SelenideElement eAccount(){ return $(".MuiGrid-align-items-xs-center", 3).parent().parent().parent(); }
             public SelenideElement eProfile(){ return $(".MuiGrid-align-items-xs-center", 4).parent().parent().parent(); }
             public SelenideElement eLogout(){ return $(".MuiGrid-align-items-xs-center", 5).parent().parent().parent(); }
-            public SelenideElement eCases(){ return $(".MuiTypography-body2", 3); }
+            public SelenideElement eCases(){ return $("#casesLink").parent(); }
             public SelenideElement eMyAlerts(){ return $(".MuiPaper-root.MuiPaper-elevation2", 1); }
+            public ElementsCollection eListOfTasks(){ return $(".MuiTableBody-root", 0).$$(".MuiTableRow-root"); }
             public ElementsCollection eListOfAlerts(){ return $(".MuiTableBody-root", 1).$$(".MuiTableRow-root");}
             public SelenideElement eBuySubscription(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-contained"); }
             public SelenideElement eTitle_Subscription(){ return $("h3"); }
             public SelenideElement eXClose_Subscription(){ return $(".MuiIconButton-root"); }
             public SelenideElement eText_Subscription(){return $("h5");}
             public SelenideElement eCheckOut_Subscription(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text"); }
-            public SelenideElement eCardNumber_Card(){ Selenide.switchTo().frame(0).switchTo().frame($(byTitle("Secure card payment input frame"))); SelenideElement element = $(".InputElement.is-empty.Input.Input--empty", 0); Selenide.switchTo().parentFrame(); return element; }
-            public SelenideElement eCardDate_Card(){ Selenide.switchTo().frame(1); SelenideElement element = $(".InputElement.is-empty.Input.Input--empty", 1); Selenide.switchTo().frame(1); return element; }
-            public SelenideElement eCVC_Card() { Selenide.switchTo().frame(1); SelenideElement element = $(".InputElement.is-empty.Input.Input--empty", 2); Selenide.switchTo().frame(1); return element; }
-            public SelenideElement eZIP_Card(){ Selenide.switchTo().frame(1); SelenideElement element = $(".InputElement.is-complete.Input"); Selenide.switchTo().frame(1); return element; }
+            /** It's necessary to use the switchTo.ParentFrame after this method**/
+            public SelenideElement eCardNumber_Card(){ Selenide.switchTo().frame($(byTitle("Secure card payment input frame"))); SelenideElement element = $(".Input", 0); return element; }
+            /** It's necessary to use the switchTo.ParentFrame after this method**/
+            public SelenideElement eCardDate_Card(){ Selenide.switchTo().frame($(byTitle("Secure card payment input frame"))); SelenideElement element = $(".Input", 1); return element; }
+            /** It's necessary to use the switchTo.ParentFrame after this method**/
+            public SelenideElement eCVC_Card() { Selenide.switchTo().frame($(byTitle("Secure card payment input frame"))); SelenideElement element = $(".Input", 2); return element; }
+            /** It's necessary to use the switchTo.ParentFrame after this method**/
+            public SelenideElement eZIP_Card(){ Selenide.switchTo().frame($(byTitle("Secure card payment input frame"))); SelenideElement element = $(".Input", 3); return element; }
             public SelenideElement eSaveCard_Card(){ return eCheckOut_Subscription(); }
             public SelenideElement ePay_Paying(){ return eCheckOut_Subscription(); }
             public void clickSaveCard_Card(){ eSaveCard_Card().click(); }
-            public void writeCardNumber_Card(String number, String date, String CVC, String ZIP) { eCardNumber_Card().setValue(number); eCardDate_Card().setValue(date); eCVC_Card().setValue(CVC); eZIP_Card().setValue(ZIP);}
+            public void writeCardNumber_Card(String number, String date, String CVC, String ZIP) { eCardNumber_Card().setValue(number);Selenide.switchTo().parentFrame(); eCardDate_Card().setValue(date); Selenide.switchTo().parentFrame();eCVC_Card().setValue(CVC); Selenide.switchTo().parentFrame();eZIP_Card().setValue(ZIP); Selenide.switchTo().parentFrame();}
             public void saveCard_Card(){ eSaveCard_Card().click(); }
             public void clickX_Subscription(){ eXClose_Subscription().click(); }
             public void clickCheckOut_Subscription(){ eCheckOut_Subscription().click(); }
@@ -452,7 +463,14 @@ public class Main {
                 public SelenideElement eI_Invite(){ return $((".MuiFilledInput-input")); }
                 public SelenideElement eSendInvitation(){ return $(".MuiButton-label"); }
                 public SelenideElement eInvitationSent() { return $((".MuiSnackbarContent-message"));}
-
+                public ElementsCollection eListOfTeamMembers(){ return $(".MuiTableBody-root").$$(".MuiTableRow-root"); }
+                public SelenideElement eEmail_TeamMember(){ return $$("ul").last().$$("li").first(); }
+                public SelenideElement eResend_TeamMember(){ return $$("ul").last().$$("li").get(1); }
+                public SelenideElement eRemove_TeamMember(){ return $$("ul").last().$$("li").last(); }
+                public void clickEmail_TeamMember(){ eEmail_TeamMember().click(); }
+                public void clickResend_TeamMember(){ eResend_TeamMember().click(); }
+                public void clickRemove_TeamMember(){ eRemove_TeamMember().click(); }
+                public void clickOptions_TeamMember(SelenideElement teamMember){ teamMember.find("button").click(); }
                 public void clickEDIT(){ eEDIT().click(); }
                 public void clickChangePassword(){ eChangePassword().click(); }
                 public void clickInvite(){ eInvite().click(); }
