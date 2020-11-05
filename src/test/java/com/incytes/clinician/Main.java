@@ -52,6 +52,7 @@ public class Main {
         $$("p.Mui-error").shouldHave(size(size));
         return $("p.Mui-error", number);
     }
+    public static void clickOutSide(SelenideElement elementOutSide, int x, int y){ Selenide.actions().moveToElement(elementOutSide, x, y).click().build().perform(); }
     /** Устанавливает язык браузера */
     public static void setLang(String language){
         switch (language){
@@ -394,6 +395,7 @@ public class Main {
                 private String country = "";
                 private String phone = "";
                 private String protocol = "";
+                private String shared = "";
                 public SelenideElement eUseExistingPatient(){ return $(".MuiTypography-subtitle2"); }
                 public SelenideElement ePatientIdentity(){ return $("#patientId"); }
                 public SelenideElement eDateOfBirth(){ return $(By.name("birthDate")); }
@@ -403,10 +405,13 @@ public class Main {
                 public SelenideElement eCountry(){ return $(By.name("countryName")); }
                 public SelenideElement ePhone(){ return $(By.name("phoneNumber")); }
                 public SelenideElement eSponsoredBy(){ return $("#sponsorId"); }
-                public SelenideElement eSharedWithCircles(){ return $(".#sharedCircles"); }
+                public SelenideElement eSharedWithCircles(){ return $("#sharedCircles"); }
                 public SelenideElement eCreateCase(){ return $(".MuiButton-textSizeLarge"); }
                 public SelenideElement eForm(){ return $(".MuiDialogContent-root"); }
+                public SelenideElement eEmail(){ return Login.this.eEmail(); }
+                public SelenideElement eXButton(){ return $(".MuiTypography-root.MuiTypography-h6").lastChild(); }
 
+                public void clickXButton(){ eXButton().click(); }
                 public void clickCreateCase(){ eCreateCase().click(); }
                 public void clickUseExistingPatient(){ eUseExistingPatient().click(); }
                 public void clickShowOptionalFields(){ eShowOptionalFields().click(); }
@@ -420,6 +425,10 @@ public class Main {
                     this.protocol = protocol;
                     return this;
                 }
+                public NewCase_abstract setSharedWith(String shared){
+                    this.shared = shared;
+                    return this;
+                }
                 public NewCase_abstract writeAll(){
                     if(eEmail().is(exist)){
                         eEmail().setValue(email);
@@ -427,7 +436,7 @@ public class Main {
                     }
                     else {
                         ePatientIdentity().setValue(email);
-                        while(true) if($(byAttribute("role", "tooltip")).waitUntil(visible, 5000).$("div").$("ul").$$("li").toArray().length == 1) { $(byAttribute("role", "tooltip")).$("div").$("ul").click(); break;}
+                        while(true) if($(byAttribute("role", "tooltip")).waitUntil(visible, 5000).$("div").$("ul").$$("li").toArray().length == 1) { $(byAttribute("role", "tooltip")).$("div").$("ul").shouldHave(text(email)).click(); break;}
                     }
                     if(!firstName.isEmpty() || !lastName.isEmpty() || !country.isEmpty() || !phone.isEmpty()) {
                         if(!eFirstName().is(visible)) clickShowOptionalFields();
@@ -438,13 +447,22 @@ public class Main {
                     }
                     eSponsoredBy().setValue(protocol);
                     if(!protocol.isEmpty()) {
-                        while(true) if($(byAttribute("role", "tooltip")).waitUntil(visible, 5000).$("div").$("ul").$$("li").toArray().length == 1) { $(byAttribute("role", "tooltip")).$("div").$("ul").click(); break;}
+                        while(true) if($(byAttribute("role", "tooltip")).waitUntil(visible, 5000).$("div").$("ul").$$("li").toArray().length == 1) { $(byAttribute("role", "tooltip")).$("div").$("ul").shouldHave(text(protocol)).click(); break;}
+                    }
+                    eSharedWithCircles().setValue(shared);
+                    if(!shared.isEmpty()) {
+                        while(true) if($(byAttribute("role", "tooltip")).waitUntil(visible, 5000).$("div").$("ul").$$("li").toArray().length == 1) {  $(byAttribute("role", "tooltip")).$("div").$("ul").waitUntil(enabled, 5000).shouldHave(text(shared)).click(); break;}
                     }
                     return this;
                 }
                 public NewCase_abstract checkAll(){
-                    if(!eFirstName().is(visible))eEmail().shouldHave(value(email));
-                    eDateOfBirth().shouldHave(value(date));
+                    if(eEmail().is(exist)){
+                        eEmail().shouldHave(value(email));
+                        eDateOfBirth().shouldHave(value(date));
+                    }
+                    else {
+                        ePatientIdentity().shouldHave(value(email));
+                    }
                     if(!firstName.isEmpty() || !lastName.isEmpty() || !country.isEmpty() || !phone.isEmpty()) {
                         eFirstName().shouldHave(value(firstName));
                         eLastName().shouldHave(value(lastName));
@@ -533,10 +551,36 @@ public class Main {
                 public SelenideElement eAddCase(){ return $(".MuiButton-contained"); }
                 public SelenideElement eSearch(){ return $(".MuiInputBase-inputAdornedStart"); }
                 public SelenideElement eTitle(){ return $("#headerText"); }
+                public SelenideElement eMoreOptions(SelenideElement item){ return item.find(".MuiButtonBase-root.MuiIconButton-root"); }
                 public ElementsCollection eItems(){ return $(".MuiTableBody-root").$$(".MuiTableRow-root"); }
+                public SelenideElement eClose(){ return $(".MuiListItem-gutters"); }
+                public SelenideElement eEditCase(){ return $(".MuiListItem-gutters", 1); }
+                public SelenideElement eCloseCase_CLosing(){ return $(".MuiButton-sizeLarge"); }
+                public void clickCloseCase_Closing(){ eCloseCase_CLosing().click();}
                 public void clickAddCase() { eAddCase().click(); }
+                public void toCaseDetails(SelenideElement item){ item.find("a").parent().click(); }
+                public void clickMoreOptions(SelenideElement item){ eMoreOptions(item).click(); }
+                public void clickCloseCase(){ eClose().click(); }
+                public void clickEditCase(){ eEditCase().click(); }
                 public void clickSearch() { eSearch().click(); }
                 public class NewCase extends NewCase_abstract{}
+                public class CaseDetail{
+                    public SelenideElement eTitle(){ return $(".MuiTypography-root.MuiTypography-h3"); }
+                    public SelenideElement eCloseCase_CLosing(){ return Cases.this.eCloseCase_CLosing(); }
+                    public SelenideElement eArchiveCase(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-outlined"); }
+                    public SelenideElement eCloseCase(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-outlined", 1); }
+                    public SelenideElement eEditCase(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-outlined", 2); }
+                    public ElementsCollection eListOfAlerts(){ return $(".MuiTableBody-root").$$("MuiTableRow-root"); }
+                    public SelenideElement eMoreOptions(SelenideElement alert){ return alert.find(".MuiButtonBase-root.MuiIconButton-root"); }
+                    public SelenideElement ePatientProgressForm(){ return $(".MuiPaper-root.MuiPaper-elevation2"); }
+                    public SelenideElement eArchive_Archiving(){ return $(".MuiButton-sizeLarge"); }
+                    public void clickArchiveCase(){ eArchiveCase().click(); }
+                    public void clickCLoseCase(){ eCloseCase().click(); }
+                    public void clickEditCase(){ eEditCase().click(); }
+                    public void clickMoreOptions(SelenideElement alert){ eMoreOptions(alert).click(); }
+                    public void clickArchive_Archiving(){ eArchive_Archiving().click(); }
+                    public void clickCloseCase_Closing(){ eCloseCase_CLosing().click();}
+                }
             }
         }
     }
@@ -585,8 +629,8 @@ public class Main {
             $(byAttribute("href", "https://mail.yandex.by")).click();
         }
         public String time;
-        private String lastCode(){
-            time = $(".mail-MessageSnippet-Item_dateText").getAttribute("title").substring(18);
+        protected String lastCode(){
+            time = $(".mail-MessageSnippet-Item_dateText").getText();
             return $(".js-message-snippet-firstline").getText().substring(26).replace(".", "");
         }
     }
@@ -615,6 +659,7 @@ public class Main {
         }
         public void toInvitation(){
             super.enter(); //
+            super.lastCode();
             if(!$(".js-message-snippet-subject").waitUntil(visible, 5000).$$("span").get(2).getText().isEmpty()){
                 $(".mail-MessageSnippet-Content").click();
                 int x = $$(".mail-MessageSnippet-Wrap").size();
