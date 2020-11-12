@@ -21,6 +21,30 @@ public class Main {
         @Test
         void method();
     }
+    public class List<T>{
+        Value[] mass = new Value[0];
+        public void Add(T value){
+            Value[] instead = new Value[mass.length+1];
+            for(int step = 0; step < mass.length; step++) instead[step] = mass[step];
+            mass = instead;
+            mass[mass.length-1] = new Value(value);
+        }
+        public int length(){
+            return mass.length;
+        }
+        public T getValue(int number){
+            return (T) mass[number].get();
+        }
+        class Value<T>{
+            T value;
+            public Value(T value){
+                this.value = value;
+            }
+            public T get(){
+                return value;
+            }
+        }
+    }
     private String baddress = "https://qa.incytesdata-dev.com/";
     public Main(String language){
         setLang(language);
@@ -52,6 +76,7 @@ public class Main {
         $$("p.Mui-error").shouldHave(size(size));
         return $("p.Mui-error", number);
     }
+
     public static void clickOutSide(SelenideElement elementOutSide, int x, int y){ Selenide.actions().moveToElement(elementOutSide, x, y).click().build().perform(); }
     /** Устанавливает язык браузера */
     public static void setLang(String language){
@@ -346,7 +371,7 @@ public class Main {
             public SelenideElement eSearch(){ return $(".MuiGrid-align-items-xs-center", 0).parent().parent().parent(); }
             public SelenideElement eNewCase(){ return $(".MuiSvgIcon-root", 1).parent(); }
             public SelenideElement eReports(){ return $(".MuiTypography-body2", 4).parent().parent().parent(); }
-            public SelenideElement eCircles(){ return $(".MuiTypography-body2", 5).parent().parent().parent(); }
+            public SelenideElement eCircles(){ return $(".MuiTypography-body2", 5).parent().parent().parent().waitUntil(enabled, 5000); }
             public SelenideElement ePatients(){ return $(".MuiTypography-body2", 6).parent().parent().parent(); }
             public SelenideElement eSupport(){ return $(".MuiGrid-align-items-xs-center", 2).parent().parent().parent(); }
             public SelenideElement eAccount(){ return $(".MuiGrid-align-items-xs-center", 3).parent().parent().parent(); }
@@ -521,8 +546,13 @@ public class Main {
                 public SelenideElement eProtocol_Creation(){ return $(".MuiFilledInput-input", 1); }
                 public SelenideElement eTreatment_Creation(){ return $(".MuiFilledInput-input", 2); }
                 public SelenideElement eIndication_Creation(){ return $(".MuiFilledInput-input", 3); }
-                public SelenideElement eLastCircle(){ return $(byAttribute("style", "display: block; text-decoration: none; font-weight: bold; font-size: 17px; line-height: 20px; letter-spacing: 0.16px; color: rgb(1, 16, 32); margin-bottom: 5px;")); }
+                public SelenideElement eSelectMenu(){ return $(".MuiSelect-selectMenu"); }
+                public ElementsCollection eListOfSelectMenu(){ int size = $$(".MuiList-root.MuiMenu-list.MuiList-padding").size(); return $(".MuiList-root.MuiMenu-list.MuiList-padding", size-1).$$("li");}
+                public SelenideElement eLastCircle(){ return eListOfCircles().first().find(byAttribute("style", "display: block; text-decoration: none; font-weight: bold; font-size: 17px; line-height: 20px; letter-spacing: 0.16px; color: rgb(1, 16, 32); margin-bottom: 5px;")); }
+                public ElementsCollection eListOfCircles(){ $(".MuiTableBody-root").$$("tr").first().waitUntil(enabled, 5000); return $(".MuiTableBody-root").$$("tr"); }
 
+                public void clickSelectMenu(){  eSelectMenu().click();}
+                public void selectTypeOfCircles(int type){ eSelectMenu().click(); eListOfSelectMenu().get(4).waitUntil(enabled, 10000); eListOfSelectMenu().get(type-1).click(); }
                 public Boolean isNoCircles(){ if($(".MuiTypography-h4").has(text("MuiTypography-h4"))) return true; return false; }
                 public void writeCircleName(String name){ eCircleName_Creation().setValue(name); }
                 public void clickNonPHI(){ eNonPHI_Creation().click(); }
@@ -531,6 +561,7 @@ public class Main {
                 public void writeProtocol(String name){ eProtocol_Creation().setValue(name); }
                 public void writeTreatment(String name){ eTreatment_Creation().setValue(name); }
                 public void writeIndication(String name){ eIndication_Creation().setValue(name); }
+                public void clickOnCircle(SelenideElement circle){ circle.find(byAttribute("style", "display: block; text-decoration: none; font-weight: bold; font-size: 17px; line-height: 20px; letter-spacing: 0.16px; color: rgb(1, 16, 32); margin-bottom: 5px;")).waitUntil(enabled, 5000).click(); }
                 public void clickLastCircle(){ eLastCircle().click(); }
                 public class Circle{
                     public SelenideElement eInvite() { return $(".MuiIconButton-label", 1); }
@@ -539,8 +570,69 @@ public class Main {
                     public ElementsCollection eCircleMembers() { return $$(".MuiTableRow-root"); }
                     //public SelenideElement eSponsor_Invite(){ return $(""); }
                     public SelenideElement eSendInvitation_Invite(){ return $(byAttribute("type", "submit")); }
+                    public SelenideElement eEditCircle(){ return $(".MuiButtonBase-root.MuiIconButton-root"); }
+                    public SelenideElement eNameOfScoringGroup(){ return $(".MuiSelect-root.MuiSelect-select.MuiSelect-selectMenu.MuiInputBase-input.MuiInput-input"); }
+                    public void toListOfScoringGroups(){ eNameOfScoringGroup().click(); }
+                    public ElementsCollection eListOfScoringGroups(){ return $(".MuiList-root.MuiMenu-list.MuiList-padding").$$("li"); }
+                    public SelenideElement eGraph(){ return $("#chart").$("svg"); }
+
+                    //EditCircle
+                    String circleName = "", description = "", country = "", phone = "", streetAddress = "", city = "", state = "", postalCode = "";
+                    boolean isArchive;
+                    public SelenideElement eTitle_EditCircle(){ return $(".MuiTypography-root.MuiTypography-h3", 1); }
+                    public SelenideElement eCircleName_EditCircle(){ return $(byName("name")); }
+                    public SelenideElement eDescription_EditCircle(){ return $(byName("description")); }
+                    public SelenideElement eCountry_EditCircle(){ return $(byName("countryName")); }
+                    public SelenideElement ePhone_EditCircle(){ return $(byName("phoneNumber")); }
+                    public SelenideElement eStreetAddress_EditCircle(){ return $(byName("streetAddress")); }
+                    public SelenideElement eCity_EditCircle(){ return $(byName("city")); }
+                    public SelenideElement eState_EditCircle(){ return $(byName("state")); }
+                    public SelenideElement ePostalCode_EditCircle(){ return $(byName("postalCode")); }
+                    public SelenideElement eArchive_EditCircle(){ return $(byName("isArchived")); }
+                    public SelenideElement eSaveButton_EditCircle(){ return $(".MuiButton-sizeLarge"); }
+
+                    public void clickArchive_EditCircle(){ eArchive_EditCircle().click(); }
+                    public void clickSaveButton_EditCircle(){ eSaveButton_EditCircle().click(); }
+                    public Circle setAll_EditCircle(String circleName, String description, String country, String phone, String streetAddress, String city,String state, String postalCode, boolean isArchive ){
+                        this.circleName = circleName;
+                        this.description = description;
+                        this.country = country;
+                        this.phone = phone;
+                        this.streetAddress = streetAddress;
+                        this.city = city;
+                        this.postalCode = postalCode;
+                        this.state = state;
+                        this.isArchive = isArchive;
+                        return this;
+                    }
+                    public Circle setAll_EditCircle(){
+                        if(!circleName.isEmpty()) eCircleName_EditCircle().setValue(circleName);
+                        if(!description.isEmpty()) eDescription_EditCircle().setValue(description);
+                        if(!country.isEmpty()) eCountry_EditCircle().setValue(country);
+                        if(!phone.isEmpty()) ePhone_EditCircle().setValue(phone);
+                        if(!streetAddress.isEmpty()) eStreetAddress_EditCircle().setValue(streetAddress);
+                        if(!city.isEmpty()) eCity_EditCircle().setValue(city);
+                        if(!postalCode.isEmpty()) ePostalCode_EditCircle().setValue(postalCode);
+                        if(!state.isEmpty()) eState_EditCircle().setValue(state);
+                        if((isArchive && !Boolean.getBoolean(eArchive_EditCircle().getValue())) || (!isArchive && Boolean.getBoolean(eArchive_EditCircle().getValue()))) eArchive_EditCircle().click();
+                        return this;
+                    }
+                    public Circle checkAll(){
+                        if(!circleName.isEmpty()) eCircleName_EditCircle().shouldHave(text(circleName));
+                        if(!description.isEmpty()) eDescription_EditCircle().shouldHave(text(description));
+                        if(!country.isEmpty()) eCountry_EditCircle().shouldHave(text(country));
+                        if(!phone.isEmpty()) ePhone_EditCircle().shouldHave(text(phone));
+                        if(!streetAddress.isEmpty()) eStreetAddress_EditCircle().shouldHave(text(streetAddress));
+                        if(!city.isEmpty()) eCity_EditCircle().shouldHave(text(city));
+                        if(!postalCode.isEmpty()) ePostalCode_EditCircle().shouldHave(text(postalCode));
+                        if(!state.isEmpty()) eState_EditCircle().shouldHave(text(state));
+                        eArchive_EditCircle().shouldHave(value(String.valueOf(isArchive)));
+                        return this;
+                    }
+
 
                     public void clickInvite() { eInvite().click();}
+                    public void clickEditCircle(){ eEditCircle().click(); }
                     public void writeEmail_Invite(String email){ eEmail_Invite().setValue(email); }
                     public void clickSendInvitation_Invite(){ eSendInvitation_Invite().click(); }
                     public void notHaveErrors(){ eErrors_Invite().shouldHave(size(0)); }
@@ -580,6 +672,96 @@ public class Main {
                     public void clickMoreOptions(SelenideElement alert){ eMoreOptions(alert).click(); }
                     public void clickArchive_Archiving(){ eArchive_Archiving().click(); }
                     public void clickCloseCase_Closing(){ eCloseCase_CLosing().click();}
+                }
+            }
+            public class Reports{
+                public SelenideElement eTitle(){ return $(".MuiTypography-root.MuiTypography-h3"); }
+                public SelenideElement eBuildReport(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-contained"); }
+                public SelenideElement eSavedReportsForm(){ return $(".MuiPaper-rounded"); }
+                public SelenideElement eKOOSForm(){ return $(".MuiPaper-rounded", 1);}
+                public ElementsCollection eListOfSavedReports(){ return $$(".MuiGrid-root.MuiGrid-container.MuiGrid-align-items-xs-flex-start.MuiGrid-justify-xs-space-between"); }
+                public SelenideElement eMoreOptions(SelenideElement report){ return report.find(".MuiButtonBase-root.MuiIconButton-root"); }
+                public SelenideElement eNameReport(){ return $(".MuiListItem-button"); }
+                public SelenideElement eRemoveReport(){ return $(".MuiListItem-button", 1); }
+                public SelenideElement eEditReport(){ return $(byAttribute("style", "color: rgb(19, 104, 236);")).waitUntil(exist, 5000).waitUntil(enabled, 5000); }
+                public SelenideElement eReportName_Build(){ return $(byName("name")); }
+                public SelenideElement eCreateReport_Build(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textSizeLarge.MuiButton-sizeLarge"); }
+                public SelenideElement eXClose_Build(){ return $(".MuiButtonBase-root.MuiIconButton-root", 3); }
+                public SelenideElement eTitle_Build(){ return $(".MuiTypography-alignLeft"); }
+                public SelenideElement eChartSection(){ return $(".MuiPaper-rounded", 1); }
+                public SelenideElement eName_ChartSection(){ return eChartSection().find(".MuiTypography-body1"); }
+                public SelenideElement eRemove_Removing(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textSizeLarge.MuiButton-sizeLarge"); }
+                public void clickRemove_Removing(){ eRemove_Removing().click(); }
+                public void clickXClose_Build(){ eXClose_Build().click(); }
+                public void clickBuildReport(){ eBuildReport().click(); }
+                public void selectReport(SelenideElement report){ report.find("h6").click(); }
+                public void clickMoreOptions(SelenideElement report) { eMoreOptions(report).click(); }
+                public void clickEditReport(){ Selenide.sleep(2000); eEditReport().click(); }
+                public void clickNameReport(){ eNameReport().click(); }
+                public void clickRemoveReport(){ eRemoveReport().click(); }
+                public void clickCreateReport_Build(){ eCreateReport_Build().click(); }
+                public void writeNameReport(String name){ eReportName_Build().setValue(name); }
+                public class ReportBuilder{
+                    public SelenideElement eTitle(){ return $(".MuiTypography-root.MuiTypography-h3"); }
+                    public SelenideElement eBackToReports(){ return $(byAttribute("href", "/reports")); }
+                    public SelenideElement eCirclesButton(){ $(".MuiButtonBase-root.MuiButton-root.MuiButton-text", 2).waitUntil(enabled, 5000); return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text").waitUntil(enabled, 5000); }
+                    public SelenideElement eYAxisButton(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text", 1); }
+                    public SelenideElement ePopulationButton(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text", 2); }
+                    public SelenideElement eAddCohortButton(){ return $(byAttribute("style", "padding: 15px; border: 1px dashed rgb(0, 122, 255); border-radius: 5px; cursor: pointer;")); }
+                    public SelenideElement eCasesCount(){ return $(byAttribute("style", "font-size: 64px; font-weight: bold; color: rgb(188, 193, 201);"), 1); }
+                    public SelenideElement eDataPointsCount(){ return $(byAttribute("style", "font-size: 64px; font-weight: bold; color: rgb(188, 193, 201);"), 2); }
+                    public SelenideElement eCohortACasesCount(){ return $(byAttribute("style", "font-size: 64px; font-weight: bold; color: rgb(188, 193, 201);"), 3); }
+                    public SelenideElement eCohortBCasesCount(){ return $(byAttribute("style", "font-size: 64px; font-weight: bold; color: rgb(188, 193, 201);"), 4); }
+                    public List<SelenideElement> eListOfCohorts(){ List<SelenideElement> elements = new List<SelenideElement>(); for(int step = 0; step < $(byAttribute("style", "justify-content: space-between;")).parent().parent().$$(".MuiGrid-root.MuiGrid-item").size(); step++) if($(byAttribute("style", "justify-content: space-between;")).parent().parent().$$(".MuiGrid-root.MuiGrid-item").get(step).lastChild().lastChild().lastChild().find("button").exists()) elements.Add($(byAttribute("style", "justify-content: space-between;")).parent().parent().$$(".MuiGrid-root.MuiGrid-item").get(step)); return elements;}
+                    public SelenideElement eGraph(){ return $(byAttribute("style", "flex: 0.9 1 0%;")); }
+                    public SelenideElement eYAxis(){ return $(".yAxisGroup"); }
+                    public SelenideElement eNameOfCurrentCircle(){ return $(".MuiTypography-root.MuiTypography-body1", 1); }
+                    public SelenideElement eNameOfCurrentScoringGroup(){ return $(".MuiTypography-root.MuiTypography-body1", 3); }
+
+                    //AddCohort
+                    public SelenideElement eTitle_Cohort(){ return eTitle_YAxis(); }
+                    public ElementsCollection eCheckBoxes_Cohort(){ return $$(byAttribute("type", "checkbox")); }
+                    public SelenideElement eAddCohortFiler_Cohort(){ return $(".MuiButton-sizeSmall"); }
+                    public void clickAddCohortFilter_Cohort(){ eAddCohortFiler_Cohort().click(); }
+                    public ElementsCollection eButtonsOfList_Cohort(){ return $$(byAttribute("aria-haspopup", "listbox")); }
+                    public ElementsCollection eListOfAnswers(){ return $$(".MuiList-root.MuiMenu-list.MuiList-padding").find(visible).$$("li"); }
+                    public ElementsCollection eInputsOfQuestions(){ Selenide.sleep(500); if($$("input").filter(attribute("maxlength", "255")).first().exists()) return $$("input").filter(attribute("maxlength", "255")); else if($$("input").filter(attribute("maxlength", "10")).first().exists()) return $$("input").filter(attribute("maxlength", "10")); else return $$("input").filter(attribute("style", "color: white; background-color: rgb(36, 48, 65); padding-left: 10px;"));}
+                    public void selectListAnswer_Cohort(int numberOfButton, int numberOfAnswer){ eButtonsOfList_Cohort().get(numberOfButton+1).waitUntil(enabled, 5000).click(); eListOfAnswers().get(numberOfAnswer).waitUntil(enabled, 5000).click(); }
+                    public SelenideElement eInput_Cohort(){ return $("#react-autosuggest-popper"); }
+                    public SelenideElement eDone_Cohort(){ return $$(".MuiButton-sizeSmall").last(); }
+                    public ElementsCollection eListOfCohorts_Cohort(){ return $$("ul").filter(attribute("role", "listbox")).first().$$("li"); }
+                    public void selectCohort_Cohort(String cohort){ eInput_Cohort().setValue(cohort); eListOfCohorts_Cohort().find(text(cohort)).waitUntil(enabled, 5000).click(); }
+                    public void clickDone_Cohort(){ eDone_Cohort().click(); }
+                    public SelenideElement eXCloseButton_Cohort(){ return $(".MuiButtonBase-root.MuiIconButton-root", 4); }
+                    public SelenideElement eAddTab_Cohort(){ return $(".MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary"); }
+                    public void clickXCloseButton_Cohort(){ eXCloseButton_Cohort().click(); }
+                    //CircleForm
+                    public SelenideElement eInputCircle_Circle(){ return $(".MuiFormControl-root.MuiFormControl-fullWidth"); }
+                    public SelenideElement eUpdateReport_Circle(){ return $(".MuiButton-sizeLarge"); }
+                    public SelenideElement eXCloseButton_Circle(){ return $(".MuiButtonBase-root.MuiIconButton-root", 2).waitUntil(enabled, 5000); }
+                    public SelenideElement eTitle_Circle(){ return $(".MuiTypography-root.MuiTypography-h3.MuiTypography-alignLeft"); }
+                    public void clickUpdateReport_Circle(){ eUpdateReport_Circle().click(); }
+                    public void clickXcloseButton_Circle(){ eXCloseButton_Circle().waitUntil(enabled, 5000).click();}
+                    public ElementsCollection eListOfCircles(){ $$(".MuiList-root.MuiMenu-list.MuiList-padding").findBy(visible).$$("li").first().waitUntil(enabled, 5000); return $$(".MuiList-root.MuiMenu-list.MuiList-padding").findBy(visible).$$("li"); }
+                    public void selectCircle_Circle(String circle){ eInputCircle_Circle().click();
+                        eListOfCircles().findBy(text(circle)).waitUntil(enabled, 5000).click();
+                    }
+
+                    //YaxisForm
+                    public SelenideElement eInputScoringGroup_YAxis(){ return eInputCircle_Circle(); }
+                    public SelenideElement eSubmit_YAxis(){ return eUpdateReport_Circle(); }
+                    public SelenideElement eXCloseButton_YAxis(){ return eXCloseButton_Circle(); }
+                    public SelenideElement eTitle_YAxis(){ return eTitle_Circle(); }
+                    public void clickSubmitButton_YAxis(){ clickUpdateReport_Circle(); }
+                    public void clickXcloseButton_YAxis(){ clickXcloseButton_Circle(); }
+                    public void selectScoringGroup_YAxis(String scoringGroup){ selectCircle_Circle(scoringGroup); }
+                    public ElementsCollection eListOfScoringGroups(){ return eListOfCircles(); }
+
+                    public void clickAddCohortButton(){ eAddCohortButton().waitUntil(enabled, 5000).click(); }
+                    public void clickYAxisButton(){ eYAxisButton().click(); }
+                    public void clickBackToReports(){ eBackToReports().click(); }
+                    public void clickCirclesButton(){ eCirclesButton().waitUntil(enabled, 10000).click(); }
+                    public void clickPopulationButton(){ ePopulationButton().click(); }
                 }
             }
         }
