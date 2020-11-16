@@ -45,6 +45,11 @@ public class Main {
             }
         }
     }
+    public abstract class TermsAndConditions_abstract{
+        public SelenideElement eHeading(){return $(".MuiTypography-h3");}
+        public ElementsCollection eLinks(){ return $$("a"); }
+        public SelenideElement firstText(){return $(".MuiTypography-body2");}
+    }
     private String baddress = "https://qa.incytesdata-dev.com/";
     public Main(String language){
         setLang(language);
@@ -247,12 +252,7 @@ public class Main {
         public void haveAnAccount(){ eHaveAnAccount().shouldBe(visible); }
         public void haveFourRequired(){  $$(byText("Required")).shouldHave(size(4)); }
         public void clickTerms(){ eTermsAndConditions().click(); }
-
-        public class TermsAndConditions{
-            public SelenideElement eHeading(){return $(".MuiTypography-h3");}
-            public ElementsCollection eLinks(){ return $$("a"); }
-            public SelenideElement firstText(){return $(".MuiTypography-body2");}
-        }
+        public class TermsAndConditions extends TermsAndConditions_abstract{}
     }
     /** Класс предназначен для работы с формой входа */
     public class Login{
@@ -536,6 +536,7 @@ public class Main {
 
             }
             public class Circles{
+                public class TermsAndConditions extends TermsAndConditions_abstract {}
                 public SelenideElement eAllCircles(){ return $(".MuiInput-formControl"); }
                 public SelenideElement eSearch(){ return $(".MuiInputBase-inputAdornedStart"); }
                 public SelenideElement eCreateCircle(){ return $(".MuiButton-contained"); }
@@ -550,7 +551,14 @@ public class Main {
                 public ElementsCollection eListOfSelectMenu(){ int size = $$(".MuiList-root.MuiMenu-list.MuiList-padding").size(); return $(".MuiList-root.MuiMenu-list.MuiList-padding", size-1).$$("li");}
                 public SelenideElement eLastCircle(){ return eListOfCircles().first().find(byAttribute("style", "display: block; text-decoration: none; font-weight: bold; font-size: 17px; line-height: 20px; letter-spacing: 0.16px; color: rgb(1, 16, 32); margin-bottom: 5px;")); }
                 public ElementsCollection eListOfCircles(){ $(".MuiTableBody-root").$$("tr").first().waitUntil(enabled, 5000); return $(".MuiTableBody-root").$$("tr"); }
-
+                public SelenideElement eTitle_Creation(){ return $(".MuiTypography-alignLeft"); }
+                public ElementsCollection eListOfProtocols_Creation(){ return $$("ul").find(visible).$$("li"); }
+                public SelenideElement eCreateCircle_Creation(){ return $(".MuiButton-sizeLarge"); }
+                public SelenideElement eInputCases_Creation_Cases(){  return $(byName("sponsoredCases"));}
+                public SelenideElement eObservationalProtocol_Creation(){ return  $("#protocolId");}
+                public void clickCreateCircle_Creation(){ eCreateCircle_Creation().click(); }
+                public SelenideElement eTermsAndConditions_Creation(){ return $(byAttribute("href", "/terms")); }
+                public void clickCreateCircle(){ eCreateCircle().click();}
                 public void clickSelectMenu(){  eSelectMenu().click();}
                 public void selectTypeOfCircles(int type){ eSelectMenu().click(); eListOfSelectMenu().get(4).waitUntil(enabled, 10000); eListOfSelectMenu().get(type-1).click(); }
                 public Boolean isNoCircles(){ if($(".MuiTypography-h4").has(text("MuiTypography-h4"))) return true; return false; }
