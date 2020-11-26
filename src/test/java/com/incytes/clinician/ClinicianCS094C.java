@@ -18,6 +18,6 @@ public class ClinicianCS094C {
         newCase.ePatientIdentity().shouldBe(Condition.visible);
         newCase.eSponsoredBy().shouldBe(Condition.visible);
         newCase.eSharedWithCircles().shouldBe(Condition.visible);
-        newCase.setAll("qwertyuiop17091709+243@yandex.by", "", "", "", "", "", "").writeAll();
+        newCase.setAll("qwertyuiop17091709+243@yandex.by", "", "", "", "", "", "").writeAll().checkAll();
     }
 }
