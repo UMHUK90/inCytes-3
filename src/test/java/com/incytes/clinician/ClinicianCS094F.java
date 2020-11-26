@@ -13,6 +13,6 @@ public class ClinicianCS094F {
         Main.Login.DashBoard.Cases cases = dashBoard.new Cases();
         cases.clickAddCase();
         Main.Login.DashBoard.Cases.NewCase newCase = cases.new NewCase();
-        newCase.setAll("", "", "", "", "", "", "Common").writeAll();
+        newCase.setAll("", "", "", "", "", "", "Common").writeAll().checkAll();
     }
 }
