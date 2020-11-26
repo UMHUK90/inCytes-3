@@ -13,6 +13,6 @@ public class ClinicianCS094H {
         Main.Login.DashBoard.Cases cases = dashBoard.new Cases();
         cases.clickAddCase();
         Main.Login.DashBoard.Cases.NewCase newCase = cases.new NewCase();
-        newCase.setSharedWith("Common Protocol").writeAll();
+        newCase.setSharedWith("Common Protocol").writeAll().checkAll();
     }
 }
