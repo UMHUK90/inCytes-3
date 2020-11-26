@@ -472,7 +472,7 @@ public class Main {
                     }
                     eSponsoredBy().setValue(protocol);
                     if(!protocol.isEmpty()) {
-                        while(true) if($(byAttribute("role", "tooltip")).waitUntil(visible, 5000).$("div").$("ul").$$("li").toArray().length == 1) { $(byAttribute("role", "tooltip")).$("div").$("ul").shouldHave(text(protocol)).click(); break;}
+                        while(true) if($(byAttribute("role", "tooltip")).waitUntil(visible, 5000).$("div").$("ul").$$("li").toArray().length == 1) { $(byAttribute("role", "tooltip")).$("div").$("ul").$("li").waitUntil(text(protocol), 5000).parent().click(); break;}
                     }
                     eSharedWithCircles().setValue(shared);
                     if(!shared.isEmpty()) {
