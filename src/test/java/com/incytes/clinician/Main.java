@@ -58,7 +58,7 @@ public class Main {
         setLang("En");
     }
     public static void close(){
-        Selenide.closeWebDriver();
+        Selenide.close();
     }
     /** Открывает новое окно */
     public static void newTab(){ Selenide.executeJavaScript("window.open()");}
@@ -135,10 +135,10 @@ public class Main {
             } catch (Throwable e) {
                 list.Add(name + "   -   " + e);
             }
-            Selenide.closeWebDriver();
+            Selenide.close();
             return this;
         }
-        public MultipleMethods openWithoutException(IMethod method){ method.method(); Selenide.closeWebDriver(); return this;}
+        public MultipleMethods openWithoutException(IMethod method){ method.method(); Selenide.close(); return this;}
         public void GetExceptions(){
             if(list.length() > 0) try {
                 new Exception("Произошли ошибки в тестах");
@@ -195,7 +195,7 @@ public class Main {
         //All
         public String firstName = "", lastName = "", email = "", password = "", verifyPassword = "";
 
-             /** Открывает ссылку в настоящем окне */
+        /** Открывает ссылку в настоящем окне */
         public void open() {
             Selenide.open(address);
         }
@@ -209,7 +209,7 @@ public class Main {
             this.verifyPassword = verifyPassword;
             return this;
         }
-             /** Вводит записанные данные на страницу регистрации / в случае их отсутствия введутся пустые строки */
+        /** Вводит записанные данные на страницу регистрации / в случае их отсутствия введутся пустые строки */
         public Registration wRegistration() {
             eFirstName().setValue(firstName);
             eLastName().setValue(lastName);
@@ -219,7 +219,7 @@ public class Main {
             return this;
         }
 
-               /** Проверяет на присутствие введённых данных (можно пропустить) */
+        /** Проверяет на присутствие введённых данных (можно пропустить) */
         public Registration cRegistration() {
             eFirstName().shouldHave(Condition.value(firstName));
             eLastName().shouldHave(Condition.value(lastName));
@@ -228,12 +228,12 @@ public class Main {
             eVerifyPassword().shouldHave(Condition.value(verifyPassword));
             return this;
         }
-         /** Соглашается с лицензией и отправляет данные */
+        /** Соглашается с лицензией и отправляет данные */
         public void clickNext() {
             eCheckBox().click();
             eNext().click();
         }
-             /** Вводит код и отправляет */
+        /** Вводит код и отправляет */
         public void submitCode(String code) {
             eInputCode().setValue(code);
             eSubmitCode().click();
@@ -372,7 +372,7 @@ public class Main {
             public SelenideElement eNewCase(){ return $(".MuiSvgIcon-root", 1).parent(); }
             public SelenideElement eReports(){ return $(".MuiTypography-body2", 4).parent().parent().parent(); }
             public SelenideElement eCircles(){ return $(".MuiTypography-body2", 5).parent().parent().parent().waitUntil(enabled, 5000); }
-            public SelenideElement ePatients(){ return $(".MuiTypography-body2", 6).parent().parent().parent(); }
+            public SelenideElement ePatients(){ return $(".MuiTypography-body2", 7).parent().parent().parent(); }
             public SelenideElement eSupport(){ return $(".MuiGrid-align-items-xs-center", 2).parent().parent().parent(); }
             public SelenideElement eAccount(){ return $(".MuiGrid-align-items-xs-center", 3).parent().parent().parent(); }
             public SelenideElement eProfile(){ return $(".MuiGrid-align-items-xs-center", 4).parent().parent().parent(); }
