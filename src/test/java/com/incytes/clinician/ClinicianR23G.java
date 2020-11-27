@@ -16,7 +16,7 @@ public class ClinicianR23G {
             int count = Integer.parseInt(file.getText());
             Main.Login login = main.new Login();
             login.open();
-            login.setAll("andrew.grabovskiy@gmail.com", "261090inCytes").wLogin().signIn();
+            login.setAll("andrew.grabovskiy+6@gmail.com", "261090inCytes").wLogin().signIn();
             Main.Login.DashBoard dashBoard = login.new DashBoard();
             dashBoard.clickCircles();
             Main.Login.DashBoard.Circles circles = dashBoard.new Circles();
