@@ -18,7 +18,7 @@ public class ClinicianСO61K {
         dashBoard.clickCircles();
         Main.Login.DashBoard.Circles circles = dashBoard.new Circles();
         circles.clickCreateCircle();
-        circles.eObservationalProtocol_Creation().setValue("Common Protocol");
+        circles.eObservationalProtocol_Creation().setValue("Common");
         circles.eListOfProtocols_Creation().find(text("Common Protocol")).shouldBe(visible);
         circles.clickCreateCircle_Creation();
         Main.haveRequired(2);
