@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -16,5 +18,9 @@ public class ClinicianСO62C {
         String text = "hel 0 0 11/13/20 andrew.grabovskiy";
         circles.eSearch().setValue(text);
         for (String str:text.split(" ")) circles.eListOfCircles().first().shouldHave(text("str"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

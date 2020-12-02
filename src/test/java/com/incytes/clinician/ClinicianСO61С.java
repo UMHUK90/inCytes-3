@@ -1,11 +1,11 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selectors.byTitle;
 import static com.codeborne.selenide.Selenide.$;
@@ -29,5 +29,9 @@ public class ClinicianСO61С {
         circles.clickCreateCircle_Creation();
         circles.eNonPHI_Creation().shouldBe(Condition.not(Condition.visible));
         circles.eListOfCircles().last().shouldHave(text(text)).find(byTitle("Non-PHI"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

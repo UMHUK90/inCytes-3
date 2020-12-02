@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.value;
@@ -26,5 +28,9 @@ public class ClinicianСO61H {
         circles.eInputCases_Creation_Cases().shouldNotBe(visible);
         circles.clickSponsored();
         circles.eInputCases_Creation_Cases().shouldHave(value(""));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

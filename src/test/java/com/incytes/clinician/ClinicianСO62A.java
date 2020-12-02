@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -25,5 +27,9 @@ public class ClinicianСO62A {
         circles.eListOfCircles().find(text("Grabovskiy6")).shouldBe(visible);
         circles.eSearch().setValue("Test Protocol");
         circles.eListOfCircles().first().shouldBe(visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

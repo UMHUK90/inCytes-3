@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianСO61B {
@@ -16,5 +18,9 @@ public class ClinicianСO61B {
         circles.clickCreateCircle();
         circles.eCircleName_Creation().setValue(text).shouldHave(Condition.value(text));
         System.out.println(text.length());
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

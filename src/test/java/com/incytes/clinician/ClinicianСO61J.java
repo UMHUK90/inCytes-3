@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.*;
@@ -17,5 +19,9 @@ public class ClinicianСO61J {
         circles.clickCreateCircle();
         circles.eObservationalProtocol_Creation().setValue("Common Protocol");
         circles.eListOfProtocols_Creation().find(text("Common Protocol")).shouldBe(visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

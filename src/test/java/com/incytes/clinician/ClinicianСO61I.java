@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.*;
@@ -23,5 +25,9 @@ public class ClinicianСO61I {
         circles.eInputCases_Creation_Cases().setValue("300").shouldHave(value("300"));
         Main.clickOutSide(dashBoard.eProfile(), -50, -50);
         Main.muiError(1, 0).shouldHave(text("Must be less than"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

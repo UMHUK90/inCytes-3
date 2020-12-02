@@ -2,6 +2,7 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -29,5 +30,9 @@ public class ClinicianСO61E {
         Selenide.switchTo().window(1);
         Main.Login.DashBoard.Circles.TermsAndConditions termsAndConditions = circles.new TermsAndConditions();
         termsAndConditions.eHeading().shouldHave(text("Terms And Conditions")).shouldBe(visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

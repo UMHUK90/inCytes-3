@@ -1,6 +1,7 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -21,5 +22,9 @@ public class ClinicianСO61G {
         circles.clickSponsored();
         Selenide.sleep(1000);
         $(byText("No cases available to allocate. You can purchase more cases from the Circle Details page.")).shouldBe(visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

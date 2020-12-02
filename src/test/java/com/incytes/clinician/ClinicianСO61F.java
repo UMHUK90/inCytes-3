@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -21,5 +23,9 @@ public class ClinicianСO61F {
         $(byText("Available")).shouldBe(visible);
         $(byText("Cases on plan")).shouldBe(visible);
         circles.eInputCases_Creation_Cases().shouldBe(visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }
