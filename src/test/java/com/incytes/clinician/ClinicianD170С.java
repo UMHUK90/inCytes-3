@@ -1,7 +1,7 @@
 package com.incytes.clinician;
 
-import Past.PatientPA182G;
 import com.codeborne.selenide.*;
+import com.incytes.patient.PatientPA182G;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selectors.byText;
@@ -33,12 +33,12 @@ public class ClinicianD170С {
         patients.eListOfPatients().first().shouldHave(Condition.text("qwertyuiop17091709+"+(count-1)+"@yandex.by"));
         dashBoard.clickCases();
         cases.eItems().first().shouldHave(Condition.text("qwertyuiop17091709+"+(count-1)+"@yandex.by"));
-        Selenide.closeWebDriver();
-        patient.Main main1 = new patient.Main("En", "qa");
-        patient.Main.Login login1 = main1.new Login().open();
+        Selenide.close();
+        com.incytes.patient.Main main1 = new com.incytes.patient.Main("En", "qa");
+        com.incytes.patient.Main.Login login1 = main1.new Login().open();
         login1.setAll("qwertyuiop17091709+"+(count-1)+"@yandex.by", Main.password).wLogin().signIn();
-        patient.Main.Login.Home home = login1.new Home();
-        patient.Main.Login.Home.Survey survey = home.new Survey();
+        com.incytes.patient.Main.Login.Home home = login1.new Home();
+        com.incytes.patient.Main.Login.Home.Survey survey = home.new Survey();
         survey.eRadioButtons().first().click();
         for (SelenideElement element:survey.eCheckBoxes()) element.click();
         survey.clickSubmit();
@@ -50,7 +50,7 @@ public class ClinicianD170С {
         home.eAllResults_MyResults().first().shouldHave(Condition.text("Your results"));
         home.eAboutGraph_MyResults().exists();
         home.eGrids_MyResults().shouldHave(CollectionCondition.size(2));
-        Selenide.closeWebDriver();
+        Selenide.close();
         login.open();
         login.setAll("andrew.grabovskiy+6@gmail.com", Main.password).wLogin().signIn();
         dashBoard.eListOfAlerts().first().shouldHave(Condition.text("qwertyuiop17091709+"+(count-1)+"@yandex.by")).shouldHave(Condition.text("Outlier Detected"));

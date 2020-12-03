@@ -2,10 +2,11 @@ package com.incytes.clinician;
 
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
-public class ClinicianR22C_REDO {
+public class ClinicianD171B {
     @Test
     public void c_test() {
         Main main = new Main("Fr");
@@ -15,5 +16,6 @@ public class ClinicianR22C_REDO {
         $(".MuiTypography-h3").shouldHave(text("Termes et conditions"));
         $$("a").findBy(text("www.incytesapp.com")).click();
         $$("p").findBy(text("Built by clinicians for clinicians")).shouldBe(visible);
+        close();
     }
 }

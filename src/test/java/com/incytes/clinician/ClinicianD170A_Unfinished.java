@@ -1,9 +1,10 @@
 package com.incytes.clinician;
 
-import Past.PatientPA182G;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import com.incytes.patient.PatientPA182G;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianD170A_Unfinished {
@@ -31,22 +32,26 @@ public class ClinicianD170A_Unfinished {
         patients.eListOfPatients().first().shouldHave(Condition.text("qwertyuiop17091709+"+(count-1)+"@yandex.by"));
         dashBoard.clickCases();
         cases.eItems().first().shouldHave(Condition.text("qwertyuiop17091709+"+(count-1)+"@yandex.by"));
-        Selenide.closeWebDriver();
-        patient.Main main1 = new patient.Main("En", "qa");
-        patient.Main.Login login1 = main1.new Login().open();
+        Selenide.close();
+        com.incytes.patient.Main main1 = new com.incytes.patient.Main("En", "qa");
+        com.incytes.patient.Main.Login login1 = main1.new Login().open();
         login1.setAll("qwertyuiop17091709+"+(count-1)+"@yandex.by", Main.password).wLogin().signIn();
-        patient.Main.Login.Home home = login1.new Home();
-        patient.Main.Login.Home.Survey survey = home.new Survey();
+        com.incytes.patient.Main.Login.Home home = login1.new Home();
+        com.incytes.patient.Main.Login.Home.Survey survey = home.new Survey();
         survey.eRadioButtons().first().click();
         survey.eCheckBoxes().last().click();
         survey.clickSubmit();
         home.eAboutGraph_MyResults().exists();
         home.eGrids_MyResults().shouldHave(CollectionCondition.size(1));
-        Selenide.closeWebDriver();
+        Selenide.close();
         login.open();
         login.setAll("andrew.grabovskiy+6@gmail.com", Main.password).wLogin().signIn();
         //4-2 Пункт
-        Selenide.sleep(50000000);
-        Selenide.sleep(5000000);
+        //Selenide.sleep(50000000);
+        //Selenide.sleep(5000000);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }
