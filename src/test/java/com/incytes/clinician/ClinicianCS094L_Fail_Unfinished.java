@@ -1,6 +1,7 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianCS094L_Fail_Unfinished {
@@ -16,5 +17,9 @@ public class ClinicianCS094L_Fail_Unfinished {
         Main.Login.DashBoard.Cases.NewCase newCase = cases.new NewCase();
         newCase.eDateOfBirth().setValue("2077/10/10");
         Selenide.sleep(5000000);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

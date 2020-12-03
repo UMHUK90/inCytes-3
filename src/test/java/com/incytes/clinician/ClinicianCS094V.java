@@ -2,6 +2,7 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianCS094V {
@@ -18,5 +19,9 @@ public class ClinicianCS094V {
         Main.clickOutSide(dashBoard.eCases(), -50, -50);
         Selenide.sleep(500);
         newCase.eEmail().shouldBe(Condition.visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianCS094P {
@@ -15,5 +17,9 @@ public class ClinicianCS094P {
         Main.Login.DashBoard.Cases.NewCase newCase = cases.new NewCase();
         newCase.clickShowOptionalFields();
         newCase.setAll("", "", Main.randomText(255), Main.randomText(255), "", "", "").writeAll().checkAll();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

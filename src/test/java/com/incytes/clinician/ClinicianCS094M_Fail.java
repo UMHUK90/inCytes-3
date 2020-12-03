@@ -3,6 +3,7 @@ package com.incytes.clinician;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import java.util.Date;
@@ -32,5 +33,9 @@ public class ClinicianCS094M_Fail {
         if(date.getHours() != Integer.parseInt(yandex.time.replace(":", "").substring(0, 1)) && date.getMinutes()+1 < Integer.parseInt(time2)) throw new ElementNotVisibleException("Hours = " + date.getHours() +" - " + yandex.time.replace(":", "").substring(0, 1) + " " + "Minutes = " + String.valueOf(date.getMinutes()-1) +" - " + time2);
         //if(date.getHours() != Integer.parseInt(yandex.time.substring(0, 2)) && date.getMinutes()+1 < Integer.parseInt(yandex.time.substring(3))) throw new ElementNotVisibleException("Hours = " + date.getHours() +" - " + yandex.time.substring(0, 2) + " " + "Minutes = " + String.valueOf(date.getMinutes()-1) +" - " + yandex.time.substring(3));
         //The invitation didn't come on e-mail
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

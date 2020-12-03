@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selectors.byText;
@@ -21,5 +23,9 @@ public class ClinicianCS094O {
         newCase.setAll("qwertyuiop17091709+243@yandex.by", "", "", "", "", "", "missing readonly-content").writeAll().checkAll();
         newCase.clickCreateCase();
         $(byText("No available cases for this Circle. Visit the Circle details page to add more cases.")).shouldBe(Condition.visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

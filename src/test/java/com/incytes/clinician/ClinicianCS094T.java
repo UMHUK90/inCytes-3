@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianCS094T {
@@ -18,5 +20,9 @@ public class ClinicianCS094T {
         newCase.eFirstName().shouldBe(Condition.visible);
         newCase.clickShowOptionalFields();
         newCase.eFirstName().shouldNotBe(Condition.visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

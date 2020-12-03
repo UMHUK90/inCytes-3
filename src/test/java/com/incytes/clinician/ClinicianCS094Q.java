@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selectors.byText;
@@ -22,5 +24,9 @@ public class ClinicianCS094Q {
         $(byText("No Entries Found"));
         newCase.eEmail().setValue("");
         newCase.eCountry().shouldHave(Condition.exactText(""));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

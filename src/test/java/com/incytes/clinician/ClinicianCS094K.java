@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianCS094K {
@@ -16,5 +18,9 @@ public class ClinicianCS094K {
         Main.Login.DashBoard.Cases.NewCase newCase = cases.new NewCase();
         newCase.eDateOfBirth().setValue("1000/10/10");
         Main.muiError(1, 0).shouldHave(Condition.text("Year must be greater than 1900"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }
