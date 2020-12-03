@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selectors.byText;
@@ -18,5 +20,9 @@ public class ClinicianCS092G {
         cases.eItems().first().waitUntil(Condition.visible, 5000);
         cases.eSearch().setValue("Common Protocol");
         $(byText("Common Protocol")).shouldBe(Condition.visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -2,6 +2,8 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selectors.byText;
@@ -24,5 +26,9 @@ public class ClinicianCS091A {
         $(byText("TREATMENT DATE")).shouldBe(Condition.visible);
         $(byText("UPDATED")).shouldBe(Condition.visible);
         $(byText("PROGRESS")).shouldBe(Condition.visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

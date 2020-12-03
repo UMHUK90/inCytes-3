@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianCS094C {
@@ -19,5 +21,9 @@ public class ClinicianCS094C {
         newCase.eSponsoredBy().shouldBe(Condition.visible);
         newCase.eSharedWithCircles().shouldBe(Condition.visible);
         newCase.setAll("qwertyuiop17091709+243@yandex.by", "", "", "", "", "", "").writeAll().checkAll();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

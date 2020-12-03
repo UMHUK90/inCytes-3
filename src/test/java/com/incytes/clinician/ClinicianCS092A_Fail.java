@@ -1,7 +1,9 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianCS092A_Fail {
@@ -17,5 +19,9 @@ public class ClinicianCS092A_Fail {
         cases.eSearch().setValue(Main.randomText(7000));
         if(cases.eSearch().getValue().toCharArray().length != 255) throw new ElementNotVisibleException(String.valueOf(cases.eSearch().getValue().toCharArray().length));
         // The search field is without limitation
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

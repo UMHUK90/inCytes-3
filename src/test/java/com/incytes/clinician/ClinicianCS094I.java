@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianCS094I {
@@ -16,5 +18,9 @@ public class ClinicianCS094I {
         Main.Login.DashBoard.Cases.NewCase newCase = cases.new NewCase();
         newCase.eEmail().setValue("wqertwrq@yandex.by");
         newCase.eEmail().shouldHave(Condition.value("wqertwrq@yandex.by"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -2,6 +2,7 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selectors.byText;
@@ -21,5 +22,9 @@ public class ClinicianCS092C {
         cases.eSearch().setValue("qwertyuiop17091709+440");
         while(true) if(cases.eItems().size() < count) break; else Selenide.sleep(50);
         $(byText("qwertyuiop17091709+440@yandex.by")).shouldBe(Condition.visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }
