@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.sleep;
@@ -8,14 +10,14 @@ import static com.codeborne.selenide.Selenide.switchTo;
 
 public class PatientPA182E {
     public void InvitationOnEmail(String language){
-        clinician.Main main = new clinician.Main(language);
-        clinician.Main.Login login = main.new Login();
+        com.incytes.clinician.Main main = new com.incytes.clinician.Main(language);
+        com.incytes.clinician.Main.Login login = main.new Login();
         login.open();
         login.setAll("andrew.grabovskiy+6@gmail.com", Main.password).wLogin().signIn();
-        clinician.Main.Login.DashBoard dashBoard = login.new DashBoard();
-        clinician.Main.Login.DashBoard.NewCase newCase = dashBoard.new NewCase();
+        com.incytes.clinician.Main.Login.DashBoard dashBoard = login.new DashBoard();
+        com.incytes.clinician.Main.Login.DashBoard.NewCase newCase = dashBoard.new NewCase();
         while(true) {if(!newCase.eForm().exists()) {dashBoard.eNewCase().click(); sleep(50);} else break;}
-        clinician.Main.FileTXT file = main.new FileTXT("D:\\Path\\count.txt");
+        com.incytes.clinician.Main.FileTXT file = main.new FileTXT("D:\\Path\\count.txt");
         int count = Integer.parseInt(file.getText());
         newCase.setAll("qwertyuiop17091709+" + count + "@yandex.by", "2017/04/23", "", "", "", "", "Common Protocol").writeAll().checkAll();
         newCase.clickCreateCase();
@@ -34,5 +36,9 @@ public class PatientPA182E {
         reg.setAll("", Main.password, Main.password, "", "", "", "", "").wRegistration().cRegistration().clickLogin();
         reg.eTextOfCheckBox1().shouldHave(Condition.text("Allgemeine Geschäftsbedingungen"));
         reg.eTextOfCheckBox2().shouldHave(Condition.text("Allgemeine Geschäftsbedingungen des medizinischen Fachpersonals"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

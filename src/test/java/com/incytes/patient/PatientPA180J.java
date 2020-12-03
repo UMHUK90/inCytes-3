@@ -1,10 +1,11 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
 
 public class PatientPA180J {
     @Test
@@ -15,5 +16,9 @@ public class PatientPA180J {
         reg.setAll("andrew.grabovskiy+patient32a@gmail.com", Main.password, Main.password, "", "", "", "", "").wRegistration();
         reg.clickLogin();
         $("p").shouldHave(text("Ваш лечащий врач приглашает вас в inCytes"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

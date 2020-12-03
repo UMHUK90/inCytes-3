@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA181G {
@@ -23,5 +25,9 @@ public class PatientPA181G {
         Main.muiError(1, 0).shouldHave(Condition.text("Invalid Date"));
         reg.eBirthDate().setValue("2030/10/10");
         Main.muiError(1, 0).shouldHave(Condition.text("Invalid date: Must be born on or before"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

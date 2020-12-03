@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA187A {
@@ -12,5 +14,9 @@ public class PatientPA187A {
         Main.Login.Home home = login.new Home();
         home.eEmail_Managing().click();
         home.eEmail_Managing().shouldHave(Condition.attribute("style", "cursor: pointer; margin-top: 3px; word-break: break-word;"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

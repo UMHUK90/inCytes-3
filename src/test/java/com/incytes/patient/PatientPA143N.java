@@ -2,6 +2,7 @@ package com.incytes.patient;
 
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -20,12 +21,16 @@ public class PatientPA143N {
         char[] date = home.eDate_Information().getText().toCharArray();
         if(date.length != 10 || date[2] != '/' || date[5] != '/') {System.out.println(date[2] + "-" + date[5]); throw new ElementNotVisibleException("Error in Date");}
         Main.setLang("Ru");
-        Selenide.closeWebDriver();
+        Selenide.close();
         login.open().wLogin().signIn();
         home.openInNewTab();
         home.clickInformation();
         home.eTitle_Information().shouldHave(text("Информация о клиническом случае"));
         date = home.eDate_Information().getText().toCharArray();
         if(date.length != 10 || date[2] != '.' || date[5] != '.') {System.out.println(date[2] + "-" + date[5]); throw new ElementNotVisibleException("Error in Date");}
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

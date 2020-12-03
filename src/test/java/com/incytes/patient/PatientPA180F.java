@@ -1,5 +1,7 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.value;
@@ -14,5 +16,9 @@ public class PatientPA180F {
         reg.ePassword().setValue("4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop");
         reg.clickLogin();
         reg.ePassword().shouldHave(value("4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop4Gjnghtop"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -2,8 +2,10 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -46,5 +48,9 @@ public class ClinicianD172A {
         dashBoard.eTotalCasesCount().shouldHave(Condition.exactText("0"));
         dashBoard.eGraph().shouldBe(Condition.visible);
         dashBoard.eLogout().shouldBe(Condition.visible).click();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

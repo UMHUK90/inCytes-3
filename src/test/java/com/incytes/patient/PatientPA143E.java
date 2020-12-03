@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA143E {
@@ -15,5 +17,9 @@ public class PatientPA143E {
         home.setAllPassword_changePassword("", Main.password, Main.randomText(6) + "G5").writeAll_changePassword().checkAll_changePassword();
         home.clickSave_changePassword();
         Main.muiError(2,1).shouldHave(Condition.text("Passwords must match"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

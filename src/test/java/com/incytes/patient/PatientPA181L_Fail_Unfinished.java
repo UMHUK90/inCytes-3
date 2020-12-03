@@ -1,12 +1,10 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import patient.Main;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.attribute;
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.sleep;
 
 public class PatientPA181L_Fail_Unfinished {
     @Test
@@ -28,11 +26,12 @@ public class PatientPA181L_Fail_Unfinished {
         //reg.eGetStarted().shouldHave(text("Продолжить"));
         reg.clickGetStarted();
         Main.currentPage().contains("survey");
-        clinician.Main main_clinician = new clinician.Main("Ru");
-        clinician.Main.Login login_clinician = main_clinician.new Login();
-        login_clinician.open().setAll("andrew.grabovskiy+1@gmail.com", "261090inCytes").wLogin().signIn();
-        sleep(500000000);
-
-
+        Main main_clinician = new Main("Ru");
+        Main.Login login_clinician = main_clinician.new Login();
+        //login_clinician.open().setAll("andrew.grabovskiy+1@gmail.com", "261090inCytes").wLogin().signIn();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

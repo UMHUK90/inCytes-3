@@ -540,7 +540,7 @@ public class Main {
                 public class TermsAndConditions extends TermsAndConditions_abstract {}
                 public SelenideElement eAllCircles(){ return $(".MuiInput-formControl"); }
                 public SelenideElement eSearch(){ return $(".MuiInputBase-inputAdornedStart"); }
-                public SelenideElement eCreateCircle(){ return $(".MuiButton-contained"); }
+                public SelenideElement eCreateCircle(){ return $(".MuiButton-contained").waitUntil(visible, 8000); }
                 public SelenideElement eCircleName_Creation(){ return $(".MuiFilledInput-input"); }
                 public SelenideElement eNonPHI_Creation(){ return $(byAttribute("name", "phi"));}
                 public SelenideElement ePHI_Creation(){ return $(byAttribute("name", "phi"), 1);}

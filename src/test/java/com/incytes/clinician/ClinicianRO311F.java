@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRO311F {
@@ -20,5 +22,9 @@ public class ClinicianRO311F {
         reports.eReportName_Build().shouldNotBe(Condition.visible);
         Main.Login.DashBoard.Reports.ReportBuilder reportBuilder = reports.new ReportBuilder();
         reportBuilder.eTitle().shouldHave(Condition.text("Report Builder"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

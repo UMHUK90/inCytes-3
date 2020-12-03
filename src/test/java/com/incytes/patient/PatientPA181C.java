@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA181C {
@@ -17,5 +19,9 @@ public class PatientPA181C {
         reg.wwRegistration();
         reg.eFirstName().shouldHave(Condition.value("nghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghn"));
         reg.eLastName().shouldHave(Condition.value("nghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghnchjtpfnghn"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

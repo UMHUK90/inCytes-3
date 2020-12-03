@@ -2,6 +2,8 @@ package com.incytes.patient;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.switchTo;
@@ -30,5 +32,9 @@ public class PatientPA184E {
         home.eAllResults_MyResults().shouldHave(CollectionCondition.size(1)).first().shouldHave(Condition.text("Your results 50"));
         home.eX_MyResults().shouldBe(Condition.visible).lastChild().shouldHave(Condition.text("Time"));
         home.eY_MyResults().shouldBe(Condition.visible).lastChild().shouldHave(Condition.text("Survey Score"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -2,6 +2,7 @@ package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA143L {
@@ -17,8 +18,12 @@ public class PatientPA143L {
         Selenide.actions().moveToElement(home.eChangePassword(), -50, -50).click().build().perform();
         Main.clickOutSide(home.eChangePassword(), -50, -50);
         home.eSave_changePassword().shouldNotBe(Condition.visible);
-        Selenide.closeWebDriver();
+        Selenide.close();
         login.open().wLogin().signIn();
         home.eChangePassword().shouldBe(Condition.visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

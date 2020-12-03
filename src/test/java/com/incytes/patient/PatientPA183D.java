@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA183D {
@@ -14,5 +16,9 @@ public class PatientPA183D {
         home.clickAllTypesOfQuestions_MyResults();
         home.eResultGraph_MyResults().shouldNotBe(Condition.visible);
         home.eChartKeyText_MyResults().shouldHave(Condition.text("All types of questions. All types of questions. All types of questions. All types of questions. All types of questions. All types of questions. All types of questions. "));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -1,10 +1,11 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 
 public class ClinicianRO321D {
     @Test
@@ -25,5 +26,9 @@ public class ClinicianRO321D {
         reportBuilder.clickCirclesButton();
         reportBuilder.clickUpdateReport_Circle();
         Main.eBottomMessage().shouldHave(text("Select Circle from the list and try again"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

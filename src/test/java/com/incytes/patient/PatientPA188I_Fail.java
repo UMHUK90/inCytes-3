@@ -3,6 +3,7 @@ package com.incytes.patient;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.switchTo;
@@ -31,5 +32,9 @@ public class PatientPA188I_Fail {
         Main.muiError(1,0).shouldHave(Condition.text("Invalid verification code"));
         //1 - 29 - app.confirmPassword.wrongCode</p> Text
         //2 - Error in Buttons with all tests in Code_resetPassword
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

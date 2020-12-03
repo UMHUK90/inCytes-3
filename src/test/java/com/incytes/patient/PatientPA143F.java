@@ -1,5 +1,7 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA143F {
@@ -13,5 +15,9 @@ public class PatientPA143F {
         home.clickChangePassword();
         home.setAllPassword_changePassword("", Main.randomText(97)+"G9", "").writeAll_changePassword().checkAll_changePassword();
         home.clickSave_changePassword();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

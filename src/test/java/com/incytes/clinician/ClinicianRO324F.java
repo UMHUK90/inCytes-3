@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRO324F {
@@ -27,5 +29,9 @@ public class ClinicianRO324F {
         reportBuilder.clickAddCohortButton();
         reportBuilder.selectCohort_Cohort("À quelle fréquence toussez-vous?");
         //Failed to fetch cohort questions. Try again later.
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

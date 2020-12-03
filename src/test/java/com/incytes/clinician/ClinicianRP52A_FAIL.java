@@ -1,7 +1,9 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRP52A_FAIL {
@@ -21,5 +23,9 @@ public class ClinicianRP52A_FAIL {
         if(login.eConfirmPassword_resetPassword().getValue().toCharArray().length != 8) throw new ElementNotVisibleException("Error in password - " + login.eConfirmPassword_resetPassword().getValue().toCharArray().length);
         Main.muiError(3, 2).shouldHave(Condition.text("Passwords must match"));
         //Error with BUTTON - 17
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

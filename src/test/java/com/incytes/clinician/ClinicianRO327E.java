@@ -1,7 +1,9 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selectors.byText;
@@ -40,5 +42,9 @@ public class ClinicianRO327E {
         reportBuilder.clickAddCohortFilter_Cohort();
         reportBuilder.clickDone_Cohort();
         if(reportBuilder.eListOfCohorts().length() != 3) throw new ElementNotVisibleException(String.valueOf(reportBuilder.eListOfCohorts().length()));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

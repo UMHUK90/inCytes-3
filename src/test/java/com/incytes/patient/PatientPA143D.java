@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA143D {
@@ -15,5 +17,9 @@ public class PatientPA143D {
         home.setAllPassword_changePassword("", Main.randomText(5) + " G5", "").writeAll_changePassword().checkAll_changePassword();
         home.clickSave_changePassword();
         Main.muiError(3,1).shouldHave(Condition.text("Spaces are not allowed"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

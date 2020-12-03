@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA188J {
@@ -15,5 +17,9 @@ public class PatientPA188J {
         login.writeEmail_forgotPassword(text);
         login.clickSubmit_forgotPassword();
         login.eEmail().shouldHave(Condition.value(text));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

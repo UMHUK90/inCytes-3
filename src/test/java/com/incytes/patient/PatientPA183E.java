@@ -2,10 +2,10 @@ package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.*;
 
 public class PatientPA183E {
     Main main = new Main();
@@ -28,6 +28,10 @@ public class PatientPA183E {
         home.eAboutGraphButton_MyResults().shouldHave(Condition.text(text2));
         home.eTextBodies_Treatment().first().shouldHave(Condition.text(text4));
         home.eTextBodies_Indication().first().shouldHave(Condition.text(text5));
-        Selenide.closeWebDriver();
+        Selenide.close();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

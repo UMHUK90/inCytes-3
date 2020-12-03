@@ -1,14 +1,12 @@
 package com.incytes.patient;
 
-import com.codeborne.selenide.*;
-import com.codeborne.selenide.Selenide.*;
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
 
 public class PatientPA143M_Fail {
     @Test
@@ -24,5 +22,9 @@ public class PatientPA143M_Fail {
         if(date.length != 10 || date[2] != '/' || date[5] != '/') {System.out.println(date[2] + "-" + date[5]); throw new ElementNotVisibleException("Error in Date");}
         home.eClinicianName_Information().shouldHave(text("Andrew Grabovskiy"));
         home.ePhone_Information().shouldHave(text("")); // Fill in
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

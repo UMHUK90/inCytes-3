@@ -1,6 +1,7 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA188C {
@@ -13,6 +14,9 @@ public class PatientPA188C {
         login.checkForgotPasswordForm();
         login.clickSubmit_forgotPassword();
         Main.haveRequired(1);
-        Selenide.sleep(5000000);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

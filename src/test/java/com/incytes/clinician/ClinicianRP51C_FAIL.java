@@ -1,7 +1,9 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRP51C_FAIL {
@@ -19,5 +21,9 @@ public class ClinicianRP51C_FAIL {
         if(login.ePassword().getValue().toCharArray().length != 8) throw new ElementNotVisibleException("Error in password - " + login.ePassword().getValue().toCharArray().length);
         Main.muiError(3, 1).shouldHave(Condition.text("Spaces are not allowed"));
         //Error with BUTTON - 17
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

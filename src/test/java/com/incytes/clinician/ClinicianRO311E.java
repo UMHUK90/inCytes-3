@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRO311E {
@@ -15,5 +17,9 @@ public class ClinicianRO311E {
         reports.clickBuildReport();
         reports.clickCreateReport_Build();
         Main.haveRequired(1);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

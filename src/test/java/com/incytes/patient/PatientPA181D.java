@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA181D {
@@ -16,6 +18,9 @@ public class PatientPA181D {
         file.writeText(String.valueOf(count+1), false);
         reg.wwRegistration();
         reg.eCountryName().shouldHave(Condition.value("No Matches"));
-
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

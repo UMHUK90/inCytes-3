@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selectors.byText;
@@ -35,5 +37,9 @@ public class ClinicianRO325A {
         reportBuilder.eGraph().$("circle", 4).shouldBe(Condition.visible);
         reportBuilder.eGraph().$("circle", 4).hover();
         $$(byText("Cohort B")).find(Condition.visible).shouldBe(Condition.visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -1,5 +1,7 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.switchTo;
@@ -23,5 +25,9 @@ public class PatientPA184G_Divergence_Unfinished {
         survey.eRadioButtons().first().click();
         survey.eCheckBoxes().last().click();
         survey.clickSubmit();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

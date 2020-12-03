@@ -1,10 +1,10 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-
-import static com.codeborne.selenide.Condition.*;
 
 public class ClinicianRO321F {
     @Test
@@ -30,5 +30,9 @@ public class ClinicianRO321F {
         dashBoard.clickCircles();
         Main.Login.DashBoard.Circles circles = dashBoard.new Circles();
         if(circles.eListOfCircles().size() != size) throw new ElementNotVisibleException(size + " - " + circles.eListOfCircles().size());
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -1,10 +1,11 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.*;
 
 public class PatientPA180J_Divergence {
     @Test
@@ -18,5 +19,9 @@ public class PatientPA180J_Divergence {
         reg.clickLogin();
         file.writeText(String.valueOf(count+1), false);
         $("p").shouldHave(text("Введите личные данные"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

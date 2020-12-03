@@ -1,6 +1,7 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.*;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selectors.byText;
@@ -44,6 +45,9 @@ public class ClinicianD171A_Fail {
         dashBoard.eBuySubscription().shouldHave(Condition.text("BUY CASES")).shouldBe(Condition.visible);
         dashBoard.clickCircles();
         // 30 - A white random window in fast click
-        Selenide.sleep(50000000);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -1,7 +1,9 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.switchTo;
@@ -29,5 +31,9 @@ public class PatientPA188H_Fail {
         Main.eBottomMessage().shouldHave(Condition.text("app.confirmPassword.success"));
         //1 - There is nothing the same things that the test have at the end
         //2 - Error in Buttons with all tests in Code_resetPassword
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

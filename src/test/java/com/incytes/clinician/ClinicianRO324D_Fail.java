@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRO324D_Fail {
@@ -28,5 +30,9 @@ public class ClinicianRO324D_Fail {
         reportBuilder.selectCohort_Cohort("How often are you coughing?");
         reportBuilder.clickDone_Cohort();
         //Failed to fetch cohort questions. Try again later.
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

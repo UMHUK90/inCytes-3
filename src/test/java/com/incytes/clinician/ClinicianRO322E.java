@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -30,5 +32,9 @@ public class ClinicianRO322E {
         reportBuilder.eInputScoringGroup_YAxis().shouldNotBe(visible);
         reportBuilder.eNameOfCurrentScoringGroup().shouldHave(text("Common"));
         reportBuilder.eGraph().find("circle", 4).shouldBe(visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

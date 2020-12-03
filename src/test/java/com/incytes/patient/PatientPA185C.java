@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA185C {
@@ -15,5 +17,9 @@ public class PatientPA185C {
         home.eTitles_Treatment().first().shouldHave(Condition.text("Nom Du Traitement: Couteau. La Tanzanie F"));
         home.eTextBodies_Indication().first().shouldHave(Condition.text("Fourche"));
         home.eTitles_Indication().first().shouldHave(Condition.text("Couteau"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

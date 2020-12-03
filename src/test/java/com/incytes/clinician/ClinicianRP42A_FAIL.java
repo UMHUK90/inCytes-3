@@ -1,7 +1,9 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -16,7 +18,7 @@ public class ClinicianRP42A_FAIL {
         login.diplayedEmail_forgotPassword();
         login.clickSubmit_forgotPassword();
         //Error with BUTTON - 17
-        patient.Main.eBottomMessage().shouldHave(Condition.text("A verification code has been successfully sent to your email"));
+        com.incytes.patient.Main.eBottomMessage().shouldHave(Condition.text("A verification code has been successfully sent to your email"));
         //NOTHING appeared at the bottom of the page! - 19
         Main.newTab();
         switchTo().window(1);
@@ -27,5 +29,9 @@ public class ClinicianRP42A_FAIL {
         $(".js-message-snippet-firstline").shouldHave(Condition.text("Your verification code is"));
         getcode.clickLastCheckBox();
         getcode.eDelete().click();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -1,5 +1,7 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -19,5 +21,9 @@ public class PatientPA181A {
         file.writeText(String.valueOf(count+1), false);
         $(".MuiTypography-h3").shouldHave(text("Добро пожаловать! Ваш аккаунт почти готов."));
         reg.cwRegistration();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

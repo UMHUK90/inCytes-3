@@ -1,8 +1,10 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -44,5 +46,9 @@ public class ClinicianRO322F {
             }
             if(!isExist || list.size() != circle.eListOfScoringGroups().size()) throw new ElementNotVisibleException("Element not exist");
         }
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

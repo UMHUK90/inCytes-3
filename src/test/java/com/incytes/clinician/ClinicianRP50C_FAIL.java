@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRP50C_FAIL {
@@ -15,5 +17,9 @@ public class ClinicianRP50C_FAIL {
         //Error with BUTTON - 19
         login.clickBackToLogin_resetPassword();
         login.eConfirmPassword_resetPassword().shouldNotBe(Condition.exist);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

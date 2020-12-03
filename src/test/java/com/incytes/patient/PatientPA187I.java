@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.switchTo;
@@ -18,5 +20,9 @@ public class PatientPA187I {
         String text = "Sei stato invitato ad accedere il portale personalizzato del paziente, in cui sia ";
         if(invitation.eLastCheckBox().is(Condition.exist))invitation.eLastText().shouldHave(Condition.text(text));
         else invitation.eFullMessage().$$("p").first().shouldHave(Condition.text(text));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

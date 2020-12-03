@@ -1,6 +1,7 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
 
@@ -141,10 +142,10 @@ public class Main {
             } catch (Throwable e) {
                 list.Add(name + "   -   " + e);
             }
-            Selenide.closeWebDriver();
+            Selenide.close();
             return this;
         }
-        public MultipleMethods openWithoutException(IMethod method){ method.method(); Selenide.closeWebDriver(); return this;}
+        public MultipleMethods openWithoutException(IMethod method){ method.method(); Selenide.close(); return this;}
         public MultipleMethods openWithoutClosing(IMethod method){ method.method(); return this; }
         public void GetExceptions(){
             if(list.length() > 0) try {
@@ -345,7 +346,7 @@ public class Main {
         public class Portal {
             public void isThisLanguage(String language){
                 switch (language){
-                    case "En": $(".MuiTypography-h5").shouldHave(text("Patient Portal"));
+                    case "En": $(".MuiTypography-h5").shouldHave(text("Patient Portalll"));
                         break;
                     case "Fr": $(".MuiTypography-h4").shouldHave(text("Bienvenue chez inCytes!"));
                         break;
@@ -399,7 +400,7 @@ public class Main {
             public SelenideElement ePhone_Information(){ return $(".MuiTypography-root.MuiTypography-body2", 4); }
             public SelenideElement eFacilityName_Information(){ return $(".MuiTypography-root.MuiTypography-body2", 2); }
             public SelenideElement eAddress_Information(){ return $(".MuiTypography-root.MuiTypography-body2", 3); }
-            public SelenideElement eInCytesLabel(){ return $(".MuiGrid-root.MuiGrid-container.MuiGrid-align-items-xs-center.MuiGrid-justify-xs-space-between").$(byTagName("img")); }
+            public SelenideElement eInCytesLabel(){ return $(".MuiGrid-root.MuiGrid-container.MuiGrid-align-items-xs-center.MuiGrid-justify-xs-space-between").$(By.tagName("img")); }
             public SelenideElement eTitle(){ return $(".MuiTypography-root.MuiTypography-h3"); }
             public SelenideElement ePatientName(){ return $(".MuiTypography-root.MuiTypography-body1"); }
             public SelenideElement eProtocolName(){ return $(".MuiTypography-root.MuiTypography-body1", 1); }

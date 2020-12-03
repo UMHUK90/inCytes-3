@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA188K_Fail {
@@ -18,5 +20,9 @@ public class PatientPA188K_Fail {
         login.clickReset_resetPassword();
         Main.muiError(2, 0).shouldHave(Condition.text("8 character minimum. Must contain at least 1 upper case, 1 lower case, 1 number."));
         //2 - Error in Buttons with all tests in Code_resetPassword
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

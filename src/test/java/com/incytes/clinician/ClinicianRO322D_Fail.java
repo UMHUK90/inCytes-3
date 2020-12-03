@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -27,5 +29,9 @@ public class ClinicianRO322D_Fail {
         reportBuilder.clickSubmitButton_YAxis();
         Main.eBottomMessage().shouldHave(text("Select scoring group from the list and try again"));
         //"Select scoring group from the list and try again" text doesn't appears
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

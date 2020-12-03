@@ -1,8 +1,10 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRO322G {
@@ -31,4 +33,8 @@ public class ClinicianRO322G {
             for(int i = 0; i < mass.length; i++) if(element.getText().toCharArray()[0] == mass[i]) if(i < number) throw new ElementNotVisibleException("Error with alphabet"); else number = i;
         }
         }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
+}

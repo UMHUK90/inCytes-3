@@ -1,5 +1,7 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.exactText;
@@ -8,7 +10,7 @@ import static org.openqa.selenium.By.name;
 import static org.openqa.selenium.By.xpath;
 
 public class PatientPA184A {
-    public static String baseUrl = "https://qa-patient.incytesdata-dev.com/",
+    public static String baseUrl = "https://alpha-patient.incytesdata-dev.com/",
                          password = "261090inCytes",
                          existingPassword = password,
                          newpassword = "261090inCytes";
@@ -38,5 +40,9 @@ public class PatientPA184A {
         clickSignInButton();
         $$("p").findBy(exactText("О ГРАФИКЕ"));
         $$("p").findBy(exactText("MY RESULTS")).click();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

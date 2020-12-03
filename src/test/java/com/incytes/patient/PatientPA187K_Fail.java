@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.back;
@@ -22,5 +24,9 @@ public class PatientPA187K_Fail {
         else invitation.eFullMessage().$$("p").first().shouldHave(Condition.text(text));
         //Problems:
         //1: The message is in the Italian language, but title is in Spanish
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

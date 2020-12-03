@@ -1,8 +1,9 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.visible;
 
 public class PatientPA143O {
@@ -16,5 +17,9 @@ public class PatientPA143O {
         Main.Login.Home home = login.new Home();
         Main.clickOutSide(home.eChangePassword(), -50, -50);
         home.ePhone_Information().shouldNotBe(visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

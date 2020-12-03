@@ -1,6 +1,7 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.*;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selectors.byText;
@@ -42,5 +43,9 @@ public class ClinicianD171A {
         Main.eBottomMessage().shouldHave(Condition.text("Payment Successful"));
         dashBoard.eBuySubscription().shouldHave(Condition.text("BUY CASES")).shouldBe(Condition.visible);
         dashBoard.clickCircles();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

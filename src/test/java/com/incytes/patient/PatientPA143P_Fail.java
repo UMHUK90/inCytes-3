@@ -1,5 +1,7 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA143P_Fail {
@@ -12,5 +14,9 @@ public class PatientPA143P_Fail {
         home.openInNewTab();
         home.clickLogOut();
         login.wLogin().signIn();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

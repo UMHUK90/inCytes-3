@@ -1,17 +1,16 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.$$;
 import static org.openqa.selenium.By.name;
 import static org.openqa.selenium.By.xpath;
 
 public class PatientPA183A {
-    public static String baseUrl = "https://qa-patient.incytesdata-dev.com/",
+    public static String baseUrl = "https://alpha-patient.incytesdata-dev.com/",
                          password = "261090inCytes",
                          existingPassword = password,
                          newpassword = "261090inCytes";
@@ -44,5 +43,9 @@ public class PatientPA183A {
         $$("p").findBy(exactText("РАЗВЕРНУТЬ")).click();
         $$("p").findBy(exactText("Scoring Group Test #6 Description - Single Questions Only. Scoring Group Test #6 Description - Single Questions Only. Scoring Group Test #6 Description - Single Questions Only. Scoring Group Test #6 Description - Single Questions Only. Scoring Group Test #6 Description - Single Questions Only. Scoring Group Test #6 Description - Single Questions Only."));
         $$("p").findBy(exactText("СВЕРНУТЬ"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

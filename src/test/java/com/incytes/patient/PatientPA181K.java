@@ -1,12 +1,12 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.*;
 
 public class PatientPA181K {
     @Test
@@ -20,5 +20,9 @@ public class PatientPA181K {
         reg.eGetStarted().shouldHave(attribute("style", "width: 100px; color: rgb(129, 129, 131);"));
         reg.clickCheckBox();
         reg.eGetStarted().shouldHave(attribute("style", "width: 100px; color: rgb(255, 255, 255);"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

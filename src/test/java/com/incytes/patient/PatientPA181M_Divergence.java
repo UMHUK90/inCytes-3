@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA181M_Divergence {
@@ -15,5 +17,9 @@ public class PatientPA181M_Divergence {
         reg.eBlueMarker(3);
         reg.eGetStarted().shouldNotBe(Condition.disabled);
         reg.clickGetStarted();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

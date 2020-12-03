@@ -1,5 +1,7 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.*;
@@ -8,7 +10,7 @@ import static org.openqa.selenium.By.name;
 import static org.openqa.selenium.By.xpath;
 
 public class PatientPA186A_REDO {
-    public static String baseUrl = "https://qa-patient.incytesdata-dev.com/",
+    public static String baseUrl = "https://alpha-patient.incytesdata-dev.com/",
                          password = "261090inCytes",
                          existingPassword = password,
                          newpassword = "261090inCytes";
@@ -28,14 +30,17 @@ public class PatientPA186A_REDO {
         $(xpath("/html/body/div[3]/div[3]/div/div[2]/form/div/div/div/div[5]/button")).click();
     }
 
-
     @Test
     public void c_test() {
         open(baseUrl + "auth/login");
         EnterEmail();
         EnterPassword();
         clickSignInButton();
-        open("https://qa-patient.incytesdata-dev.com/survey/126/31/69/42");
+        open("https://alpha-patient.incytesdata-dev.com/survey/126/31/69/42");
         $$("p").findBy(text("Failed to get survey, try later.")).waitUntil(visible, 10000);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -1,5 +1,7 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -10,7 +12,7 @@ import static org.openqa.selenium.By.name;
 import static org.openqa.selenium.By.xpath;
 
 public class PatientPA180I_Fail {
-    public static String siteurl = "https://qa-patient.incytesdata-dev.com/",
+    public static String siteurl = "https://alpha-patient.incytesdata-dev.com/",
                          password = "261090inCytes",
                          existingPassword = password,
                          newpassword = "261090inCytes";
@@ -42,5 +44,9 @@ public class PatientPA180I_Fail {
         EnterConfirmPassword();
         clickSignInButton();
         $(byText("app.registration.duplicateUser")).waitUntil(visible, 10000);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

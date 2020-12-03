@@ -1,5 +1,7 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA181B {
@@ -14,5 +16,9 @@ public class PatientPA181B {
         reg.setAll("qwertyuiop17091709+" + count + "@yandex.by", Main.password, Main.password, "Ппловырнучсæææꝏꝏnaïve", "СОРгеыæææꝏꝏnaïve", "", "", "").wRegistration().clickLogin();
         reg.wwRegistration().cwRegistration();
         file.writeText(String.valueOf(count+1), false);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

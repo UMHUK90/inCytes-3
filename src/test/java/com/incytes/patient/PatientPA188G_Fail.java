@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.switchTo;
@@ -25,5 +27,9 @@ public class PatientPA188G_Fail {
         Main.haveRequired(3);
         //1 - Access Code is not in Red and Required
         //2 - Error in Buttons with all tests in Code_resetPassword
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

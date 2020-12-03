@@ -1,5 +1,7 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA181I {
@@ -22,5 +24,9 @@ public class PatientPA181I {
         reg.ePhoneNumber().click();
         reg.clickCheckBox();
         Main.haveRequired(5);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

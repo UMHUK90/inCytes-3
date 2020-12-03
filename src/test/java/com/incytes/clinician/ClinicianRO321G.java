@@ -2,6 +2,8 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -58,5 +60,9 @@ public class ClinicianRO321G {
         reportBuilder.clickCirclesButton();
         reportBuilder.eInputCircle_Circle().click();
         reportBuilder.eListOfCircles().shouldHave(CollectionCondition.size(list.length));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

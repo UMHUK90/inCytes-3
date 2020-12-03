@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -27,5 +29,9 @@ public class ClinicianRO322B {
         reportBuilder.selectScoringGroup_YAxis("Common");
         reportBuilder.clickXcloseButton_YAxis();
         reportBuilder.eNameOfCurrentScoringGroup().shouldHave(text("None Selected"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

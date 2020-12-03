@@ -1,19 +1,15 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
-import static org.openqa.selenium.By.name;
-import static org.openqa.selenium.By.xpath;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.sleep;
 
 public class PatientPA143H {
-    public static String siteurl = "https://alpha-patient.incytesdata-dev.com/",
-                        password = "261090inCytes",
-                        newpassword = "261090inCytes";
-
     @Test
     public void c_test() {
         Main main = new Main();
@@ -28,5 +24,9 @@ public class PatientPA143H {
         login.setAll("andrew.grabovskiy+patient1@gmail.com", "261090inCytes").wLogin().signIn();
         portal.isThisLanguage("En");
         sleep(2000);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

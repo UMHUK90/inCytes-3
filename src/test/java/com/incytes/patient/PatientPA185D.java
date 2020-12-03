@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA185D {
@@ -15,5 +17,9 @@ public class PatientPA185D {
         home.eTitles_Treatment().first().shouldHave(Condition.text("Nome Del Trattamento: Coltello. Tanzania F"));
         home.eTextBodies_Indication().first().shouldHave(Condition.text("Il dominio tedesco iniziò nella Tanzania cont"));
         home.eTitles_Indication().first().shouldHave(Condition.text("Indicazione."));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

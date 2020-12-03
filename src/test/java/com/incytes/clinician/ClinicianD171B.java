@@ -1,5 +1,7 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -16,6 +18,9 @@ public class ClinicianD171B {
         $(".MuiTypography-h3").shouldHave(text("Termes et conditions"));
         $$("a").findBy(text("www.incytesapp.com")).click();
         $$("p").findBy(text("Built by clinicians for clinicians")).shouldBe(visible);
-        close();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

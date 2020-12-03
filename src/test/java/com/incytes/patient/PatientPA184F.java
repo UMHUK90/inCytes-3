@@ -2,7 +2,9 @@ package com.incytes.patient;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.switchTo;
@@ -29,5 +31,9 @@ public class PatientPA184F {
         Main.Login.Home home = main.new Login().new Home();
         home.eGrid_MyResults().hover();
         if(home.eAllResults_MyResults().shouldHave(CollectionCondition.size(1)).first().shouldHave(Condition.text("Your results 50")).getText().toCharArray().length != 26) throw new ElementNotVisibleException("Size is not correct");
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

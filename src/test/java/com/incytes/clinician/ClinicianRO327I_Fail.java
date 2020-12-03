@@ -3,6 +3,7 @@ package com.incytes.clinician;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRO327I_Fail {
@@ -42,5 +43,9 @@ public class ClinicianRO327I_Fail {
         Selenide.sleep(1000);
         reportBuilder.clickDone_Cohort();
         if(reportBuilder.eListOfCohorts().length() != 4) throw new ElementNotVisibleException(String.valueOf(reportBuilder.eListOfCohorts().length()));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

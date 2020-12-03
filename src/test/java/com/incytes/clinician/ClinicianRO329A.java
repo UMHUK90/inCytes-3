@@ -2,6 +2,7 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRO329A {
@@ -21,5 +22,9 @@ public class ClinicianRO329A {
         Selenide.switchTo().window(1);
         Selenide.open("https://qa.incytesdata-dev.com/report/23/456");
         Main.eBottomMessage().shouldHave(Condition.text("Failed to load report. Please try again"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRO328A {
@@ -26,5 +28,9 @@ public class ClinicianRO328A {
         reportBuilder.clickSubmitButton_YAxis();
         reportBuilder.eDataPointsCount().waitUntil(Condition.not(Condition.exactText("0")), 5000);
         reportBuilder.eCasesCount().waitUntil(Condition.not(Condition.exactText("0")), 5000);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

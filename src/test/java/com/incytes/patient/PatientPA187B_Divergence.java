@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.switchTo;
@@ -28,5 +30,9 @@ public class PatientPA187B_Divergence {
         survey.clickSubmit();
         Main.Login.Home home = main.new Login().new Home();
         home.ePatientName().shouldHave(Condition.text("Максим"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

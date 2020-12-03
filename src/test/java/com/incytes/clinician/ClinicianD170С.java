@@ -2,6 +2,7 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.*;
 import com.incytes.patient.PatientPA182G;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selectors.byText;
@@ -58,5 +59,9 @@ public class ClinicianD170С {
         dashBoard.clickCases();
         cases.eItems().get(1).find(byText("qwertyuiop17091709+"+(count-1)+"@yandex.by")).parent().click();
         $$(byText("Outlier Detected")).shouldHave(CollectionCondition.size(4));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

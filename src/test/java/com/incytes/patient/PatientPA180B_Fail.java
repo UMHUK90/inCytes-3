@@ -1,19 +1,10 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.*;
-import static org.openqa.selenium.By.xpath;
-
 public class PatientPA180B_Fail {
-    public static String siteurl = "https://qa-patient.incytesdata-dev.com/",
-                         password = "261090inCytes";
-
-    public void clickSignInButton() {
-        $(xpath("//*[@id=\"root\"]/div/form/div/div/div[8]/button")).click();
-    }
-
     @Test
     public void c_test() {
         Main main = new Main("Ru");
@@ -35,5 +26,9 @@ public class PatientPA180B_Fail {
         reg.wRegistration();
         reg.clickLogin();
         Main.muiError(3);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

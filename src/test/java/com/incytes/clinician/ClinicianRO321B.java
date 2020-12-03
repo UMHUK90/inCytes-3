@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.*;
@@ -27,5 +29,9 @@ public class ClinicianRO321B {
         reportBuilder.clickXcloseButton_Circle();
         reportBuilder.eInputCircle_Circle().shouldNotBe(visible);
         reportBuilder.eNameOfCurrentCircle().shouldHave(exactText("No Filter Set"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

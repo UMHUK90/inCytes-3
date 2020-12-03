@@ -3,6 +3,7 @@ package com.incytes.clinician;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selectors.byText;
@@ -36,8 +37,11 @@ public class ClinicianD171B_Fail {
         dashBoard.clickSaveCard_Card();
         Main.eBottomMessage().shouldHave(Condition.text("Your card number is incomplete."));
         dashBoard.eSaveCard_Card().shouldBe(Condition.visible);
-        Selenide.sleep(5000000);
         // 30 - A white random window in fast click
         // 38... - Don't appears and nothing is happen
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

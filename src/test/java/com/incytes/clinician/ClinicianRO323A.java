@@ -2,6 +2,8 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.*;
@@ -34,5 +36,9 @@ public class ClinicianRO323A {
         circles.clickOnCircle(circles.eListOfCircles().find(text("Common Protocol")));
         Main.Login.DashBoard.Circles.Circle circle = circles.new Circle();
         circle.eGraph().$$("circle").shouldHave(CollectionCondition.size(size));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

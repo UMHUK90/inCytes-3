@@ -2,6 +2,7 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRP50D_FAIL {
@@ -32,7 +33,7 @@ public class ClinicianRP50D_FAIL {
         Main.eBottomMessage().shouldBe();
         login.ePassword().setValue(Main.password + "!");
         login.ePassword().shouldNotBe();
-        Selenide.closeWebDriver();
+        Selenide.close();
         login.open().forgotPassword();
         login.writeEmail_forgotPassword(email);
         login.clickSubmit_forgotPassword();
@@ -44,5 +45,9 @@ public class ClinicianRP50D_FAIL {
         login.writePassword_resetPassword(Main.password);
         login.writeConfirmPassword_resetPassword(Main.password);
         login.clickReset_resetPassword();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

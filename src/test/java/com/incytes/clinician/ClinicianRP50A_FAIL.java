@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRP50A_FAIL {
@@ -16,5 +18,9 @@ public class ClinicianRP50A_FAIL {
         login.checkResetPasswordForm();
         login.eNote_resetPassword().shouldHave(Condition.text("A verification code has been successfully sent to your email. Please input the code below"));
         login.eEmail().shouldBe(Condition.disabled);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -2,6 +2,8 @@ package com.incytes.patient;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.switchTo;
@@ -42,5 +44,9 @@ public class PatientPA184D {
         survey.eRadioButtons().first().click();
         survey.eCheckBoxes().last().click();
         survey.clickSubmit();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

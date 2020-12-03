@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA181J {
@@ -20,5 +22,9 @@ public class PatientPA181J {
         reg.eGetStarted().shouldBe(Condition.disabled);
         reg.clickCheckBox();
         reg.eBlueMarker().shouldBe();
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -27,5 +29,9 @@ public class ClinicianRO322C {
         reportBuilder.selectScoringGroup_YAxis("Common");
         Main.clickOutSide(dashBoard.eProfile(), -50, -50);
         reportBuilder.eInputScoringGroup_YAxis().shouldBe(visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

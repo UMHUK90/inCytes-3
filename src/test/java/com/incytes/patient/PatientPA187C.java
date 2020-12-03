@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA187C {
@@ -12,5 +14,9 @@ public class PatientPA187C {
         Main.Login.Home home = login.new Home();
         home.checkHome();
         home.eTitles_Treatment().first().shouldHave(Condition.text("Tanzania"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

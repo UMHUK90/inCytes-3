@@ -1,5 +1,7 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -14,5 +16,9 @@ public class PatientPA180D {
         reg.setAll("", "Patien 1", "Patien 1", "", "", "", "", "").wRegistration();
         reg.clickLogin();
         Main.muiError(2, 1).shouldHave(text("Spaces are not allowed"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

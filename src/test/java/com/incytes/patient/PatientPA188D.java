@@ -1,6 +1,8 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA188D {
@@ -16,5 +18,9 @@ public class PatientPA188D {
         login.clickSubmit_forgotPassword();
         login.eEmail().shouldHave(Condition.value(text));
         Main.eBottomMessage().shouldHave(Condition.text("Unable to send a confirmation code to the email address provided"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

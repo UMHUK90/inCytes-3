@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.*;
@@ -32,5 +34,9 @@ public class ClinicianRO324A {
         reportBuilder.eAddTab_Cohort().shouldBe(enabled);
         reportBuilder.eInput_Cohort().shouldBe(enabled);
         reportBuilder.eDone_Cohort().shouldBe(enabled);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

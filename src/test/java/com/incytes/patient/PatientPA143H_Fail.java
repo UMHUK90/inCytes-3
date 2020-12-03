@@ -2,6 +2,7 @@ package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class PatientPA143H_Fail {
@@ -16,7 +17,7 @@ public class PatientPA143H_Fail {
         home.setAllPassword_changePassword(Main.password, Main.password+"!", Main.password+"!").writeAll_changePassword().checkAll_changePassword();
         home.clickSave_changePassword();
         Main.eBottomMessage().shouldHave(Condition.text("Updated"));
-        Selenide.closeWebDriver();
+        Selenide.close();
         login.open();
         login.wLogin().signIn();
         login.setAll("andrew.grabovskiy+alphapat1@gmail.com",Main.password+"!").wLogin().isVisible().signIn();
@@ -25,5 +26,9 @@ public class PatientPA143H_Fail {
         home.setAllPassword_changePassword(Main.password + "!", Main.password, Main.password).writeAll_changePassword().checkAll_changePassword();
         home.clickSave_changePassword();
         Main.eBottomMessage().shouldHave(Condition.text("Updated"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

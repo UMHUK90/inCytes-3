@@ -1,20 +1,24 @@
 package com.incytes.patient;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import com.incytes.clinician.Main;
+
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class PatientPA182C {
     public void InvitationOnEmail(String language){
-        clinician.Main main = new clinician.Main(language);
-        clinician.Main.Login login = main.new Login();
+        Main main = new Main(language);
+        Main.Login login = main.new Login();
         login.open();
-        login.setAll("andrew.grabovskiy+6@gmail.com", Main.password).wLogin().signIn();
-        clinician.Main.Login.DashBoard dashBoard = login.new DashBoard();
-        clinician.Main.Login.DashBoard.NewCase newCase = dashBoard.new NewCase();
+        login.setAll("andrew.grabovskiy+6@gmail.com", com.incytes.patient.Main.password).wLogin().signIn();
+        Main.Login.DashBoard dashBoard = login.new DashBoard();
+        Main.Login.DashBoard.NewCase newCase = dashBoard.new NewCase();
         while(true) {if(!newCase.eForm().exists()) {dashBoard.eNewCase().click(); sleep(50);} else break;}
-        clinician.Main.FileTXT file = main.new FileTXT("D:\\Path\\count.txt");
+        Main.FileTXT file = main.new FileTXT("D:\\Path\\count.txt");
         int count = Integer.parseInt(file.getText());
         newCase.setAll("qwertyuiop17091709+" + count + "@yandex.by", "2017/04/23", "", "", "", "", "Common Protocol").writeAll().checkAll();
         newCase.clickCreateCase();
@@ -23,15 +27,19 @@ public class PatientPA182C {
     @Test
     public void c_test() {
         InvitationOnEmail("Fr");
-        Main main = new Main("Fr");
-        Main.newTab();
+        com.incytes.patient.Main main = new com.incytes.patient.Main("Fr");
+        com.incytes.patient.Main.newTab();
         switchTo().window(1);
-        Main.GetInvitationWithYandex invitation = main.new GetInvitationWithYandex("qwertyuiop17091709@yandex.ru", "cilaCILA17097938", "+375298746833");
+        com.incytes.patient.Main.GetInvitationWithYandex invitation = main.new GetInvitationWithYandex("qwertyuiop17091709@yandex.ru", "cilaCILA17097938", "+375298746833");
         invitation.clickInvitation();
         switchTo().window(2);
-        Main.Registration reg = main.new Registration();
-        reg.setAll("", Main.password, Main.password, "", "", "", "", "").wRegistration().cRegistration().clickLogin();
+        com.incytes.patient.Main.Registration reg = main.new Registration();
+        reg.setAll("", com.incytes.patient.Main.password, com.incytes.patient.Main.password, "", "", "", "", "").wRegistration().cRegistration().clickLogin();
         reg.eTextOfCheckBox1().shouldHave(Condition.text("Termes et Conditions"));
         reg.eTextOfCheckBox2().shouldHave(Condition.text("Termes et Conditions pour les professionnels de la santé"));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

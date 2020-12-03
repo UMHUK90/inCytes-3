@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRP53A_FAIL {
@@ -16,5 +18,9 @@ public class ClinicianRP53A_FAIL {
         login.writeAccessCode_resetPassword(Main.randomText(16));
         if(login.eAccessCode_resetPassword().getValue().toCharArray().length != 16) throw new ElementNotVisibleException("Error in password - " + login.eAccessCode_resetPassword().getValue().toCharArray().length);
         //Error with BUTTON - 17
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

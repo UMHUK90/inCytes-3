@@ -1,5 +1,7 @@
 package com.incytes.patient;
 
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -14,5 +16,9 @@ public class PatientPA180I {
         reg.setAll("qwertyuiop17091709+151@yandex.by", "Patient1", "Patient1", "", "", "", "", "").wRegistration().cRegistration();
         reg.clickLogin();
         Main.eBottomMessage().shouldHave(text("Адрес электронной почты уже зарегестрирован в нашей системе."));
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

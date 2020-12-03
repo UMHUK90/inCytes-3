@@ -1,7 +1,9 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianRP53B_FAIL {
@@ -22,5 +24,9 @@ public class ClinicianRP53B_FAIL {
         //Error with BUTTON - 17
 
         //1 - Ввёл неверный код, но верные пароли, послало на страницу логина.
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }
