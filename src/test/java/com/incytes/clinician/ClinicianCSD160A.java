@@ -1,6 +1,8 @@
 package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 public class ClinicianCSD160A {
@@ -15,5 +17,9 @@ public class ClinicianCSD160A {
         cases.toCaseDetails(cases.eItems().first());
         Main.Login.DashBoard.Cases.CaseDetail caseDetail = cases.new CaseDetail();
         caseDetail.eTitle().shouldHave(Condition.text("Case Detail")).shouldBe(Condition.visible);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }

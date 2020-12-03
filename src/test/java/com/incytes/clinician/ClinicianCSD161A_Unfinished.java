@@ -2,6 +2,7 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selectors.byText;
@@ -34,5 +35,9 @@ public class ClinicianCSD161A_Unfinished {
         cases.eItems().first().shouldNot(Condition.have(Condition.text("qwertyuiop17091709+" + (count-1) + "@yandex.by")));
         //reminders switched off
         Selenide.sleep(500000000);
+    }
+    @AfterMethod
+    public static void close(){
+        Selenide.close();
     }
 }
