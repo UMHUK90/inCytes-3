@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
-public class ClinicianСO61G {
+public class ClinicianСO61G_IRRELEVANT {
     @Test
     public void method(){
         String text = Main.randomText(5);
