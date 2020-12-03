@@ -2,6 +2,7 @@ package com.incytes.clinician;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import com.incytes.clinician.irrelevant.ClinicianCS094W_Fail;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
@@ -30,7 +31,6 @@ public class ClinicianCS095A_Unfinished {
         Main.eBottomMessage().shouldHave(Condition.text("Case has been closed"));
         cases.eItems().first().shouldHave(Condition.text("Completed"));
         //reminders switched off
-        Selenide.sleep(500000);
     }
     @AfterMethod
     public static void close(){

@@ -370,9 +370,9 @@ public class Main {
             public SelenideElement eSearch(){ return $(".MuiGrid-align-items-xs-center", 0).parent().parent().parent(); }
             public SelenideElement eNewCase(){ return $(".MuiSvgIcon-root", 2).parent(); }
             public SelenideElement eDashBoard(){ return $(".MuiTypography-root.MuiTypography-body2", 2); }
-            public SelenideElement eCases(){ return $("#casesLink").parent(); }
-            public SelenideElement eTasks(){ return $("#mytasksLink").parent(); }
-            public SelenideElement eReports(){ return $(".MuiTypography-body2", 4).parent().parent().parent(); }
+            public SelenideElement eCases(){ return $("#casesLink").parent().waitUntil(enabled, 5000); }
+            public SelenideElement eTasks(){ return $("#mytasksLink").parent().waitUntil(enabled, 5000); }
+            public SelenideElement eReports(){ return $(".MuiTypography-body2", 4).parent().parent().parent().waitUntil(enabled, 5000); }
             public SelenideElement eCircles(){ return $("#circlesLink").parent().waitUntil(enabled, 5000); }
             public SelenideElement ePatients(){ return $(".MuiTypography-body2", 7).parent().parent().parent(); }
             public SelenideElement eSupport(){ return $(".MuiGrid-align-items-xs-center", 2).parent().parent().parent(); }
@@ -649,7 +649,7 @@ public class Main {
                 }
             }
             public class Cases{
-                public SelenideElement eAddCase(){ return $(".MuiButton-contained"); }
+                public SelenideElement eAddCase(){ return $(".MuiButton-contained").waitUntil(visible,10000); }
                 public SelenideElement eSearch(){ return $(".MuiInputBase-inputAdornedStart"); }
                 public SelenideElement eTitle(){ return $("#headerText"); }
                 public SelenideElement eMoreOptions(SelenideElement item){ return item.find(".MuiButtonBase-root.MuiIconButton-root"); }
