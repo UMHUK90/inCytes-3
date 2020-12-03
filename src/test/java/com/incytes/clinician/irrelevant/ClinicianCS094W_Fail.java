@@ -1,14 +1,15 @@
-package com.incytes.clinician;
+package com.incytes.clinician.irrelevant;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import com.incytes.clinician.Main;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import java.util.Date;
 
-public class ClinicianCS094M_Fail {
+public class ClinicianCS094W_Fail {
     @Test
     public void method(){
         Main main = new Main();
@@ -20,8 +21,9 @@ public class ClinicianCS094M_Fail {
         cases.clickAddCase();
         Main.Login.DashBoard.Cases.NewCase newCase = cases.new NewCase();
         newCase.clickUseExistingPatient();
-        newCase.setAll("qwertyuiop17091709+243@yandex.by", "", "", "", "", "", "Common protocol").writeAll().checkAll();
+        newCase.setAll("qwertyuiop17091709+243@yandex.by", "", "", "", "", "", "Common Protocol").writeAll().checkAll();
         newCase.clickCreateCase();
+        newCase.eForm().shouldNotBe(Condition.visible);
         newCase.eSharedWithCircles().shouldNotBe(Condition.visible);
         dashBoard.clickCases();
         cases.eItems().first().shouldHave(Condition.text("qwertyuiop17091709+243@yandex.by"));
@@ -31,7 +33,6 @@ public class ClinicianCS094M_Fail {
         Date date = new Date();
         String time2 = yandex.time.replace(":", "").length() == 4 ? yandex.time.substring(3) : yandex.time.substring(1);
         if(date.getHours() != Integer.parseInt(yandex.time.replace(":", "").substring(0, 1)) && date.getMinutes()+1 < Integer.parseInt(time2)) throw new ElementNotVisibleException("Hours = " + date.getHours() +" - " + yandex.time.replace(":", "").substring(0, 1) + " " + "Minutes = " + String.valueOf(date.getMinutes()-1) +" - " + time2);
-        //if(date.getHours() != Integer.parseInt(yandex.time.substring(0, 2)) && date.getMinutes()+1 < Integer.parseInt(yandex.time.substring(3))) throw new ElementNotVisibleException("Hours = " + date.getHours() +" - " + yandex.time.substring(0, 2) + " " + "Minutes = " + String.valueOf(date.getMinutes()-1) +" - " + yandex.time.substring(3));
         //The invitation didn't come on e-mail
     }
     @AfterMethod

@@ -1,12 +1,12 @@
-package com.incytes.clinician;
+package com.incytes.clinician.irrelevant;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import com.incytes.clinician.Main;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-public class ClinicianRP51C_FAIL {
+public class ClinicianRP53A_FAIL {
     @Test
     public void method(){
         Main main = new Main();
@@ -16,10 +16,8 @@ public class ClinicianRP51C_FAIL {
         login.writeEmail_forgotPassword(email);
         login.diplayedEmail_forgotPassword();
         login.clickSubmit_forgotPassword();
-        login.eConfirmPassword_resetPassword().waitUntil(Condition.visible, 5000);
-        login.writePassword_resetPassword(Main.randomText(5) + "7 H").clickReset_resetPassword();
-        if(login.ePassword().getValue().toCharArray().length != 8) throw new ElementNotVisibleException("Error in password - " + login.ePassword().getValue().toCharArray().length);
-        Main.muiError(3, 1).shouldHave(Condition.text("Spaces are not allowed"));
+        login.writeAccessCode_resetPassword(Main.randomText(16));
+        if(login.eAccessCode_resetPassword().getValue().toCharArray().length != 16) throw new ElementNotVisibleException("Error in password - " + login.eAccessCode_resetPassword().getValue().toCharArray().length);
         //Error with BUTTON - 17
     }
     @AfterMethod

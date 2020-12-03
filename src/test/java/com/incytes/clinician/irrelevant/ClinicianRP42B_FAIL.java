@@ -1,14 +1,16 @@
-package com.incytes.clinician;
+package com.incytes.clinician.irrelevant;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import com.incytes.clinician.Main;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.switchTo;
 
-public class ClinicianRP42A_FAIL {
+public class ClinicianRP42B_FAIL {
     @Test
     public void method(){
         Main main = new Main();
@@ -27,6 +29,7 @@ public class ClinicianRP42A_FAIL {
         if(code == 0) throw new ElementNotVisibleException("НЕТ КОДА");
         $(".mail-MessageSnippet-Item_subject").shouldHave(Condition.text("Your verification code to inCytes™"));
         $(".js-message-snippet-firstline").shouldHave(Condition.text("Your verification code is"));
+        getcode.eLastSender().shouldHave(Condition.text("no-reply@verificationemail.com"));
         getcode.clickLastCheckBox();
         getcode.eDelete().click();
     }

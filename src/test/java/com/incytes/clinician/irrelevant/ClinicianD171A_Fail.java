@@ -1,6 +1,8 @@
-package com.incytes.clinician;
+package com.incytes.clinician.irrelevant;
 
 import com.codeborne.selenide.*;
+import com.incytes.clinician.ClinicianR17A;
+import com.incytes.clinician.Main;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 

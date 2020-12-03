@@ -1,7 +1,9 @@
-package com.incytes.clinician;
+package com.incytes.clinician.irrelevant;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import com.incytes.clinician.ClinicianCS094N;
+import com.incytes.clinician.Main;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 

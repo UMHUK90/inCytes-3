@@ -1,17 +1,16 @@
-package com.incytes.clinician;
+package com.incytes.clinician.irrelevant;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import com.incytes.clinician.Main;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.text;
-
-public class ClinicianRO322D_Fail {
+public class ClinicianRO324D_Fail {
     @Test
     public void method(){
         String text = Main.randomText(5);
-        Main main = new Main();
+        Main main = new Main("En");
         Main.Login login = main.new Login().open();
         login.setAll("andrew.grabovskiy+6@gmail.com", Main.password).wLogin().signIn();
         Main.Login.DashBoard dashBoard = login.new DashBoard();
@@ -26,9 +25,12 @@ public class ClinicianRO322D_Fail {
         reportBuilder.selectCircle_Circle("Common Protocol");
         reportBuilder.clickUpdateReport_Circle();
         reportBuilder.clickYAxisButton();
+        reportBuilder.selectScoringGroup_YAxis("Common");
         reportBuilder.clickSubmitButton_YAxis();
-        Main.eBottomMessage().shouldHave(text("Select scoring group from the list and try again"));
-        //"Select scoring group from the list and try again" text doesn't appears
+        reportBuilder.clickAddCohortButton();
+        reportBuilder.selectCohort_Cohort("How often are you coughing?");
+        reportBuilder.clickDone_Cohort();
+        //Failed to fetch cohort questions. Try again later.
     }
     @AfterMethod
     public static void close(){
