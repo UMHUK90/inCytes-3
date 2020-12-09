@@ -163,8 +163,8 @@ public class Main {
     public class Registration {
         public class Survey extends Survey_abstract{};
         //Элементы Регистрации
-        public SelenideElement eFirstName(){ return $(name("firstName")); }
-        public SelenideElement eLastName(){ return  $(name("lastName"));}
+        public SelenideElement eFirstName(){ return $("input[name='firstName']"); }
+        public SelenideElement eLastName(){ return  $("input[name='lastName']"); }
         public SelenideElement eEmail(){ return $(name("email")); }
         public SelenideElement ePassword(){ return $(name("password")); }
         public SelenideElement eConfirmPassword(){ return $(name("confirmPassword")); }
@@ -176,8 +176,8 @@ public class Main {
         public SelenideElement eGetStarted(){ return $("button"); }
         public SelenideElement eLogin(){return $(".MuiButton-sizeLarge");}
         public SelenideElement eEnumCountiesFirst(){ return $(".MuiListItem-gutters");}
-        public SelenideElement eTextOfCheckBox1(){ return $(".MuiTypography-root", 3); }
-        public SelenideElement eTextOfCheckBox2(){ return $(".MuiTypography-root", 5); }
+        public SelenideElement eTextOfCheckBox1(){ return $("h5", 1); }
+        public SelenideElement eTextOfCheckBox2(){ return $("h5", 2); }
         public SelenideElement eBlueMarker(int count, int number){$$(".MuiSvgIcon-colorSecondary").shouldBe(size(count)); return $(".MuiSvgIcon-colorSecondary", number); }
         public SelenideElement eBlueMarker(){ return $(".MuiSvgIcon-colorSecondary");}
         public void eBlueMarker(int count){ $$(".MuiSvgIcon-colorSecondary").shouldBe(size(count));}
