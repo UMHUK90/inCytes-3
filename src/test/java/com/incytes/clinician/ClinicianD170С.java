@@ -34,7 +34,7 @@ public class ClinicianD170С {
         patients.eListOfPatients().first().shouldHave(Condition.text("qwertyuiop17091709+"+(count-1)+"@yandex.by"));
         dashBoard.clickCases();
         cases.eItems().first().shouldHave(Condition.text("qwertyuiop17091709+"+(count-1)+"@yandex.by"));
-        Selenide.close();
+        Selenide.closeWebDriver();
         com.incytes.patient.Main main1 = new com.incytes.patient.Main("En", "qa");
         com.incytes.patient.Main.Login login1 = main1.new Login().open();
         login1.setAll("qwertyuiop17091709+"+(count-1)+"@yandex.by", Main.password).wLogin().signIn();
@@ -51,7 +51,7 @@ public class ClinicianD170С {
         home.eAllResults_MyResults().first().shouldHave(Condition.text("Your results"));
         home.eAboutGraph_MyResults().exists();
         home.eGrids_MyResults().shouldHave(CollectionCondition.size(2));
-        Selenide.close();
+        Selenide.closeWebDriver();
         login.open();
         login.setAll("andrew.grabovskiy+6@gmail.com", Main.password).wLogin().signIn();
         dashBoard.eListOfAlerts().first().shouldHave(Condition.text("qwertyuiop17091709+"+(count-1)+"@yandex.by")).shouldHave(Condition.text("Outlier Detected"));
@@ -62,6 +62,6 @@ public class ClinicianD170С {
     }
     @AfterMethod
     public static void close(){
-        Selenide.close();
+        Selenide.closeWebDriver();
     }
 }

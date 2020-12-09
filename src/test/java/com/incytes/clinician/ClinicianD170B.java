@@ -34,13 +34,13 @@ public class ClinicianD170B {
         patients.eListOfPatients().first().shouldHave(text("qwertyuiop17091709+"+(count-1)+"@yandex.by"));
         dashBoard.clickCases();
         cases.eItems().first().shouldHave(text("qwertyuiop17091709+"+(count-1)+"@yandex.by"));
-        Selenide.close();
-        com.incytes.patient.Main main1 = new com.incytes.patient.Main("En", "qa");
+        Selenide.closeWebDriver();
+        com.incytes.patient.Main main1 = new com.incytes.patient.Main("Ru", "qa");
         com.incytes.patient.Main.Login login1 = main1.new Login().open();
         login1.setAll("qwertyuiop17091709+"+(count-1)+"@yandex.by", Main.password).wLogin().signIn();
         com.incytes.patient.Main.Registration registration = main1.new Registration();
         registration.setAll("", "", "", "Andrew", "Grabovskiy", "20100105", "Belarus", "73597545");
-        $(".MuiTypography-h3").shouldHave(text("Добро пожаловать! Ваш аккаунт почти готов."));
+        $("h3").shouldHave(text("Добро пожаловать! Ваш аккаунт почти готов."));
         registration.wwRegistration().cwRegistration();
         com.incytes.patient.Main.Login.Home home = login1.new Home();
         com.incytes.patient.Main.Login.Home.Survey survey = home.new Survey();
@@ -51,7 +51,7 @@ public class ClinicianD170B {
         home.eAllResults_MyResults().first().shouldHave(text("Your results"));
         home.eAboutGraph_MyResults().exists();
         home.eGrids_MyResults().shouldHave(CollectionCondition.size(1));
-        Selenide.close();
+        Selenide.closeWebDriver();
         login.open();
         login.setAll("andrew.grabovskiy+6@gmail.com", Main.password).wLogin().signIn();
         dashBoard.eListOfAlerts().first().shouldHave(text("qwertyuiop17091709+"+(count-1)+"@yandex.by"));
@@ -61,6 +61,6 @@ public class ClinicianD170B {
     }
     @AfterMethod
     public static void close(){
-        Selenide.close();
+        Selenide.closeWebDriver();
     }
 }
