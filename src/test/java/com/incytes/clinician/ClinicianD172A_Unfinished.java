@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class ClinicianD172A {
+public class ClinicianD172A_Unfinished {
     @Test
     public void method(){
         Configuration.timeout = 5000;
@@ -51,6 +51,6 @@ public class ClinicianD172A {
     }
     @AfterMethod
     public static void close(){
-        Selenide.close();
+        Selenide.closeWebDriver();
     }
 }

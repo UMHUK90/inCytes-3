@@ -39,25 +39,38 @@ public class ClinicianD170B {
         com.incytes.patient.Main.Login login1 = main1.new Login().open();
         login1.setAll("qwertyuiop17091709+"+(count-1)+"@yandex.by", Main.password).wLogin().signIn();
         com.incytes.patient.Main.Registration registration = main1.new Registration();
-        registration.setAll("", "", "", "Andrew", "Grabovskiy", "20100105", "Belarus", "73597545");
+        registration.setAll("", "", "", "First Name", "Last Name", "2010/01/05", "Belarus", "73597545");
         $("h3").shouldHave(text("Добро пожаловать! Ваш аккаунт почти готов."));
-        registration.wwRegistration().cwRegistration();
+        registration.wwRegistration().cwRegistration().clickGetStarted();
         com.incytes.patient.Main.Login.Home home = login1.new Home();
         com.incytes.patient.Main.Login.Home.Survey survey = home.new Survey();
         survey.eRadioButtons().first().click();
         for (SelenideElement element:survey.eCheckBoxes()) element.click();
+        // Grouped Type Question
+        $("input[value='8']", 0).click();
+        $("input[value='7']", 1).click();
+        $("input[value='6']", 2).click();
+        $("input[value='7']", 3).click();
+        // Date Question
+        $("input[name='answers.date._15']").setValue("2011/01/20");
+        // Number Type Question
+        $("input[type='text']", 1).setValue("20");
+        // Text Type Question
+        $("textarea").setValue("Some text");
         survey.clickSubmit();
         home.eGrids_MyResults().first().hover();
         home.eAllResults_MyResults().first().shouldHave(text("Your results"));
         home.eAboutGraph_MyResults().exists();
         home.eGrids_MyResults().shouldHave(CollectionCondition.size(1));
         Selenide.closeWebDriver();
-        login.open();
-        login.setAll("andrew.grabovskiy+6@gmail.com", Main.password).wLogin().signIn();
-        dashBoard.eListOfAlerts().first().shouldHave(text("qwertyuiop17091709+"+(count-1)+"@yandex.by"));
+        Main main2 = new Main("Ru");
+        Main.Login login2 = main2.new Login().open();
+        login2.open();
+        login2.setAll("andrew.grabovskiy+6@gmail.com", Main.password).wLogin().signIn();
+        //dashBoard.eListOfAlerts().first().shouldHave(text("qwertyuiop17091709+"+(count-1)+"@yandex.by"));
         dashBoard.clickCases();
-        cases.eItems().get(1).find(byText("qwertyuiop17091709+"+(count-1)+"@yandex.by")).parent().click();
-        $(byText("Outlier Detected")).shouldBe(Condition.exist);
+        cases.eItems().get(1).find(byText(registration.firstName+" "+registration.lastName)).parent().click();
+        //$(byText("Outlier Detected")).shouldBe(Condition.exist);
     }
     @AfterMethod
     public static void close(){

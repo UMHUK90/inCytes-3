@@ -19,13 +19,13 @@ public class ClinicianR20A {
         reg.wRegistration().cRegistration().clickNext();
         file.writeText(String.valueOf(count+1), false);
         $$("h4").findBy(text("Код подтверждения")).shouldBe(visible);
-        $$("h4").findBy(text("Код подтверждения был успешно отправлен на вашу электронную почту. Пожалуйста, введите код в соответствующее поле.")).shouldBe(visible);
+        $$("h4").findBy(text("Код подтверждения был успешно отправлен на вашу электронную почту. Пожалуйста, введите его ниже, чтобы закончить регистрацию.")).shouldBe(visible);
         $$("input").findBy(attribute("placeholder", "Код подтверждения")).shouldBe(visible);
         $$("span.MuiButton-label").findBy(text("SUBMIT")).shouldBe(visible);
         $$("span.MuiButton-label").findBy(text("Отправить код подтверждения ещё раз")).shouldBe(visible);
     }
     @AfterMethod
     public static void close(){
-        Selenide.close();
+        Selenide.closeWebDriver();
     }
 }

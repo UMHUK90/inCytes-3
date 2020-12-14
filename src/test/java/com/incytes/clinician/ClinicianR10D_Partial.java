@@ -23,6 +23,6 @@ public class ClinicianR10D_Partial {
     }
     @AfterMethod
     public static void close(){
-        Selenide.close();
+        Selenide.closeWebDriver();
     }
 }

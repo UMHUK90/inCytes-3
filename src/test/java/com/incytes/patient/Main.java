@@ -165,15 +165,15 @@ public class Main {
         //Элементы Регистрации
         public SelenideElement eFirstName(){ return $("input[name='firstName']"); }
         public SelenideElement eLastName(){ return  $("input[name='lastName']"); }
-        public SelenideElement eEmail(){ return $(name("email")); }
-        public SelenideElement ePassword(){ return $(name("password")); }
-        public SelenideElement eConfirmPassword(){ return $(name("confirmPassword")); }
-        public SelenideElement eBirthDate(){ return $(name("birthDate")); }
-        public SelenideElement eCountryName(){ return $(name("countryName")); }
-        public SelenideElement ePhoneNumber(){ return $(name("phoneNumber")); }
-        public SelenideElement eCheckBox1(){return $(byAttribute("type", "checkbox"), 0);}
-        public SelenideElement eCheckBox2(){return $(byAttribute("type", "checkbox"), 1);}
-        public SelenideElement eGetStarted(){ return $("button"); }
+        public SelenideElement eEmail(){ return $("input[name='email']"); }
+        public SelenideElement ePassword(){ return $("input[name='password']"); }
+        public SelenideElement eConfirmPassword(){ return $("input[name='confirmPassword']"); }
+        public SelenideElement eBirthDate(){ return $("input[name='birthDate']"); }
+        public SelenideElement eCountryName(){ return $("input[name='countryName']"); }
+        public SelenideElement ePhoneNumber(){ return $("input[name='phoneNumber']"); }
+        public SelenideElement eCheckBox1(){return $("input[type='checkbox']", 0);}
+        public SelenideElement eCheckBox2(){return $("input[type='checkbox']", 1);}
+        public SelenideElement eGetStarted(){ return $("button[type='submit']"); }
         public SelenideElement eLogin(){return $(".MuiButton-sizeLarge");}
         public SelenideElement eEnumCountiesFirst(){ return $(".MuiListItem-gutters");}
         public SelenideElement eTextOfCheckBox1(){ return $("h5", 1); }
@@ -228,17 +228,18 @@ public class Main {
             return this;
         }
         public Registration wwRegistration(){
-            eFirstName().setValue(firstName);
-            eLastName().setValue(lastName);
-            eBirthDate().setValue(date);
             if(!country.isEmpty()) {
                 for (int step = 0; step < country.length(); step++) {
                     eCountryName().sendKeys(Keys.chord(Keys.COMMAND, String.valueOf(country.toCharArray()[step])));
-                    sleep(20);
+                    sleep(50);
                 }
                 eEnumCountiesFirst().click();
             }
+            eFirstName().setValue(firstName);
+            eLastName().setValue(lastName);
             ePhoneNumber().setValue(phone);
+            eBirthDate().setValue(date);
+            clickCheckBox();
             return this;
         }
                /** Проверяет на присутствие введённых данных (можно пропустить) */

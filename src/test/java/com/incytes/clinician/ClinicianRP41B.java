@@ -18,6 +18,6 @@ public class ClinicianRP41B {
     }
     @AfterMethod
     public static void close(){
-        Selenide.close();
+        Selenide.closeWebDriver();
     }
 }

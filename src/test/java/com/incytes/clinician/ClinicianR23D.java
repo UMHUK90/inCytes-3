@@ -40,8 +40,8 @@ public class ClinicianR23D {
             terms.eHeading().shouldHave(Condition.exactText("Termini e Condizioni"));
             terms.firstText().shouldHave(text("™"));
     }
-    @AfterMethod
-    public static void close(){
-            Selenide.close();
-    }
+        @AfterMethod
+        public static void close(){
+                Selenide.closeWebDriver();
+        }
 }

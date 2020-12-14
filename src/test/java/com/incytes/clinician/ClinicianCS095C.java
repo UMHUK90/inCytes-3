@@ -23,6 +23,6 @@ public class ClinicianCS095C {
     }
     @AfterMethod
     public static void close(){
-        Selenide.close();
+        Selenide.closeWebDriver();
     }
 }

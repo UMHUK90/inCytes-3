@@ -20,6 +20,6 @@ public class ClinicianCSD160A {
     }
     @AfterMethod
     public static void close(){
-        Selenide.close();
+        Selenide.closeWebDriver();
     }
 }

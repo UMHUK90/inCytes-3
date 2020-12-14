@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$$;
 
-public class ClinicianD170С {
+public class ClinicianD170С_Unfinished {
     @Test
     public void method(){
         Configuration.timeout = 15000;

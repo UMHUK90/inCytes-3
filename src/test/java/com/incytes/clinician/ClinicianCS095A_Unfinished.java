@@ -34,6 +34,6 @@ public class ClinicianCS095A_Unfinished {
     }
     @AfterMethod
     public static void close(){
-        Selenide.close();
+        Selenide.closeWebDriver();
     }
 }

@@ -24,6 +24,6 @@ public class ClinicianRO310A {
     }
     @AfterMethod
     public static void close(){
-        Selenide.close();
+        Selenide.closeWebDriver();
     }
 }

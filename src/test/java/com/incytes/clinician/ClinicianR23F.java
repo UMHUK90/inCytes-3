@@ -40,8 +40,8 @@ public class ClinicianR23F {
             terms.eHeading().shouldHave(Condition.exactText("Пользовательское соглашение"));
             terms.firstText().shouldHave(text("™"));
     }
-    @AfterMethod
-    public static void close(){
-            Selenide.close();
-    }
+        @AfterMethod
+        public static void close(){
+                Selenide.closeWebDriver();
+        }
 }
