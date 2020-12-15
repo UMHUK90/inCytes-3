@@ -570,7 +570,7 @@ public class Main {
                 public void writeProtocol(String name){ eProtocol_Creation().setValue(name); }
                 public void writeTreatment(String name){ eTreatment_Creation().setValue(name); }
                 public void writeIndication(String name){ eIndication_Creation().setValue(name); }
-                public void clickOnCircle(SelenideElement circle){ circle.find(byAttribute("style", "display: block; text-decoration: none; font-weight: bold; font-size: 17px; line-height: 20px; letter-spacing: 0.16px; color: rgb(1, 16, 32); margin-bottom: 5px;")).waitUntil(enabled, 5000).click(); }
+                public void clickOnCircle(SelenideElement circle){ circle.find(byAttribute("style", "display: block; text-decoration: none; font-weight: 700; font-size: 17px; line-height: 20px; letter-spacing: 0.16px; color: rgb(1, 16, 32); margin-bottom: 5px;")).waitUntil(enabled, 5000).click(); }
                 public void clickLastCircle(){ eLastCircle().click(); }
                 public class Circle{
                     public SelenideElement eInvite() { return $(".MuiIconButton-label", 2); }
@@ -638,7 +638,6 @@ public class Main {
                         eArchive_EditCircle().shouldHave(value(String.valueOf(isArchive)));
                         return this;
                     }
-
 
                     public void clickInvite() { eInvite().click();}
                     public void clickEditCircle(){ eEditCircle().click(); }
@@ -751,7 +750,7 @@ public class Main {
                     public SelenideElement eTitle_Circle(){ return $(".MuiTypography-root.MuiTypography-h3", 1); }
                     public void clickUpdateReport_Circle(){ eUpdateReport_Circle().click(); }
                     public void clickXcloseButton_Circle(){ eXCloseButton_Circle().waitUntil(enabled, 5000).click();}
-                    public ElementsCollection eListOfCircles(){ $$(".MuiList-root.MuiMenu-list.MuiList-padding").findBy(visible).$$("li").first().waitUntil(enabled, 5000); return $$(".MuiList-root.MuiMenu-list.MuiList-padding").findBy(visible).$$("li"); }
+                    public ElementsCollection eListOfCircles(){ $$(".MuiList-root.MuiMenu-list.MuiList-padding").findBy(visible).$$("li").first().waitUntil(enabled, 8000); return $$(".MuiList-root.MuiMenu-list.MuiList-padding").findBy(visible).$$("li"); }
                     public void selectCircle_Circle(String circle){ eInputCircle_Circle().click();
                         eListOfCircles().findBy(text(circle)).waitUntil(enabled, 5000).click();
                     }
