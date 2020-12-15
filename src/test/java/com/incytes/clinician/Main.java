@@ -370,10 +370,10 @@ public class Main {
             public SelenideElement eSearch(){ return $(".MuiGrid-align-items-xs-center", 0).parent().parent().parent(); }
             public SelenideElement eNewCase(){ return $(".MuiSvgIcon-root", 2).parent(); }
             public SelenideElement eDashBoard(){ return $(".MuiTypography-root.MuiTypography-body2", 2); }
-            public SelenideElement eCases(){ return $("#casesLink").parent().waitUntil(attribute("style", "pointer-events: inherit;"), 5000); }
-            public SelenideElement eTasks(){ return $("#mytasksLink").parent().waitUntil(attribute("style", "pointer-events: inherit;"), 5000); }
-            public SelenideElement eReports(){ return $(".MuiTypography-body2", 4).parent().parent().parent().waitUntil(attribute("style", "pointer-events: inherit;"), 5000); }
-            public SelenideElement eCircles(){ return $("#circlesLink").parent().waitUntil(attribute("style", "pointer-events: inherit;"), 5000); }
+            public SelenideElement eCases(){ return $("#casesLink").parent().waitUntil(attribute("style", "MuiTypography-body2;"), 5000); }
+            public SelenideElement eTasks(){ return $("#mytasksLink").parent().waitUntil(attribute("style", "pointer-events: inherit;"), 8000); }
+            public SelenideElement eReports(){ return $(".MuiTypography-body2", 5).parent().parent().waitUntil(attribute("style", "pointer-events: inherit;"), 8000).parent(); }
+            public SelenideElement eCircles(){ return $("#circlesLink").parent().waitUntil(attribute("style", "pointer-events: inherit;"), 8000); }
             public SelenideElement ePatients(){ return $(".MuiTypography-body2", 7).parent().parent().parent(); }
             public SelenideElement eSupport(){ return $(".MuiGrid-align-items-xs-center", 2).parent().parent().parent(); }
             public SelenideElement eAccount(){ return $(".MuiGrid-align-items-xs-center", 3).parent().parent().parent(); }
@@ -551,7 +551,7 @@ public class Main {
                 public SelenideElement eSelectMenu(){ return $(".MuiSelect-selectMenu"); }
                 public ElementsCollection eListOfSelectMenu(){ int size = $$(".MuiList-root.MuiMenu-list.MuiList-padding").size(); return $(".MuiList-root.MuiMenu-list.MuiList-padding", size-1).$$("li");}
                 public SelenideElement eLastCircle(){ return eListOfCircles().first().find(byAttribute("style", "display: block; text-decoration: none; font-weight: 700; font-size: 17px; line-height: 20px; letter-spacing: 0.16px; color: rgb(1, 16, 32); margin-bottom: 5px;")); }
-                public ElementsCollection eListOfCircles(){ $(".MuiTableBody-root").$$("tr").first().waitUntil(enabled, 5000); return $(".MuiTableBody-root").$$("tr"); }
+                public ElementsCollection eListOfCircles(){ $(".MuiTableBody-root").$$("tr").first().waitUntil(visible, 5000); return $(".MuiTableBody-root").$$("tr"); }
                 public SelenideElement eTitle_Creation(){ return $(".MuiTypography-h3"); }
                 public ElementsCollection eListOfProtocols_Creation(){ return $$("ul").find(visible).$$("li"); }
                 public SelenideElement eCreateCircle_Creation(){ return $(".MuiButton-sizeLarge"); }
@@ -689,14 +689,14 @@ public class Main {
                 public SelenideElement eSavedReportsForm(){ return $(".MuiPaper-rounded"); }
                 public SelenideElement eKOOSForm(){ return $(".MuiPaper-rounded", 1);}
                 public ElementsCollection eListOfSavedReports(){ return $$(".MuiGrid-root.MuiGrid-container.MuiGrid-align-items-xs-flex-start.MuiGrid-justify-xs-space-between"); }
-                public SelenideElement eMoreOptions(SelenideElement report){ return report.find(".MuiButtonBase-root.MuiIconButton-root"); }
+                public SelenideElement eMoreOptions(SelenideElement report){ return report.find(".MuiButtonBase-root.MuiIconButton-root", 1); }
                 public SelenideElement eNameReport(){ return $(".MuiListItem-button"); }
                 public SelenideElement eRemoveReport(){ return $(".MuiListItem-button", 1); }
                 public SelenideElement eEditReport(){ return $(byAttribute("style", "color: rgb(19, 104, 236);")).waitUntil(exist, 5000).waitUntil(enabled, 5000); }
                 public SelenideElement eReportName_Build(){ return $(byName("name")); }
                 public SelenideElement eCreateReport_Build(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textSizeLarge.MuiButton-sizeLarge"); }
-                public SelenideElement eXClose_Build(){ return $(".MuiButtonBase-root.MuiIconButton-root", 3); }
-                public SelenideElement eTitle_Build(){ return $(".MuiTypography-alignLeft"); }
+                public SelenideElement eXClose_Build(){ return $(byAttribute("aria-label", "close")); }
+                public SelenideElement eTitle_Build(){ return $(".MuiTypography-h3", 1); }
                 public SelenideElement eChartSection(){ return $(".MuiPaper-rounded", 1); }
                 public SelenideElement eName_ChartSection(){ return eChartSection().find(".MuiTypography-body1"); }
                 public SelenideElement eRemove_Removing(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textSizeLarge.MuiButton-sizeLarge"); }
@@ -713,9 +713,9 @@ public class Main {
                 public class ReportBuilder{
                     public SelenideElement eTitle(){ return $(".MuiTypography-root.MuiTypography-h3"); }
                     public SelenideElement eBackToReports(){ return $(byAttribute("href", "/reports")); }
-                    public SelenideElement eCirclesButton(){ $(".MuiButtonBase-root.MuiButton-root.MuiButton-text", 2).waitUntil(enabled, 5000); return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text").waitUntil(enabled, 5000); }
-                    public SelenideElement eYAxisButton(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text", 1); }
-                    public SelenideElement ePopulationButton(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text", 2); }
+                    public SelenideElement eCirclesButton(){ $(".MuiButtonBase-root.MuiIconButton-root", 3).waitUntil(enabled, 8000); return $(".MuiButtonBase-root.MuiIconButton-root", 3).waitUntil(enabled, 8000); }
+                    public SelenideElement eYAxisButton(){ return $(".MuiButtonBase-root.MuiIconButton-root", 4); }
+                    public SelenideElement ePopulationButton(){ return $(".MuiIconButton-label", 5); }
                     public SelenideElement eAddCohortButton(){ return $(byAttribute("style", "padding: 15px; border: 1px dashed rgb(0, 122, 255); border-radius: 5px; cursor: pointer;")); }
                     public SelenideElement eCasesCount(){ return $(byAttribute("style", "font-size: 64px; font-weight: bold; color: rgb(188, 193, 201);"), 1); }
                     public SelenideElement eDataPointsCount(){ return $(byAttribute("style", "font-size: 64px; font-weight: bold; color: rgb(188, 193, 201);"), 2); }
@@ -747,8 +747,8 @@ public class Main {
                     //CircleForm
                     public SelenideElement eInputCircle_Circle(){ return $(".MuiFormControl-root.MuiFormControl-fullWidth"); }
                     public SelenideElement eUpdateReport_Circle(){ return $(".MuiButton-sizeLarge"); }
-                    public SelenideElement eXCloseButton_Circle(){ return $(".MuiButtonBase-root.MuiIconButton-root", 2).waitUntil(enabled, 5000); }
-                    public SelenideElement eTitle_Circle(){ return $(".MuiTypography-root.MuiTypography-h3.MuiTypography-alignLeft"); }
+                    public SelenideElement eXCloseButton_Circle(){ return $(byAttribute("aria-label", "close"), 2).waitUntil(enabled, 5000); }
+                    public SelenideElement eTitle_Circle(){ return $(".MuiTypography-root.MuiTypography-h3", 1); }
                     public void clickUpdateReport_Circle(){ eUpdateReport_Circle().click(); }
                     public void clickXcloseButton_Circle(){ eXCloseButton_Circle().waitUntil(enabled, 5000).click();}
                     public ElementsCollection eListOfCircles(){ $$(".MuiList-root.MuiMenu-list.MuiList-padding").findBy(visible).$$("li").first().waitUntil(enabled, 5000); return $$(".MuiList-root.MuiMenu-list.MuiList-padding").findBy(visible).$$("li"); }

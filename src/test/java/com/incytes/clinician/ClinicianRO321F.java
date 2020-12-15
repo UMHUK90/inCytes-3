@@ -20,7 +20,7 @@ public class ClinicianRO321F {
         reports.writeNameReport(text);
         reports.eReportName_Build().shouldHave(Condition.value(text));
         reports.clickCreateReport_Build();
-        reports.eReportName_Build().shouldNotBe(Condition.visible);
+        reports.eReportName_Build().waitUntil(Condition.hidden, 5000);
         Main.Login.DashBoard.Reports.ReportBuilder reportBuilder = reports.new ReportBuilder();
         reportBuilder.clickCirclesButton();
         reportBuilder.eInputCircle_Circle().click();
