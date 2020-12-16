@@ -34,8 +34,8 @@ public class ClinicianRO325A {
         reportBuilder.eCheckBoxes_Cohort().last().click();
         reportBuilder.clickAddCohortFilter_Cohort();
         reportBuilder.clickDone_Cohort();
-        reportBuilder.eGraph().$("circle", 4).shouldBe(Condition.visible);
-        reportBuilder.eGraph().$("circle", 4).hover();
+        reportBuilder.eGraph().$("svg").$("g").$("circle", 4).shouldBe(Condition.visible);
+        reportBuilder.eGraph().$("svg").$("g").$("circle", 4).hover();
         $$(byText("Cohort B")).find(Condition.visible).shouldBe(Condition.visible);
     }
     @AfterMethod

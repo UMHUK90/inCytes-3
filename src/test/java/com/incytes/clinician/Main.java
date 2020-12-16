@@ -579,7 +579,7 @@ public class Main {
                     public ElementsCollection eCircleMembers() { return $$(".MuiTableRow-root"); }
                     //public SelenideElement eSponsor_Invite(){ return $(""); }
                     public SelenideElement eSendInvitation_Invite(){ return $(byAttribute("type", "submit")); }
-                    public SelenideElement eEditCircle(){ return $(byAttribute("aria-label", "more")); }
+                    public SelenideElement eEditCircle(){ return $("button.MuiButtonBase-root.MuiIconButton-root", 1); }
                     public SelenideElement eNameOfScoringGroup(){ return $(".MuiSelect-root.MuiSelect-select.MuiSelect-selectMenu.MuiInputBase-input.MuiInput-input"); }
                     public void toListOfScoringGroups(){ eNameOfScoringGroup().click(); }
                     public ElementsCollection eListOfScoringGroups(){ return $(".MuiList-root.MuiMenu-list.MuiList-padding").$$("li"); }
@@ -684,7 +684,7 @@ public class Main {
             }
             public class Reports{
                 public SelenideElement eTitle(){ return $(".MuiTypography-root.MuiTypography-h3"); }
-                public SelenideElement eBuildReport(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-contained"); }
+                public SelenideElement eBuildReport(){ return $(".MuiButton-contained"); }
                 public SelenideElement eSavedReportsForm(){ return $(".MuiPaper-rounded"); }
                 public SelenideElement eKOOSForm(){ return $(".MuiPaper-rounded", 1);}
                 public ElementsCollection eListOfSavedReports(){ return $$(".MuiGrid-root.MuiGrid-container.MuiGrid-align-items-xs-flex-start.MuiGrid-justify-xs-space-between"); }
@@ -701,7 +701,7 @@ public class Main {
                 public SelenideElement eRemove_Removing(){ return $(".MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textSizeLarge.MuiButton-sizeLarge"); }
                 public void clickRemove_Removing(){ eRemove_Removing().click(); }
                 public void clickXClose_Build(){ eXClose_Build().click(); }
-                public void clickBuildReport(){ eBuildReport().click(); }
+                public void clickBuildReport(){ eBuildReport().waitUntil(visible, 8000).click(); }
                 public void selectReport(SelenideElement report){ report.find("h6").click(); }
                 public void clickMoreOptions(SelenideElement report) { eMoreOptions(report).click(); }
                 public void clickEditReport(){ Selenide.sleep(2000); eEditReport().click(); }
@@ -712,7 +712,7 @@ public class Main {
                 public class ReportBuilder{
                     public SelenideElement eTitle(){ return $(".MuiTypography-root.MuiTypography-h3"); }
                     public SelenideElement eBackToReports(){ return $(byAttribute("href", "/reports")); }
-                    public SelenideElement eCirclesButton(){ $(".MuiButtonBase-root.MuiIconButton-root", 3).waitUntil(enabled, 8000); return $(".MuiButtonBase-root.MuiIconButton-root", 3).waitUntil(enabled, 8000); }
+                    public SelenideElement eCirclesButton(){ $(".MuiButtonBase-root.MuiIconButton-root", 3).waitUntil(visible, 8000); return $(".MuiButtonBase-root.MuiIconButton-root", 3).waitUntil(visible, 8000); }
                     public SelenideElement eYAxisButton(){ return $(".MuiButtonBase-root.MuiIconButton-root", 4); }
                     public SelenideElement ePopulationButton(){ return $(".MuiIconButton-label", 5); }
                     public SelenideElement eAddCohortButton(){ return $(byAttribute("style", "padding: 15px; border: 1px dashed rgb(0, 122, 255); border-radius: 5px; cursor: pointer;")); }
@@ -721,7 +721,7 @@ public class Main {
                     public SelenideElement eCohortACasesCount(){ return $(byAttribute("style", "font-size: 64px; font-weight: bold; color: rgb(188, 193, 201);"), 3); }
                     public SelenideElement eCohortBCasesCount(){ return $(byAttribute("style", "font-size: 64px; font-weight: bold; color: rgb(188, 193, 201);"), 4); }
                     public List<SelenideElement> eListOfCohorts(){ List<SelenideElement> elements = new List<SelenideElement>(); for(int step = 0; step < $(byAttribute("style", "justify-content: space-between;")).parent().parent().$$(".MuiGrid-root.MuiGrid-item").size(); step++) if($(byAttribute("style", "justify-content: space-between;")).parent().parent().$$(".MuiGrid-root.MuiGrid-item").get(step).lastChild().lastChild().lastChild().find("button").exists()) elements.Add($(byAttribute("style", "justify-content: space-between;")).parent().parent().$$(".MuiGrid-root.MuiGrid-item").get(step)); return elements;}
-                    public SelenideElement eGraph(){ return $(byAttribute("style", "flex: 0.9 1 0%;")); }
+                    public SelenideElement eGraph(){ return $("#chart"); }
                     public SelenideElement eYAxis(){ return $(".yAxisGroup"); }
                     public SelenideElement eNameOfCurrentCircle(){ return $(".MuiTypography-root.MuiTypography-body1", 1); }
                     public SelenideElement eNameOfCurrentScoringGroup(){ return $(".MuiTypography-root.MuiTypography-body1", 3); }
