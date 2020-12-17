@@ -23,8 +23,8 @@ public class Main {
         @Test
         void method();
     }
-    private String cite = "alpha";
-    private String baddress = "https://alpha-patient.incytesdata-dev.com/";
+    private String cite = "qa";
+    private String baddress = "https://qa-patient.incytesdata-dev.com/";
     public Main(String language){
         setLang(language);
     }
@@ -278,7 +278,7 @@ public class Main {
         public SelenideElement eEmail(){return $(name("email"));}
         public SelenideElement ePassword(){return $(name("password"));}
         public SelenideElement eLogin(){return $(".MuiButton-sizeLarge");}
-        public SelenideElement eSignIn(){return $(".MuiButton-label", 1) ;}
+        public SelenideElement eSignIn(){return $(".MuiButton-contained") ;}
         public SelenideElement eForgotPassword(){return $(".MuiButtonBase-root", 0);}
         public SelenideElement eTitle_forgotPassword(){ return $(".MuiTypography-body1"); }
         public SelenideElement eBackToLogin_forgotPassword(){ return $(".MuiButton-label");  }
@@ -514,10 +514,10 @@ public class Main {
                 return this;
             }
             public void openInNewTab(){
+                while(true) if($$(".MuiButton-label").size() == 1) break; else sleep(50);
                 Main.newTab();
                 Selenide.switchTo().window(1);
-                Selenide.open("https://alpha-patient.incytesdata-dev.com/");
-                while(true) if($$(".MuiSvgIcon-root").size() == 7) break; else sleep(50);
+                Selenide.open("https://qa-patient.incytesdata-dev.com/");
             }
         }
     }

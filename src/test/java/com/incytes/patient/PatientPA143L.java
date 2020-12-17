@@ -10,7 +10,7 @@ public class PatientPA143L {
     public void c_test() {
         Main main = new Main();
         Main.Login login = main.new Login().open();
-        login.setAll("andrew.grabovskiy+alphapat1@gmail.com", Main.password).wLogin().signIn();
+        login.setAll("andrew.grabovskiy+QApatient2@gmail.com", Main.password).wLogin().signIn();
         Main.Login.Home home = login.new Home();
         home.openInNewTab();
         home.clickChangePassword();
@@ -18,7 +18,7 @@ public class PatientPA143L {
         Selenide.actions().moveToElement(home.eChangePassword(), -50, -50).click().build().perform();
         Main.clickOutSide(home.eChangePassword(), -50, -50);
         home.eSave_changePassword().shouldNotBe(Condition.visible);
-        Selenide.close();
+        Selenide.closeWebDriver();
         login.open().wLogin().signIn();
         home.eChangePassword().shouldBe(Condition.visible);
     }

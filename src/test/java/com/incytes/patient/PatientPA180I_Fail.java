@@ -12,7 +12,7 @@ import static org.openqa.selenium.By.name;
 import static org.openqa.selenium.By.xpath;
 
 public class PatientPA180I_Fail {
-    public static String siteurl = "https://alpha-patient.incytesdata-dev.com/",
+    public static String siteurl = "https://qa-patient.incytesdata-dev.com/",
                          password = "261090inCytes",
                          existingPassword = password,
                          newpassword = "261090inCytes";

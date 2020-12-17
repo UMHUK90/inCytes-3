@@ -15,7 +15,7 @@ import static com.codeborne.selenide.Selenide.open;
 import static org.openqa.selenium.By.name;
 
 public class PatientPA180A {
-    public static String siteurl = "https://alpha-admin.incytesdata-dev.com/",
+    public static String siteurl = "https://qa-admin.incytesdata-dev.com/",
                          password = "Seamgen2";
 
     public void ClickCircles() {
