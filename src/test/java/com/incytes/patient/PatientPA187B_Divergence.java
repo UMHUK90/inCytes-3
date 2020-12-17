@@ -33,6 +33,6 @@ public class PatientPA187B_Divergence {
     }
     @AfterMethod
     public static void close(){
-        Selenide.close();
+        Selenide.closeWebDriver();
     }
 }

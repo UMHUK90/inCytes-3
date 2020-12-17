@@ -28,6 +28,6 @@ public class PatientPA184G_Divergence_Unfinished {
     }
     @AfterMethod
     public static void close(){
-        Selenide.close();
+        Selenide.closeWebDriver();
     }
 }

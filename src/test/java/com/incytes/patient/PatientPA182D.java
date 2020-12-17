@@ -39,6 +39,6 @@ public class PatientPA182D {
     }
     @AfterMethod
     public static void close(){
-        Selenide.close();
+        Selenide.closeWebDriver();
     }
 }
