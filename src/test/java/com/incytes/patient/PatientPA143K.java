@@ -16,7 +16,7 @@ public class PatientPA143K {
         home.clickChangePassword();
         home.setAllPassword_changePassword(Main.password, Main.password+"!", Main.password+"!").writeAll_changePassword().checkAll_changePassword();
         home.clickX_changePassword();
-        Selenide.close();
+        Selenide.closeWebDriver();
         login.open().wLogin().signIn();
         home.eChangePassword().shouldBe(Condition.visible);
     }

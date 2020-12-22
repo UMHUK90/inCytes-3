@@ -142,10 +142,10 @@ public class Main {
             } catch (Throwable e) {
                 list.Add(name + "   -   " + e);
             }
-            Selenide.close();
+            Selenide.closeWebDriver();
             return this;
         }
-        public MultipleMethods openWithoutException(IMethod method){ method.method(); Selenide.close(); return this;}
+        public MultipleMethods openWithoutException(IMethod method){ method.method(); Selenide.closeWebDriver(); return this;}
         public MultipleMethods openWithoutClosing(IMethod method){ method.method(); return this; }
         public void GetExceptions(){
             if(list.length() > 0) try {
