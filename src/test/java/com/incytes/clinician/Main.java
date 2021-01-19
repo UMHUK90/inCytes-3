@@ -370,7 +370,7 @@ public class Main {
             public SelenideElement eSearch(){ return $(".MuiGrid-align-items-xs-center", 0).parent().parent().parent(); }
             public SelenideElement eNewCase(){ return $(".MuiSvgIcon-root", 2).parent(); }
             public SelenideElement eDashBoard(){ return $(".MuiTypography-root.MuiTypography-body2", 2); }
-            public SelenideElement eCases(){ return $("#casesLink").parent().waitUntil(attribute("style", "MuiTypography-body2;"), 5000); }
+            public SelenideElement eCases(){ return $("#casesLink").parent().waitUntil(attribute("style", "pointer-events: inherit;"), 5000); }
             public SelenideElement eTasks(){ return $("#mytasksLink").parent().waitUntil(attribute("style", "pointer-events: inherit;"), 8000); }
             public SelenideElement eReports(){ return $(".MuiTypography-body2", 5).parent().parent().waitUntil(attribute("style", "pointer-events: inherit;"), 8000).parent(); }
             public SelenideElement eCircles(){ return $("#circlesLink").parent().waitUntil(attribute("style", "pointer-events: inherit;"), 8000); }
